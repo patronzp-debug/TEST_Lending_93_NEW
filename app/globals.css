@@ -361,6 +361,37 @@ p, span, li {
 }
 
 /* ============================================================
+   RECRUITING FORM — cinematic inputs, focus glow
+   ============================================================ */
+
+/* Focus: orange underline + subtle ambient glow */
+.form-input-field:focus {
+  border-bottom-color: #ff5a00 !important;
+  box-shadow: 0 4px 20px rgba(255, 90, 0, 0.1) !important;
+  outline: none !important;
+}
+
+/* Hover: slightly lighter border */
+.form-input-field:not(:focus):hover {
+  border-bottom-color: #3a3a3a !important;
+}
+
+/* Remove number input arrows (Chrome, Safari, Edge) */
+.form-input-field[type='number']::-webkit-inner-spin-button,
+.form-input-field[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.form-input-field[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* Submit button active press */
+.form-submit-btn:active:not(:disabled) {
+  transform: translateY(0) !important;
+}
+
+/* ============================================================
    EQUIPMENT SECTION — HUD corners, heading glow, responsive grid
    ============================================================ */
 

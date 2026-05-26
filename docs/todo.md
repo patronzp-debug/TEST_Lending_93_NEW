@@ -19,10 +19,11 @@
 - [x] **Документація:** Створено `docs/architecture_and_motion.md` — «Біблія» проєкту: структура папок, дизайн-токени, motion-патерни (GSAP + Framer Motion + Lenis bridge), специфікація компонентів, шаблони, prompt-гайд для агентів.
 - [x] **Equipment:** Асиметрична сітка (3 col → 2 col tablet → 1 col mobile). 4 картки: Стугна-П, FPV-дрони, Javelin, Bradley. GSAP 3D entrance: `rotateX(18°)→0 + scale(0.9)→1 + y(70px)→0`, perspective 900px. Framer Motion hover: агресивні HUD-кути 28px (box-shadow glow), `borderColor` #ff5a00, `boxShadow` neon. Inner placeholder scale(1.06) незалежно від рамки картки. CSS: `eq-glow` пульсація заголовку, scan-lines текстура на placeholder-блоках. Ізольований cleanup GSAP.
 
-## Этап 4: Premium Form
-- [ ] **Recruiting Form:** Использовать `shadcn/ui` + `react-hook-form` + `zod`. 
-- [ ] Настроить микро-взаимодействия (micro-interactions) при фокусе на инпутах.
-- [ ] Сохранение стейта в `localStorage`.
+## Етап 4: Premium Form
+- [x] **Recruiting Form:** `react-hook-form` + `zod` + `@hookform/resolvers`. 5 полів: ПІБ (мін. 2 слова), Телефон (+380 regex), Вік (18–60), Посада (custom select), Досвід (custom radio). Cinematic підчеркнутий input з `#ff5a00` focus glow. Анімовані помилки (Framer Motion AnimatePresence). Shimmer CTA з loading spinner + success state (CheckCircle2 + spring анімація). Кнопки «Відгукнутися» у вакансіях скролять до `#recruiting-form`.
+- [x] **Мікро-інтеракції:** Focus glow на інпутах (CSS `.form-input-field:focus`). Hover підсвічування radio-опцій. AnimatePresence для помилок (slide-down + fade). Shimmer sweep на кнопці submit при hover. Spinner при надсиланні.
+- [x] **localStorage:** `watch()` subscribe зберігає стан при кожній зміні. Відновлення при монтуванні через `reset(parsed)`. Очищення після успішного надсилання.
+
 
 ## Этап 5: Motion Polish
 - [ ] Финальный проход с `animation-principles`. Настройка таймингов, физики движения, page transitions.
