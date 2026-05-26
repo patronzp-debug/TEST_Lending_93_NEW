@@ -361,6 +361,45 @@ p, span, li {
 }
 
 /* ============================================================
+   VACANCIES — HUD corner brackets + mobile grid
+   ============================================================ */
+
+/* Reveal HUD corners when card is hovered */
+.vacancy-card:hover .hud-corner {
+  opacity: 1 !important;
+  transform: translate(0, 0) !important;
+}
+
+/* Vacancy apply button hover */
+.vacancy-apply-btn:hover {
+  border-color: rgba(255, 90, 0, 0.6) !important;
+  background: rgba(255, 90, 0, 0.08) !important;
+  box-shadow: 0 0 16px rgba(255, 90, 0, 0.2) !important;
+  color: #ffffff !important;
+}
+
+/* Mobile: force single column Bento grid */
+@media (max-width: 767px) {
+  .vacancies-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: auto !important;
+  }
+  /* Reset all bento spans on mobile */
+  .vacancies-grid > * {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+    min-height: 220px !important;
+  }
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .vacancies-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ============================================================
    LENIS SMOOTH SCROLL
    ============================================================ */
 

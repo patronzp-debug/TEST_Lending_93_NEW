@@ -1,5 +1,12 @@
 # Визуальный стиль и Cinematic Design System
 
+## 🌐 Global Language Rule
+- **Primary Language: Ukrainian.**
+- Всі тексти, заглушки, кнопки та компоненти інтерфейсу повинні бути **виключно українською мовою**.
+- Заборонено: англійські placeholder'и, мішанина мов в UI, «Coming soon» замість українського тексту.
+
+
+
 ## Aesthetic & Vibe
 - **Style:** Cinematic Military, Dark Futuristic, Premium Tactical.
 - **Inspiration Quality:** Уровень Apple, Linear, Stripe, но в агрессивной военной стилистике.

@@ -1,34 +1,22 @@
 /**
- * 93 ОПТБ — Main Page
- * Stage 3: Cinematic Hero Section active
- * See docs/todo.md for full roadmap
+ * 93 ОПТБ — Головна сторінка
+ * Primary Language: Ukrainian (spec_theme.md)
+ *
+ * Розділи:
+ *  ✓ Hero        — кінематографічне відео, глітч-заголовок, GSAP scroll
+ *  ✓ Vacancies   — асиметричний Bento Grid, HUD-hover, Framer Motion
+ *  ○ About       — у розробці (Етап 3)
+ *  ○ Equipment   — у розробці (Етап 3)
+ *  ○ Form        — у розробці (Етап 4)
  */
 import Hero from '@/components/Hero'
+import Vacancies from '@/components/Vacancies'
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main className="relative bg-[#080808]">
       <Hero />
-
-      {/* ── Placeholder spacer so scroll animations have room to breathe ── */}
-      <section
-        id="next-section-placeholder"
-        className="min-h-screen flex items-center justify-center"
-        style={{ background: '#080808' }}
-      >
-        <div className="text-center space-y-4 px-6">
-          <div className="inline-flex items-center gap-2 tactical-tag">
-            <span className="w-1.5 h-1.5 bg-[#ff5a00] rounded-full animate-pulse" />
-            НАСТУПНА СЕКЦІЯ — IN PROGRESS
-          </div>
-          <p
-            className="text-xs tracking-[0.25em] text-[#4a4a4a] uppercase"
-            style={{ fontFamily: 'var(--font-roboto-mono)' }}
-          >
-            Vacancies · About · Equipment · Form
-          </p>
-        </div>
-      </section>
+      <Vacancies />
     </main>
   )
 }
