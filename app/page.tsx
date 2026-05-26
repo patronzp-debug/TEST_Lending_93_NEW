@@ -4,19 +4,22 @@
  *
  * Розділи:
  *  ✓ Hero        — кінематографічне відео, глітч-заголовок, GSAP scroll
+ *  ✓ About       — двоколонка, stagger word-reveal, GSAP parallax галерея
  *  ✓ Vacancies   — асиметричний Bento Grid, HUD-hover, Framer Motion
- *  ○ About       — у розробці (Етап 3)
  *  ○ Equipment   — у розробці (Етап 3)
  *  ○ Form        — у розробці (Етап 4)
  */
 import Hero from '@/components/Hero'
+import About from '@/components/About'
 import Vacancies from '@/components/Vacancies'
 
 export default function Home() {
   return (
     <main className="relative bg-[#080808]">
       <Hero />
+      <About />
       <Vacancies />
     </main>
   )
 }
+

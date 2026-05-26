@@ -14,7 +14,7 @@
 
 ## Этап 3: Cinematic Секции (Mobile First)
 - [x] **Hero Section:** 100svh. Видео-фон `/placeholder-video.mp4` + vignette оверлей. Глитч-typewriter H1 (Framer Motion + CSS glitch layers). CTA-кнопка #ff5a00 с neon-glow при hover. GSAP ScrollTrigger: blur(18px) + scale(0.88) + opacity→0 при скролле. Изолированный cleanup ST-инстансов.
-- [ ] **About Section:** Кинематографичная подача. Плавное появление текста (stagger reveal) + параллакс изображений.
+- [x] **About Section:** Двоколонка (55/45) на десктопі, одна колонка на мобільному. H2 «ФІЛОСОФІЯ ПІДРОЗДІЛУ» (Oswald, word-by-word slide-up). 2 абзаци з word-stagger Framer Motion. Горизонтальний акцент-дільник. Статистика (2022 / 100% / 24/7). Права колонка — 3 асиметричних placeholder-блоки з GSAP parallax (різна швидкість: -25 / -55 / -70px). Ambient glow за текстом.
 - [x] **Vacancies:** Асиметричний Bento Grid (wide/tall/standard spans). Glassmorphism-картки (#222222 border, backdrop-blur). HUD-ефект «захоплення цілі» при hover (кутові рамки #ff5a00, Framer Motion whileHover scale). Stagger reveal при скролі (useInView). Кнопка «Відгукнутися» з accent-hover. Mobile: 1 колонка. 4 вакансії: Оператор ПТРК, Механік-водій, Бойовий медик, Оператор БПЛА.
 - [ ] **Equipment:** Сетка с 3D-feel эффектом (GSAP ScrollTrigger).
 
