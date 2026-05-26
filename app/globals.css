@@ -318,6 +318,35 @@ p, span, li {
   animation: shimmer 2.5s linear infinite;
 }
 
+/* ============================================================
+   HERO SECTION — CTA Button hover glow + shimmer sweep
+   ============================================================ */
+
+.hero-cta-btn:hover {
+  box-shadow:
+    0 0 24px rgba(255, 90, 0, 0.7),
+    0 0 60px rgba(255, 90, 0, 0.35),
+    0 0 120px rgba(255, 90, 0, 0.15),
+    0 4px 24px rgba(0, 0, 0, 0.5) !important;
+  transform: translateY(-1px);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.hero-cta-btn:active {
+  transform: translateY(0px);
+}
+
+/* Shimmer sweep activated on hover via sibling selector in JSX */
+.hero-cta-btn:hover .hero-cta-shimmer {
+  background-position: -200% center !important;
+  transition: background-position 0.6s ease !important;
+}
+
+/* Ensure video overflow is clipped for Ken-Burns scale */
+.hero-section {
+  isolation: isolate;
+}
+
 /* Tactical label (neon tag) */
 .tactical-tag {
   font-family: var(--font-roboto-mono), monospace;

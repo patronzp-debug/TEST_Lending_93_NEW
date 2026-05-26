@@ -1,42 +1,34 @@
 /**
  * 93 ОПТБ — Main Page
- * Sections will be added in subsequent Stages (see docs/todo.md)
- * Current: Stage 1 & 2 setup complete — placeholder only
+ * Stage 3: Cinematic Hero Section active
+ * See docs/todo.md for full roadmap
  */
+import Hero from '@/components/Hero'
+
 export default function Home() {
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <div className="text-center space-y-6 px-6">
-        {/* Tactical badge */}
-        <div className="inline-flex items-center gap-2 tactical-tag mb-4">
-          <span className="w-1.5 h-1.5 bg-[#ff5a00] rounded-full animate-pulse" />
-          СИСТЕМА ГОТОВА
+    <main className="relative">
+      <Hero />
+
+      {/* ── Placeholder spacer so scroll animations have room to breathe ── */}
+      <section
+        id="next-section-placeholder"
+        className="min-h-screen flex items-center justify-center"
+        style={{ background: '#080808' }}
+      >
+        <div className="text-center space-y-4 px-6">
+          <div className="inline-flex items-center gap-2 tactical-tag">
+            <span className="w-1.5 h-1.5 bg-[#ff5a00] rounded-full animate-pulse" />
+            НАСТУПНА СЕКЦІЯ — IN PROGRESS
+          </div>
+          <p
+            className="text-xs tracking-[0.25em] text-[#4a4a4a] uppercase"
+            style={{ fontFamily: 'var(--font-roboto-mono)' }}
+          >
+            Vacancies · About · Equipment · Form
+          </p>
         </div>
-
-        {/* Heading */}
-        <h1
-          className="text-6xl md:text-8xl font-bold tracking-wider text-glow"
-          style={{ fontFamily: 'var(--font-oswald)' }}
-        >
-          93 ОПТБ
-        </h1>
-
-        {/* Sub */}
-        <p
-          className="text-sm tracking-[0.3em] text-[#8a8a8a] uppercase"
-          style={{ fontFamily: 'var(--font-roboto-mono)' }}
-        >
-          Cinematic setup complete — Hero section coming next
-        </p>
-
-        {/* Status indicator */}
-        <div className="flex items-center justify-center gap-3 mt-8">
-          <div className="w-2 h-2 rounded-full bg-[#ff5a00] animate-ping" />
-          <span className="text-xs text-[#4a4a4a] tracking-widest uppercase font-mono">
-            Stage 1 &amp; 2 ✓ &nbsp;|&nbsp; Ready for Hero Integration
-          </span>
-        </div>
-      </div>
+      </section>
     </main>
   )
 }

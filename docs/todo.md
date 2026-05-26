@@ -13,7 +13,7 @@
 - [x] Создать базовую структуру `page.tsx`.
 
 ## Этап 3: Cinematic Секции (Mobile First)
-- [ ] **Hero Section:** Full-bleed. Фоновое видео. GSAP pinning при скролле. Глитч-заголовок (использовать `frontend-magic-ui`).
+- [x] **Hero Section:** 100svh. Видео-фон `/placeholder-video.mp4` + vignette оверлей. Глитч-typewriter H1 (Framer Motion + CSS glitch layers). CTA-кнопка #ff5a00 с neon-glow при hover. GSAP ScrollTrigger: blur(18px) + scale(0.88) + opacity→0 при скролле. Изолированный cleanup ST-инстансов.
 - [ ] **About Section:** Кинематографичная подача. Плавное появление текста (stagger reveal) + параллакс изображений.
 - [ ] **Vacancies:** Избегать стандартных "дешевых" карточек. Премиальный Grid. Hover-эффекты "захвата цели" (Framer Motion).
 - [ ] **Equipment:** Сетка с 3D-feel эффектом (GSAP ScrollTrigger).
