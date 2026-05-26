@@ -361,6 +361,51 @@ p, span, li {
 }
 
 /* ============================================================
+   EQUIPMENT SECTION — HUD corners, heading glow, responsive grid
+   ============================================================ */
+
+/* Aggressive HUD corners on hover */
+.equipment-card:hover .eq-hud {
+  opacity: 1 !important;
+  transform: translate(0, 0) !important;
+  box-shadow: -2px -2px 12px rgba(255, 90, 0, 0.35) !important;
+}
+
+/* Top accent line lights up on hover */
+.equipment-card:hover .eq-top-line {
+  background: linear-gradient(90deg, transparent, rgba(255, 90, 0, 0.7), transparent) !important;
+}
+
+/* Heading glow pulse after entrance */
+@keyframes eq-glow {
+  0%, 100% { text-shadow: 0 0 20px rgba(255,90,0,0.0); }
+  50%       { text-shadow: 0 0 40px rgba(255,90,0,0.4), 0 0 80px rgba(255,90,0,0.15); }
+}
+
+.eq-heading {
+  animation: eq-glow 3s ease-in-out 1s infinite;
+}
+
+/* Mobile: single column */
+@media (max-width: 767px) {
+  .equipment-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: auto !important;
+  }
+  .equipment-grid .eq-card-wrapper {
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
+  }
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .equipment-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ============================================================
    ABOUT SECTION — two-column grid layout
    ============================================================ */
 

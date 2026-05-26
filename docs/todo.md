@@ -17,7 +17,7 @@
 - [x] **About Section:** Двоколонка (55/45) на десктопі, одна колонка на мобільному. H2 «ФІЛОСОФІЯ ПІДРОЗДІЛУ» (Oswald, word-by-word slide-up). 2 абзаци з word-stagger Framer Motion. Горизонтальний акцент-дільник. Статистика (2022 / 100% / 24/7). Права колонка — 3 асиметричних placeholder-блоки з GSAP parallax (різна швидкість: -25 / -55 / -70px). Ambient glow за текстом.
 - [x] **Vacancies:** Асиметричний Bento Grid (wide/tall/standard spans). Glassmorphism-картки (#222222 border, backdrop-blur). HUD-ефект «захоплення цілі» при hover (кутові рамки #ff5a00, Framer Motion whileHover scale). Stagger reveal при скролі (useInView). Кнопка «Відгукнутися» з accent-hover. Mobile: 1 колонка. 4 вакансії: Оператор ПТРК, Механік-водій, Бойовий медик, Оператор БПЛА.
 - [x] **Документація:** Створено `docs/architecture_and_motion.md` — «Біблія» проєкту: структура папок, дизайн-токени, motion-патерни (GSAP + Framer Motion + Lenis bridge), специфікація компонентів, шаблони, prompt-гайд для агентів.
-- [ ] **Equipment:** Сетка с 3D-feel эффектом (GSAP ScrollTrigger).
+- [x] **Equipment:** Асиметрична сітка (3 col → 2 col tablet → 1 col mobile). 4 картки: Стугна-П, FPV-дрони, Javelin, Bradley. GSAP 3D entrance: `rotateX(18°)→0 + scale(0.9)→1 + y(70px)→0`, perspective 900px. Framer Motion hover: агресивні HUD-кути 28px (box-shadow glow), `borderColor` #ff5a00, `boxShadow` neon. Inner placeholder scale(1.06) незалежно від рамки картки. CSS: `eq-glow` пульсація заголовку, scan-lines текстура на placeholder-блоках. Ізольований cleanup GSAP.
 
 ## Этап 4: Premium Form
 - [ ] **Recruiting Form:** Использовать `shadcn/ui` + `react-hook-form` + `zod`. 
