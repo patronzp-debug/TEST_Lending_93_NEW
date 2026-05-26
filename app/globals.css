@@ -572,3 +572,114 @@ html.lenis {
     @apply font-sans;
   }
 }
+
+/* ============================================================
+   FAQ SECTION — two-column grid layout
+   ============================================================ */
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: clamp(40px, 6vw, 100px);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* ============================================================
+   FOOTER — two-row layout
+   ============================================================ */
+
+.footer-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(24px, 4vw, 48px);
+  flex-wrap: wrap;
+}
+
+.footer-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer-bottom-row p:last-child {
+    text-align: left !important;
+  }
+}
+
+/* ============================================================
+   MOBILE AUDIT — Global overflow + spacing fixes
+   ============================================================ */
+
+/* Hard guarantee: nothing causes horizontal scroll */
+html, body, main {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* All sections: tighter mobile padding */
+@media (max-width: 480px) {
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  footer {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Hero title: prevent text overflow on very small screens */
+  .hero-title {
+    font-size: clamp(2rem, 9vw, 5rem) !important;
+    word-break: break-word;
+  }
+
+  /* About: tighter gap on small mobile */
+  .about-grid {
+    gap: 32px !important;
+  }
+
+  /* Bento cards: reset any left/right margins for asymmetry */
+  .vacancies-grid > *,
+  .equipment-grid .eq-card-wrapper {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* FAQ: reduce heading size */
+  .faq-grid h2 {
+    font-size: clamp(2rem, 8vw, 3rem) !important;
+  }
+}
+
+/* ============================================================
+   MOTION PERFORMANCE — GPU hints
+   ============================================================ */
+
+/* Tell browser which elements will animate — avoids paint during scroll */
+.eq-card-wrapper,
+.vacancy-card,
+.about-media-col > div {
+  will-change: transform;
+  transform: translateZ(0); /* promote to compositing layer */
+}
+
+/* Prevent iOS rubber-band from exposing white background */
+body {
+  overscroll-behavior: none;
+}
