@@ -139,7 +139,7 @@ export default function Hero() {
       {/* ---- Background Video ---- */}
       <video
         className="hero-video absolute inset-0 w-full h-full object-cover"
-        src="/placeholder-video.mp4"
+        src="/bg-main.webm"
         autoPlay
         muted
         loop
@@ -193,7 +193,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#ff5a00] animate-pulse" />
-          <span>93 ОКРЕМИЙ ПІХОТНИЙ ТАКТИЧНИЙ БАТАЛЬЙОН</span>
+          <span>93 ОКРЕМИЙ ПРОТИТАНКОВИЙ БАТАЛЬЙОН</span>
         </motion.div>
 
         {/* Glitch Typewriter H1 */}
