@@ -25,5 +25,8 @@
 - [x] **localStorage:** `watch()` subscribe зберігає стан при кожній зміні. Відновлення при монтуванні через `reset(parsed)`. Очищення після успішного надсилання.
 
 
-## Этап 5: Motion Polish
-- [ ] Финальный проход с `animation-principles`. Настройка таймингов, физики движения, page transitions.
+## Етап 5: Motion Polish, FAQ та Mobile Optimization ✅ ЗАВЕРШЕНО
+- [x] **FAQ секція:** Кастомний акордеон (без shadcn — нативна реалізація з AnimatePresence height). Двоколонковий layout (заголовок зліва / питання справа). Word-slide H2 анімація при scroll. Stagger reveal кожного питання. Помаранчевий вертикальний акцент-бар у відповіді. ARIA-атрибути (aria-expanded, role="region"). Підключена в `page.tsx` між Equipment та RecruitingForm.
+- [x] **Footer:** Мінімалістичний кінематографічний Footer.tsx. Логотип + Shield іконка + слоган. Горизонтальна навігація з smooth-scroll. Горизонтальний помаранчевий gradient divider. Copyright рядок. CSS класи `.footer-top-row` / `.footer-bottom-row` у globals.css. Підключений у `page.tsx` поза `<main>`.
+- [x] **Mobile Optimization:** `overflow-x: hidden` на html/body/main. `max-width: 100vw` гарантія. Усі гриди → 1 колонка на мобільному: `.vacancies-grid`, `.equipment-grid`, `.about-grid`, `.faq-grid`. Padding 16px на секціях `<480px`. Hero title `word-break: break-word`. Footer bottom-row stack. GPU-хінти `will-change: transform` + `translateZ(0)` на картках.
+- [x] **Motion Polish:** Cinematic easing `[0.16, 1, 0.3, 1]` уніфікований по всіх компонентах. GSAP scrub `1.2–1.4` для плавного паралаксу. AnimatePresence для акордеону. Stagger children 0.1s між FAQ-елементами. Grain/noise overlay z-index 9999 збережено. `overscroll-behavior: none` для iOS.
