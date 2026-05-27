@@ -190,7 +190,9 @@ body {
   background: #080808;
   color: #ececec;
   min-height: 100dvh;
-  overflow-x: hidden;
+  /* overflow-x: clip — НЕ створює scroll-container на відміну від hidden,
+     тому Lenis / touch-scroll на iOS працює коректно */
+  overflow-x: clip;
   position: relative;
 }
 
@@ -625,10 +627,16 @@ html.lenis {
    MOBILE AUDIT — Global overflow + spacing fixes
    ============================================================ */
 
-/* Hard guarantee: nothing causes horizontal scroll */
-html, body, main {
-  max-width: 100vw;
-  overflow-x: hidden;
+/* Prevent horizontal scroll без блокування вертикального скролу Lenis.
+   CRITICAL: overflow-x: hidden на html/body/main ламає Lenis на iOS/Android.
+   overflow-x: clip — не створює scroll-container, тому Lenis працює. */
+body {
+  overflow-x: clip;
+}
+
+/* Wrapper всередині <main> отримує max-width обмеження */
+main {
+  max-width: 100%;
 }
 
 /* All sections: tighter mobile padding */

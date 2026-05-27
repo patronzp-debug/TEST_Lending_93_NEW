@@ -32,8 +32,11 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
         orientation: 'vertical',
         gestureOrientation: 'vertical',
         smoothWheel: true,
+        // syncTouch: false — Lenis НЕ синхронізує/плавить touch-events.
+        // Браузер (iOS/Android) керує тач-інерцією нативно.
+        // Це усуває freeze мобільного скролу при наявності overflow-x: clip.
+        syncTouch: false,
         wheelMultiplier: 1,
-        touchMultiplier: 2,
         infinite: false,
       })
 
