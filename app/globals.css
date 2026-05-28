@@ -456,7 +456,7 @@ input:-webkit-autofill:active {
   display: grid;
   grid-template-columns: 55fr 45fr;
   gap: clamp(40px, 6vw, 100px);
-  align-items: center;
+  align-items: flex-start;
 }
 
 /* Mobile: single column — text above, media below */
@@ -469,6 +469,11 @@ input:-webkit-autofill:active {
     /* Tighten parallax on mobile — less vertical room */
     padding-top: 0 !important;
     padding-bottom: 32px !important;
+    gap: 24px !important;
+  }
+  .about-media-col > div {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 }
 

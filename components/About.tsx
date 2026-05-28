@@ -140,6 +140,7 @@ export default function About() {
   /* ---- GSAP Parallax on media blocks ---- */
   useEffect(() => {
     let mounted = true
+    let mm: any
 
     async function initParallax() {
       const { default: gsap } = await import('gsap')
@@ -148,22 +149,26 @@ export default function About() {
 
       gsap.registerPlugin(ScrollTrigger)
 
-      MEDIA_BLOCKS.forEach(({ id, yRange }) => {
-        const el = document.getElementById(`about-media-${id}`)
-        if (!el) return
+      mm = gsap.matchMedia()
 
-        const st = gsap.to(el, {
-          y: yRange,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.4,
-          },
-        }).scrollTrigger
+      mm.add('(min-width: 768px)', () => {
+        MEDIA_BLOCKS.forEach(({ id, yRange }) => {
+          const el = document.getElementById(`about-media-${id}`)
+          if (!el) return
 
-        if (st) stInstances.current.push(st)
+          const st = gsap.to(el, {
+            y: yRange,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1.4,
+            },
+          }).scrollTrigger
+
+          if (st) stInstances.current.push(st)
+        })
       })
     }
 
@@ -171,6 +176,7 @@ export default function About() {
 
     return () => {
       mounted = false
+      if (mm) mm.revert()
       stInstances.current.forEach(st => st.kill())
       stInstances.current = []
     }
