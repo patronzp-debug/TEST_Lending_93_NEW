@@ -54,7 +54,7 @@ export default function RootLayout({
       lang="uk"
       className={`${oswald.variable} ${robotoMono.variable} antialiased`}
     >
-      <body className="bg-[#080808] text-[#ececec] overflow-x-hidden">
+      <body className="bg-[#080808] text-[#ececec] overflow-x-clip">
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>

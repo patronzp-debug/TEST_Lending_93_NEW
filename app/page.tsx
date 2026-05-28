@@ -22,7 +22,7 @@ import Footer from '@/components/Footer'
 export default function Home() {
   return (
     <>
-      <main className="relative bg-[#080808]">
+      <main className="relative bg-[#080808] overflow-x-clip">
         <Hero />
         <About />
         <Vacancies />
