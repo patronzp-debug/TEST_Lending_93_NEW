@@ -378,6 +378,16 @@ p, span, li {
   border-bottom-color: #3a3a3a !important;
 }
 
+/* Autofill override to keep dark cinematic theme */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #080808 inset !important;
+  -webkit-text-fill-color: #ececec !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 /* Remove number input arrows (Chrome, Safari, Edge) */
 .form-input-field[type='number']::-webkit-inner-spin-button,
 .form-input-field[type='number']::-webkit-outer-spin-button {

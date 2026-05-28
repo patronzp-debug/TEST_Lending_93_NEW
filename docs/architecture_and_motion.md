@@ -380,6 +380,13 @@ ease: 'power2.inOut'        // для scroll-blur Hero
 ease: 'none'                // для scrub parallax (лінійний)
 ```
 
+### 3.9 Mobile Scroll (Lenis Constraints)
+
+**Важливе правило:** Ніколи не використовуй `overflow-x: hidden` та `overflow: hidden` на тегах `html` та `body`. Це жорстко конфліктує з `Lenis` на тач-пристроях і блокує вертикальний скролл.
+Для уникнення горизонтального скролу використовуй сучасну властивість `overflow-x: clip` для `body`.
+
+Крім того, у налаштуваннях Lenis (`SmoothScrollProvider.tsx`) використовуй опцію `syncTouch: false` замість застарілої `smoothTouch` для коректної роботи на мобільних пристроях.
+
 ---
 
 ## 4. Специфікація компонентів
@@ -448,6 +455,22 @@ VacancyCard
 - Відео: `autoPlay muted loop playsInline` — обов'язкові всі 4 атрибути
 - Glitch typewriter: хук `useGlitchTypewriter(text, delayMs)` — локальний у файлі
 - GSAP cleanup: ізольований через `stInstances.current`
+
+### 4.4 Recruiting Form
+
+**Файл:** `components/RecruitingForm.tsx`
+
+- **Форма:** `react-hook-form` інтегрована з `zod` для миттєвої валідації на стороні клієнта.
+- **Відновлення даних:** Локальне збереження (`localStorage`) реалізовано через `watch()` підписку, яка кешує чорновик. При завантаженні (у `useEffect`) форма відновлює дані через `reset()`. Після успішного надсилання сторадж очищується.
+- **Анімації:** Повідомлення про помилки з'являються через `AnimatePresence` (height + opacity).
+
+### 4.5 FAQ (Акордеон)
+
+**Файл:** `components/FAQ.tsx`
+
+- Кастомний акордеон на базі `Framer Motion` (`AnimatePresence`).
+- Дотримується стандартів доступності (ARIA-атрибути: `aria-expanded`, `role="region"`).
+- Плавна зміна висоти відповіді (animate height від 0 до `auto`).
 
 ---
 
