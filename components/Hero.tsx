@@ -239,16 +239,16 @@ export default function Hero() {
           </motion.p>
         </div>
 
-        {/* CTA Button — from BOTTOM */}
+        {/* CTA Button — absolute positioned above Scroll hint */}
         <motion.div
           variants={fromBottom}
           initial="hidden"
           animate={textVisible ? 'visible' : 'hidden'}
-          className="mt-10"
+          className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 w-max"
         >
           <Button
             id="hero-cta"
-            className="hero-cta-btn relative overflow-hidden uppercase tracking-[0.2em] font-bold text-white border-0"
+            className="hero-cta-btn relative overflow-hidden uppercase tracking-[0.2em] font-bold border-0"
             style={{
               fontFamily: 'var(--font-roboto-mono)',
               fontSize: 'clamp(0.7rem, 1.1vw, 0.85rem)',
@@ -257,6 +257,7 @@ export default function Hero() {
               boxShadow: '0 0 30px rgba(255,90,0,0.35), 0 4px 24px rgba(0,0,0,0.5)',
               borderRadius: '2px',
               height: 'auto',
+              color: '#ffffff',
             }}
             onClick={() => {
               document.getElementById('recruiting-form')?.scrollIntoView({ behavior: 'smooth' })
@@ -273,7 +274,7 @@ export default function Hero() {
                 transition: 'background-position 0.5s ease',
               }}
             />
-            <span className="relative z-10 flex items-center gap-3">
+            <span className="relative z-10 flex items-center gap-3" style={{ color: '#ffffff' }}>
               Приєднатись
               <span
                 className="inline-block"
