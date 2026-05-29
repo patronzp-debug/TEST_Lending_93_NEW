@@ -1,62 +1,55 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ChevronDown } from 'lucide-react'
 import type { ScrollTrigger as STType } from 'gsap/ScrollTrigger'
+import { useIntro } from '@/components/providers/IntroContext'
+
+import type { Variants } from 'framer-motion'
 
 /* ============================================================
-   TYPEWRITER + GLITCH HOOK
+   ANIMATION VARIANTS
    ============================================================ */
 
-const FULL_TEXT = '93 ОПТБ. ЗНИЩУЙ ВОРОЖУ БРОНЮ'
-const GLITCH_CHARS = '!<>-_\\/[]{}—=+*^?#¡░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█'
+// Expo-out cubic bezier — matches the site's --ease-cinematic
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
-function useGlitchTypewriter(text: string, startDelay = 300) {
-  const [displayed, setDisplayed] = useState('')
-  const [isDone, setIsDone] = useState(false)
+const fromLeft: Variants = {
+  hidden: { x: '-100%', opacity: 0 },
+  visible: {
+    x: '0%',
+    opacity: 1,
+    transition: { duration: 0.65, ease: EASE },
+  },
+}
 
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>
-    let glitchInterval: ReturnType<typeof setInterval>
-    let charIndex = 0
+const fromRight: Variants = {
+  hidden: { x: '100%', opacity: 0 },
+  visible: {
+    x: '0%',
+    opacity: 1,
+    transition: { duration: 0.65, ease: EASE },
+  },
+}
 
-    // Initial delay before starting
-    timeout = setTimeout(() => {
-      glitchInterval = setInterval(() => {
-        if (charIndex >= text.length) {
-          clearInterval(glitchInterval)
-          setDisplayed(text)
-          setIsDone(true)
-          return
-        }
+const fromTop: Variants = {
+  hidden: { y: -50, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.7, ease: EASE, delay: 0.1 },
+  },
+}
 
-        // Build string: revealed chars + 2-3 random glitch chars at the frontier
-        const revealed = text.slice(0, charIndex)
-        const glitchCount = Math.floor(Math.random() * 3) + 1
-        const glitch = Array.from({ length: glitchCount })
-          .map(() => GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)])
-          .join('')
-
-        setDisplayed(revealed + glitch)
-
-        // Advance every ~65ms, occasional stutter
-        if (Math.random() > 0.85) {
-          charIndex += 0 // stutter — stay on same char
-        } else {
-          charIndex++
-        }
-      }, 65)
-    }, startDelay)
-
-    return () => {
-      clearTimeout(timeout)
-      clearInterval(glitchInterval)
-    }
-  }, [text, startDelay])
-
-  return { displayed, isDone }
+const fromBottom: Variants = {
+  hidden: { y: 50, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.7, ease: EASE, delay: 0.2 },
+  },
 }
 
 /* ============================================================
@@ -66,9 +59,8 @@ function useGlitchTypewriter(text: string, startDelay = 300) {
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
-  // Store our own ScrollTrigger instances so cleanup is isolated
   const stInstances = useRef<STType[]>([])
-  const { displayed, isDone } = useGlitchTypewriter(FULL_TEXT, 600)
+  const { isIntro } = useIntro()
 
   /* ---- GSAP ScrollTrigger: blur + scale on scroll ---- */
   useEffect(() => {
@@ -86,7 +78,6 @@ export default function Hero() {
       const contentEl = contentRef.current
       if (!heroEl || !contentEl) return
 
-      // Content: blur + scale down as user scrolls out
       const st1 = gsap.to(contentEl, {
         filter: 'blur(18px)',
         scale: 0.88,
@@ -100,7 +91,6 @@ export default function Hero() {
         },
       }).scrollTrigger
 
-      // Video: slow Ken-Burns zoom for parallax depth
       const st2 = gsap.to('.hero-video', {
         scale: 1.08,
         ease: 'none',
@@ -112,7 +102,6 @@ export default function Hero() {
         },
       }).scrollTrigger
 
-      // Store only our instances
       if (st1) stInstances.current.push(st1)
       if (st2) stInstances.current.push(st2)
     }
@@ -121,13 +110,12 @@ export default function Hero() {
 
     return () => {
       mounted = false
-      // Kill only Hero's own ScrollTriggers
       stInstances.current.forEach(st => st.kill())
       stInstances.current = []
     }
   }, [])
 
-  // (Framer Motion animate props handle entrance — no extra useAnimation needed)
+  const textVisible = !isIntro
 
   return (
     <section
@@ -179,124 +167,92 @@ export default function Hero() {
         }}
       />
 
-      {/* ---- Content ---- */}
+      {/* ---- Cinematic Content (appears after intro) ---- */}
       <div
         ref={contentRef}
-        className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center"
-        style={{ willChange: 'filter, transform, opacity' }}
+        className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center overflow-hidden"
+        style={{ willChange: 'filter, transform, opacity', paddingTop: '72px' }}
       >
-        {/* Tactical badge */}
-        <motion.div
-          className="inline-flex items-center gap-2 tactical-tag mb-6"
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#ff5a00] animate-pulse" />
-          <span>93 ОКРЕМИЙ ПРОТИТАНКОВИЙ БАТАЛЬЙОН</span>
-        </motion.div>
 
-        {/* Glitch Typewriter H1 */}
-        <h1
-          className="hero-title relative text-[clamp(2.8rem,8vw,7.5rem)] font-black tracking-tight leading-[1] text-white uppercase select-none"
-          style={{
-            fontFamily: 'var(--font-oswald)',
-            textShadow: isDone
-              ? '0 0 40px rgba(255,90,0,0.25), 0 2px 30px rgba(0,0,0,0.8)'
-              : '0 0 20px rgba(255,90,0,0.5), 0 0 60px rgba(255,90,0,0.2)',
-            letterSpacing: '-0.01em',
-            minHeight: '1.1em',
-            transition: 'text-shadow 1s ease',
-          }}
-          aria-label={FULL_TEXT}
-        >
-          {/* Glitch text layers */}
-          <span
-            className="relative z-10"
-            data-text={displayed}
-            style={{ display: 'inline-block' }}
+        {/* Line 1 — from LEFT */}
+        <div className="overflow-hidden w-full flex justify-center">
+          <motion.h1
+            variants={fromLeft}
+            initial="hidden"
+            animate={textVisible ? 'visible' : 'hidden'}
+            className="hero-line-1 text-[clamp(1.6rem,4.5vw,4.8rem)] font-black uppercase text-white leading-[1.05]"
+            style={{
+              fontFamily: 'var(--font-oswald)',
+              fontWeight: 900,
+              letterSpacing: '0.04em',
+              textShadow: '0 2px 40px rgba(0,0,0,0.9), 0 0 60px rgba(8,8,8,0.5)',
+            }}
           >
-            {/* Red glitch layer */}
-            {!isDone && (
-              <>
-                <span
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: `${(Math.random() * 6 - 3).toFixed(1)}px`,
-                    color: '#ff3300',
-                    opacity: 0.7,
-                    clipPath: `inset(${Math.floor(Math.random() * 40)}% 0 ${Math.floor(Math.random() * 40)}% 0)`,
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                    filter: 'blur(0.5px)',
-                  }}
-                >
-                  {displayed}
-                </span>
-                <span
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: `${(Math.random() * -4 + 2).toFixed(1)}px`,
-                    color: '#00d4ff',
-                    opacity: 0.4,
-                    clipPath: `inset(${Math.floor(Math.random() * 30 + 30)}% 0 ${Math.floor(Math.random() * 20)}% 0)`,
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                    filter: 'blur(0.3px)',
-                  }}
-                >
-                  {displayed}
-                </span>
-              </>
-            )}
-            {displayed}
-          </span>
+            Зроби свій крок до перемоги
+          </motion.h1>
+        </div>
 
-          {/* Blinking cursor */}
-          {!isDone && (
-            <span
-              className="inline-block ml-1 bg-[#ff5a00]"
-              style={{
-                width: 'clamp(3px, 0.5vw, 6px)',
-                height: '0.9em',
-                verticalAlign: 'middle',
-                animation: 'flicker 0.5s step-end infinite',
-                boxShadow: '0 0 10px rgba(255,90,0,0.8)',
-              }}
-              aria-hidden="true"
-            />
-          )}
-        </h1>
+        {/* Line 2 — from RIGHT */}
+        <div className="overflow-hidden w-full flex justify-center mt-2 md:mt-3">
+          <motion.p
+            variants={fromRight}
+            initial="hidden"
+            animate={textVisible ? 'visible' : 'hidden'}
+            className="hero-line-2 text-[clamp(1rem,2.8vw,2.8rem)] font-semibold uppercase tracking-[0.12em]"
+            style={{
+              fontFamily: 'var(--font-oswald)',
+              fontWeight: 600,
+              color: '#b0b0b0',
+              textShadow: '0 2px 20px rgba(0,0,0,0.8)',
+              letterSpacing: '0.12em',
+            }}
+          >
+            стань частиною батальйону
+          </motion.p>
+        </div>
 
-        {/* Subtitle */}
-        <motion.p
-          className="mt-6 text-[0.7rem] md:text-xs tracking-[0.25em] text-[#8a8a8a] uppercase"
-          style={{ fontFamily: 'var(--font-roboto-mono)' }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isDone ? 1 : 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          Служи з честю. Захищай Україну.
-        </motion.p>
-
-        {/* CTA Button */}
+        {/* Divider accent */}
         <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={textVisible ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+          transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="w-[180px] md:w-[260px] h-px bg-gradient-to-r from-transparent via-[#ff5a00] to-transparent mt-6 mb-5"
+          aria-hidden="true"
+        />
+
+        {/* Line 3 — from TOP */}
+        <div className="overflow-hidden w-full flex justify-center">
+          <motion.p
+            variants={fromTop}
+            initial="hidden"
+            animate={textVisible ? 'visible' : 'hidden'}
+            className="hero-line-3 text-[clamp(0.8rem,2vw,1.6rem)] font-medium uppercase tracking-[0.2em]"
+            style={{
+              fontFamily: 'var(--font-roboto-mono)',
+              fontWeight: 500,
+              color: '#ff5a00',
+              textShadow: '0 0 30px rgba(255,90,0,0.5), 0 2px 10px rgba(0,0,0,0.7)',
+              letterSpacing: '0.2em',
+            }}
+          >
+            пали ворожу броню разом з нами
+          </motion.p>
+        </div>
+
+        {/* CTA Button — from BOTTOM */}
+        <motion.div
+          variants={fromBottom}
+          initial="hidden"
+          animate={textVisible ? 'visible' : 'hidden'}
           className="mt-10"
-          initial={{ opacity: 0, y: 24 }}
-          animate={isDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-          transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <Button
             id="hero-cta"
             className="hero-cta-btn relative overflow-hidden uppercase tracking-[0.2em] font-bold text-white border-0"
             style={{
               fontFamily: 'var(--font-roboto-mono)',
-              fontSize: 'clamp(0.75rem, 1.2vw, 0.9rem)',
-              padding: 'clamp(14px, 2vw, 18px) clamp(32px, 4vw, 56px)',
+              fontSize: 'clamp(0.7rem, 1.1vw, 0.85rem)',
+              padding: 'clamp(14px, 2vw, 18px) clamp(36px, 4vw, 60px)',
               background: 'linear-gradient(135deg, #ff5a00 0%, #e84800 100%)',
               boxShadow: '0 0 30px rgba(255,90,0,0.35), 0 4px 24px rgba(0,0,0,0.5)',
               borderRadius: '2px',
@@ -318,7 +274,7 @@ export default function Hero() {
               }}
             />
             <span className="relative z-10 flex items-center gap-3">
-              Приєднатися
+              Приєднатись
               <span
                 className="inline-block"
                 style={{
@@ -338,8 +294,8 @@ export default function Hero() {
         <motion.div
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
           initial={{ opacity: 0 }}
-          animate={{ opacity: isDone ? 1 : 0 }}
-          transition={{ duration: 1, delay: 1.2 }}
+          animate={textVisible ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 1, delay: 0.8 }}
         >
           <span
             className="text-[0.6rem] tracking-[0.3em] text-[#4a4a4a] uppercase"
