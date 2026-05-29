@@ -155,8 +155,12 @@ export default function Header() {
       {/* ---- FIXED HEADER ---- */}
       <header
         id="site-header"
-        className="fixed top-0 left-0 right-0 z-[9997]"
+        className="fixed top-0 w-full z-[9997]"
         style={{
+          boxSizing: 'border-box',
+          paddingTop: '16px',
+          paddingLeft: 'clamp(16px, 3vw, 48px)',
+          paddingRight: 'clamp(16px, 3vw, 48px)',
           background: scrolled
             ? 'rgba(8,8,8,0.92)'
             : 'linear-gradient(to bottom, rgba(8,8,8,0.75) 0%, transparent 100%)',
@@ -166,10 +170,7 @@ export default function Header() {
           transition: 'background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease',
         }}
       >
-        <div
-          className="flex items-center justify-between px-6 md:px-10 lg:px-16"
-          style={{ height: '72px' }}
-        >
+        <div className="flex items-center justify-between min-h-[60px]">
           {/* ---- BRAND (animates from center to here) ---- */}
           {!isIntro && (
             <motion.div
@@ -314,19 +315,82 @@ export default function Header() {
             <motion.nav
               key="mobile-menu"
               id="mobile-nav"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="overflow-hidden md:hidden"
-              style={{
-                background: 'rgba(8,8,8,0.97)',
-                backdropFilter: 'blur(20px)',
-                borderTop: '1px solid rgba(255,255,255,0.06)',
-              }}
+              initial={{ y: '-100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '-100%' }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed inset-0 h-dvh w-full z-[9999] md:hidden flex flex-col bg-[#080808]"
               aria-label="Мобільна навігація"
             >
-              <div className="flex flex-col px-6 py-6 gap-5">
+              {/* Top Row: Brand & Close Button */}
+              <div 
+                className="flex items-center justify-between min-h-[60px] w-full"
+                style={{
+                  boxSizing: 'border-box',
+                  paddingTop: '16px',
+                  paddingLeft: 'clamp(16px, 3vw, 48px)',
+                  paddingRight: 'clamp(16px, 3vw, 48px)',
+                }}
+              >
+                <div 
+                  className="flex items-center gap-2 cursor-pointer"
+                  onClick={() => {
+                    setMobileOpen(false)
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }}
+                >
+                  <Image
+                    src="/logo_section_Hero.png"
+                    alt="93 ОПТБ Логотип"
+                    width={44}
+                    height={44}
+                    className="object-contain"
+                    style={{ filter: 'drop-shadow(0 0 8px rgba(255,90,0,0.35))' }}
+                  />
+                  <span
+                    className="font-bold text-white leading-none select-none"
+                    style={{
+                      fontFamily: 'var(--font-oswald)',
+                      fontSize: '2rem',
+                      lineHeight: 1,
+                    }}
+                  >
+                    93
+                  </span>
+                  <div className="flex flex-col leading-tight ml-1">
+                    <span
+                      className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
+                      style={{ fontFamily: 'var(--font-oswald)' }}
+                    >
+                      ОКРЕМИЙ
+                    </span>
+                    <span
+                      className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
+                      style={{ fontFamily: 'var(--font-oswald)' }}
+                    >
+                      ПРОТИТАНКОВИЙ
+                    </span>
+                    <span
+                      className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
+                      style={{ fontFamily: 'var(--font-oswald)' }}
+                    >
+                      БАТАЛЬЙОН
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  className="p-2 text-[#ececec]"
+                  onClick={() => setMobileOpen(false)}
+                  aria-label="Закрити меню"
+                  style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                >
+                  <X size={22} />
+                </button>
+              </div>
+
+              {/* Centered links */}
+              <div className="flex flex-col items-center justify-center flex-1 gap-8 my-auto">
                 {NAV_LINKS.map((link, i) => (
                   <motion.button
                     key={link.href}
@@ -334,33 +398,47 @@ export default function Header() {
                       setMobileOpen(false)
                       scrollTo(link.href)
                     }}
-                    className="text-left text-[0.75rem] font-medium tracking-[0.14em] text-[#8a8a8a] uppercase transition-colors duration-200 hover:text-[#ececec]"
-                    style={{ fontFamily: 'var(--font-roboto-mono)', background: 'none', border: 'none', cursor: 'pointer' }}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-center text-[1.5rem] font-bold tracking-[0.2em] text-[#ececec] hover:text-[#ff5a00] uppercase transition-colors duration-200"
+                    style={{ fontFamily: 'var(--font-oswald)', background: 'none', border: 'none', cursor: 'pointer' }}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
                   >
                     {link.label}
                   </motion.button>
                 ))}
+              </div>
+
+              {/* Bottom CTA Button (Elegant margins, tall, blocky like reference) */}
+              <div 
+                className="w-full mt-auto"
+                style={{
+                  boxSizing: 'border-box',
+                  paddingLeft: '16px',
+                  paddingRight: '16px',
+                  paddingBottom: '24px',
+                }}
+              >
                 <motion.button
                   onClick={() => {
                     setMobileOpen(false)
                     scrollTo('#recruiting-form')
                   }}
-                  className="mt-2 text-[0.7rem] font-bold tracking-[0.16em] text-white uppercase"
+                  className="w-full flex items-center justify-center font-bold text-white transition-all duration-200 hover:bg-[#e04f00]"
                   style={{
-                    fontFamily: 'var(--font-roboto-mono)',
-                    background: 'linear-gradient(135deg, #ff5a00 0%, #e84800 100%)',
+                    fontFamily: 'var(--font-sans), sans-serif',
+                    background: '#ff5a00',
                     border: 'none',
-                    padding: '12px 24px',
-                    borderRadius: '2px',
+                    height: '60px',
+                    fontSize: '1.05rem',
+                    letterSpacing: '0.05em',
                     cursor: 'pointer',
-                    boxShadow: '0 0 18px rgba(255,90,0,0.3)',
+                    borderRadius: '0px',
+                    boxShadow: '0 4px 20px rgba(255,90,0,0.15)',
                   }}
-                  initial={{ y: 10, opacity: 0 }}
+                  initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: NAV_LINKS.length * 0.06 + 0.05, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ delay: NAV_LINKS.length * 0.08 + 0.05, ease: [0.16, 1, 0.3, 1] }}
                 >
                   Приєднатися
                 </motion.button>
