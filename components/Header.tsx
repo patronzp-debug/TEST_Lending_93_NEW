@@ -73,20 +73,28 @@ export default function Header() {
             className="fixed inset-0 z-[9998] flex items-center justify-center pointer-events-none"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Dark overlay for splash */}
+            {/* Semi-transparent blurred overlay — hero video shows through */}
             <motion.div
-              className="absolute inset-0 bg-[#080808]"
+              className="absolute inset-0 bg-[#080808]/80 backdrop-blur-md"
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             />
+
+            {/* ---- SINGLE RESPONSIVE BRAND BLOCK ---- */}
+            {/*
+              flex-wrap: на мобільному текст (w-full) переноситься на новий рядок.
+              На desktop (md:) текст w-auto → всі в один рядок.
+              Один DOM-вузол = один layoutId = no Framer Motion conflicts.
+            */}
             <motion.div
               layoutId="brand"
-              className="relative z-10 flex flex-col items-center gap-5"
+              className="relative z-10 flex flex-row flex-wrap items-center justify-center gap-x-5 gap-y-4 px-8 md:flex-nowrap md:justify-start md:gap-x-6 md:px-0"
               style={{ originX: 0.5, originY: 0.5 }}
             >
+              {/* Logo */}
               <motion.div
                 layoutId="brand-logo"
                 style={{ originX: 0.5, originY: 0.5 }}
@@ -94,37 +102,50 @@ export default function Header() {
                 <Image
                   src="/logo_section_Hero.png"
                   alt="93 ОПТБ Логотип"
-                  width={180}
-                  height={180}
+                  width={140}
+                  height={140}
                   priority
-                  className="object-contain drop-shadow-[0_0_40px_rgba(255,90,0,0.5)]"
-                  style={{ filter: 'drop-shadow(0 0 40px rgba(255,90,0,0.45))' }}
+                  className="object-contain"
+                  style={{
+                    filter: 'drop-shadow(0 0 40px rgba(255,90,0,0.45))',
+                    width: 'clamp(90px, 14vw, 140px)',
+                    height: 'auto',
+                  }}
                 />
               </motion.div>
+
+              {/* Large "93" numeral — визуально висотою щита */}
+              <motion.span
+                layoutId="brand-number"
+                className="font-bold text-white leading-none select-none"
+                style={{
+                  fontFamily: 'var(--font-oswald)',
+                  fontSize: 'clamp(5.5rem, 14vw, 10rem)',
+                  lineHeight: 1,
+                  textShadow: '0 0 60px rgba(255,255,255,0.12)',
+                }}
+              >
+                93
+              </motion.span>
+
+              {/* Text block — w-full на mobile → новий рядок; w-auto на md → inline */}
               <motion.div
                 layoutId="brand-text"
-                className="flex flex-col items-center"
+                className="flex flex-col items-center leading-snug w-full md:w-auto md:items-start"
               >
-                <motion.p
-                  className="text-[clamp(1.1rem,3vw,1.8rem)] font-bold tracking-[0.18em] text-[#ececec] uppercase text-center"
-                  style={{
-                    fontFamily: 'var(--font-oswald)',
-                    textShadow: '0 0 30px rgba(255,90,0,0.4), 0 2px 20px rgba(0,0,0,0.8)',
-                    letterSpacing: '0.18em',
-                  }}
-                >
-                  93 окремий протитанковий
-                </motion.p>
-                <motion.p
-                  className="text-[clamp(1.1rem,3vw,1.8rem)] font-bold tracking-[0.18em] text-[#ff5a00] uppercase text-center"
-                  style={{
-                    fontFamily: 'var(--font-oswald)',
-                    textShadow: '0 0 30px rgba(255,90,0,0.6)',
-                    letterSpacing: '0.18em',
-                  }}
-                >
-                  батальйон
-                </motion.p>
+                {(['ОКРЕМИЙ', 'ПРОТИТАНКОВИЙ', 'БАТАЛЬЙОН'] as const).map((word) => (
+                  <span
+                    key={word}
+                    className="block font-bold uppercase tracking-[0.2em] text-[#ececec]"
+                    style={{
+                      fontFamily: 'var(--font-oswald)',
+                      fontSize: 'clamp(0.9rem, 2.2vw, 1.4rem)',
+                      textShadow: '0 2px 20px rgba(0,0,0,0.8)',
+                    }}
+                  >
+                    {word}
+                  </span>
+                ))}
               </motion.div>
             </motion.div>
           </motion.div>
@@ -153,7 +174,7 @@ export default function Header() {
           {!isIntro && (
             <motion.div
               layoutId="brand"
-              className="flex items-center gap-3 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
               style={{ originX: 0, originY: 0.5 }}
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
@@ -168,18 +189,36 @@ export default function Header() {
                 />
               </motion.div>
 
-              <motion.div layoutId="brand-text" className="flex flex-col leading-tight">
+              <motion.span
+                layoutId="brand-number"
+                className="font-bold text-white leading-none select-none"
+                style={{
+                  fontFamily: 'var(--font-oswald)',
+                  fontSize: '2rem',
+                  lineHeight: 1,
+                }}
+              >
+                93
+              </motion.span>
+
+              <motion.div layoutId="brand-text" className="flex flex-col leading-tight ml-1">
                 <span
-                  className="text-[0.65rem] font-semibold tracking-[0.15em] text-[#ececec] uppercase"
+                  className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
                   style={{ fontFamily: 'var(--font-oswald)' }}
                 >
-                  93 окремий протитанковий
+                  ОКРЕМИЙ
                 </span>
                 <span
-                  className="text-[0.65rem] font-semibold tracking-[0.15em] text-[#ff5a00] uppercase"
+                  className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
                   style={{ fontFamily: 'var(--font-oswald)' }}
                 >
-                  батальйон
+                  ПРОТИТАНКОВИЙ
+                </span>
+                <span
+                  className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
+                  style={{ fontFamily: 'var(--font-oswald)' }}
+                >
+                  БАТАЛЬЙОН
                 </span>
               </motion.div>
             </motion.div>
