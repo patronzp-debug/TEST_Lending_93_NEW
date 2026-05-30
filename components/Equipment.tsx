@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Crosshair, Zap, Target, Shield } from 'lucide-react'
 import type { ScrollTrigger as STType } from 'gsap/ScrollTrigger'
@@ -19,6 +20,7 @@ interface EquipmentItem {
   icon: React.ElementType
   /** Asymmetric grid: 'wide' = 2 cols, 'tall' = 2 rows, 'standard' */
   span: 'wide' | 'tall' | 'standard'
+  image: string
 }
 
 const EQUIPMENT: EquipmentItem[] = [
@@ -31,6 +33,7 @@ const EQUIPMENT: EquipmentItem[] = [
     weaponClass: 'ПТРК',
     icon: Crosshair,
     span: 'wide',
+    image: '/PTRK_STUGNA.png',
   },
   {
     id: 'eq2',
@@ -41,6 +44,7 @@ const EQUIPMENT: EquipmentItem[] = [
     weaponClass: 'БПЛА',
     icon: Zap,
     span: 'tall',
+    image: '/FPV_DRON.png',
   },
   {
     id: 'eq3',
@@ -51,6 +55,7 @@ const EQUIPMENT: EquipmentItem[] = [
     weaponClass: 'ПТРК',
     icon: Target,
     span: 'standard',
+    image: '/FGM-JACELIN.png',
   },
   {
     id: 'eq4',
@@ -61,6 +66,7 @@ const EQUIPMENT: EquipmentItem[] = [
     weaponClass: 'ББМ',
     icon: Shield,
     span: 'wide',
+    image: '/БМП_М2_BREADLEY.png',
   },
 ]
 
@@ -118,8 +124,6 @@ interface CardProps {
 }
 
 function EquipmentCard({ item, index }: CardProps) {
-  const Icon = item.icon
-
   return (
     /*
      * GSAP owns the *wrapper* (entrance: opacity, y, rotateX, scale).
@@ -196,85 +200,19 @@ function EquipmentCard({ item, index }: CardProps) {
           <motion.div
             style={{
               position: 'absolute', inset: 0,
-              display: 'flex', flexDirection: 'column',
-              alignItems: 'center', justifyContent: 'center', gap: '12px',
               willChange: 'transform',
             }}
-            whileHover={{ scale: 1.06, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Icon
-              size={item.span === 'wide' ? 40 : 32}
-              color="rgba(255,90,0,0.2)"
-              strokeWidth={1}
-              aria-hidden="true"
+            <Image
+              src={item.image}
+              alt={item.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
             />
-            {/* Crosshair grid lines */}
-            <svg
-              aria-hidden="true"
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.06 }}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#ff5a00" strokeWidth="0.5" />
-              <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#ff5a00" strokeWidth="0.5" />
-              <circle cx="50%" cy="50%" r="18%" stroke="#ff5a00" strokeWidth="0.5" fill="none" />
-            </svg>
           </motion.div>
-
-          {/* Scan-line texture overlay */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: 'absolute', inset: 0, pointerEvents: 'none',
-              backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.25) 3px, rgba(0,0,0,0.25) 4px)',
-              opacity: 0.5,
-            }}
-          />
-
-          {/* Weapon class badge */}
-          <div
-            style={{
-              position: 'absolute', top: '12px', left: '12px',
-              fontFamily: 'var(--font-roboto-mono)',
-              fontSize: '0.55rem',
-              letterSpacing: '0.2em',
-              color: '#ff5a00',
-              background: 'rgba(8,8,8,0.8)',
-              border: '1px solid rgba(255,90,0,0.3)',
-              padding: '2px 8px',
-              backdropFilter: 'blur(4px)',
-            }}
-          >
-            {item.weaponClass}
-          </div>
-
-          {/* Origin badge */}
-          <div
-            style={{
-              position: 'absolute', top: '12px', right: '12px',
-              fontFamily: 'var(--font-roboto-mono)',
-              fontSize: '0.5rem',
-              letterSpacing: '0.15em',
-              color: '#3a3a3a',
-              background: 'rgba(8,8,8,0.7)',
-              padding: '2px 8px',
-            }}
-          >
-            {item.origin}
-          </div>
-
-          {/* Index */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: 'absolute', bottom: '10px', right: '14px',
-              fontFamily: 'var(--font-roboto-mono)',
-              fontSize: '0.5rem',
-              color: '#2a2a2a',
-              letterSpacing: '0.1em',
-            }}
-          >
-            0{index + 1} / 0{EQUIPMENT.length}
-          </div>
         </div>
 
         {/* ── Text content ── */}

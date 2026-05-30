@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 import { Shield, Crosshair, Users } from 'lucide-react'
 import type { ScrollTrigger as STType } from 'gsap/ScrollTrigger'
@@ -86,6 +87,7 @@ interface MediaBlock {
   /** Slight horizontal offset to create asymmetry */
   marginLeft?: string
   marginRight?: string
+  image: string
 }
 
 const MEDIA_BLOCKS: MediaBlock[] = [
@@ -96,6 +98,7 @@ const MEDIA_BLOCKS: MediaBlock[] = [
     yRange: -55,
     aspectRatio: '4/3',
     marginRight: '10%',
+    image: '/education_comand_ABOUT.webp',
   },
   {
     id: 'mb2',
@@ -104,6 +107,7 @@ const MEDIA_BLOCKS: MediaBlock[] = [
     yRange: -25,
     aspectRatio: '1/1',
     marginLeft: '20%',
+    image: '/battalion%20weapons_ABOUT.webp',
   },
   {
     id: 'mb3',
@@ -112,6 +116,7 @@ const MEDIA_BLOCKS: MediaBlock[] = [
     yRange: -70,
     aspectRatio: '16/9',
     marginRight: '5%',
+    image: '/comand_ABOUT.webp',
   },
 ]
 
@@ -380,11 +385,11 @@ export default function About() {
             }}
           >
             {MEDIA_BLOCKS.map((block, i) => {
-              const Icon = block.icon
               return (
                 <motion.div
                   key={block.id}
                   id={`about-media-${block.id}`}
+                  className="group"
                   style={{
                     position: 'relative',
                     aspectRatio: block.aspectRatio,
@@ -411,56 +416,14 @@ export default function About() {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                 >
-                  {/* Top-edge orange line accent */}
-                  <div
-                    aria-hidden="true"
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: '10%',
-                      right: '10%',
-                      height: '1px',
-                      background:
-                        'linear-gradient(90deg, transparent, rgba(255,90,0,0.4), transparent)',
-                    }}
+                  {/* Next.js responsive image */}
+                  <Image
+                    src={block.image}
+                    alt={block.label}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-
-                  {/* Icon */}
-                  <Icon
-                    size={28}
-                    color="rgba(255,90,0,0.35)"
-                    strokeWidth={1.5}
-                    aria-hidden="true"
-                  />
-
-                  {/* Label */}
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-roboto-mono)',
-                      fontSize: '0.6rem',
-                      letterSpacing: '0.2em',
-                      color: '#3a3a3a',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    {block.label}
-                  </span>
-
-                  {/* Corner index number */}
-                  <span
-                    aria-hidden="true"
-                    style={{
-                      position: 'absolute',
-                      bottom: '12px',
-                      right: '16px',
-                      fontFamily: 'var(--font-roboto-mono)',
-                      fontSize: '0.55rem',
-                      color: '#2a2a2a',
-                      letterSpacing: '0.1em',
-                    }}
-                  >
-                    0{i + 1} / 03
-                  </span>
                 </motion.div>
               )
             })}
