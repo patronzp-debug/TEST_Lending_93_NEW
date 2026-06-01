@@ -1,0 +1,192 @@
+/* ============================================================
+   AnimatedList.css — Mobile Vacancies accordion list
+   Adapted from React Bits AnimatedList, styled for 93 OPTB
+   ============================================================ */
+
+/* ── Scroll container ── */
+.animated-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ── Single item wrapper ── */
+.animated-list-item {
+  position: relative;
+  border-bottom: 1px solid #1e1e1e;
+  transition: background 0.25s ease;
+  overflow: hidden;
+}
+
+.animated-list-item:first-child {
+  border-top: 1px solid #1e1e1e;
+}
+
+.animated-list-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ── Item header (clickable row) ── */
+.animated-list-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Priority dot indicator ── */
+.animated-list-item-priority {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Title + meta group ── */
+.animated-list-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.animated-list-item-title {
+  font-family: var(--font-oswald);
+  font-size: clamp(1.05rem, 4.5vw, 1.25rem);
+  font-weight: 700;
+  color: #ececec;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.animated-list-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+
+.animated-list-item-category {
+  font-family: var(--font-roboto-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  color: #ff5a00;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 90, 0, 0.3);
+  background: rgba(255, 90, 0, 0.06);
+  padding: 2px 8px;
+  line-height: 1.8;
+  white-space: nowrap;
+}
+
+.animated-list-item-priority-label {
+  font-family: var(--font-roboto-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* ── Chevron icon ── */
+.animated-list-item-chevron {
+  flex-shrink: 0;
+  color: #4a4a4a;
+  transition: color 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animated-list-item-chevron.open {
+  color: #ff5a00;
+  transform: rotate(180deg);
+}
+
+/* ── Expandable body ── */
+.animated-list-item-body {
+  overflow: hidden;
+}
+
+.animated-list-item-body-inner {
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Description text ── */
+.animated-list-item-description {
+  font-family: var(--font-roboto-mono);
+  font-size: 0.72rem;
+  color: #6a6a6a;
+  line-height: 1.75;
+  letter-spacing: 0.03em;
+}
+
+/* ── Requirement row ── */
+.animated-list-item-requirement {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-left: 2px solid rgba(255, 90, 0, 0.35);
+  background: rgba(255, 90, 0, 0.03);
+}
+
+.animated-list-item-requirement-label {
+  font-family: var(--font-roboto-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: #3a3a3a;
+  text-transform: uppercase;
+}
+
+.animated-list-item-requirement-text {
+  font-family: var(--font-roboto-mono);
+  font-size: 0.7rem;
+  color: #8a8a8a;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+/* ── Apply button ── */
+.animated-list-apply-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 24px;
+  background: #ff5a00;
+  border: none;
+  border-radius: 1px;
+  color: #fff;
+  font-family: var(--font-roboto-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.animated-list-apply-btn:hover,
+.animated-list-apply-btn:focus-visible {
+  background: #e84800;
+  box-shadow: 0 0 24px rgba(255, 90, 0, 0.45);
+  transform: translateY(-1px);
+}
+
+.animated-list-apply-btn:active {
+  transform: translateY(0);
+}
