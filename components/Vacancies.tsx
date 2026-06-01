@@ -191,26 +191,31 @@ const VACANCY_CATEGORIES: VacancyCategory[] = [
   {
     id: 'cat-drivers',
     categoryName: 'Водії та Техніка',
+    icon: '/driver.svg',
     items: VACANCIES.filter(v => v.category === 'Водії та Техніка'),
   },
   {
     id: 'cat-medicine',
     categoryName: 'Медицина',
+    icon: '/medic.svg',
     items: VACANCIES.filter(v => v.category === 'Медицина'),
   },
   {
     id: 'cat-combat',
     categoryName: 'Бойові Спеціальності',
+    icon: '/crosshair.svg',
     items: VACANCIES.filter(v => v.category === 'Бойові Спеціальності'),
   },
   {
     id: 'cat-tech',
     categoryName: 'Спеціалісти (БПЛА/IT)',
+    icon: '/drone.svg',
     items: VACANCIES.filter(v => v.category === 'БПЛА / IT'),
   },
   {
     id: 'cat-admin',
     categoryName: 'Адміністрація та Логістика',
+    icon: '/accountant1.svg',
     items: VACANCIES.filter(v => v.category === 'Адміністрація'),
   },
 ]
@@ -289,8 +294,8 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
     vacancy.priority === 'КРИТИЧНО'
       ? '#ff2200'
       : vacancy.priority === 'ТЕРМІНОВО'
-      ? '#ff5a00'
-      : '#8a8a8a'
+        ? '#ff5a00'
+        : '#8a8a8a'
 
   return (
     <motion.article

@@ -31,6 +31,8 @@ export interface VacancyCategory {
   id: string
   /** Display name shown in the category header */
   categoryName: string
+  /** Path to SVG icon in /public (e.g. '/driver.svg') */
+  icon?: string
   /** Total count for the badge */
   count?: number
   /** Vacancy items belonging to this category */
@@ -203,8 +205,19 @@ function CategoryBlock({
         aria-controls={`catbody-${category.id}`}
         id={`cattrigger-${category.id}`}
       >
-        {/* Icon placeholder — will be replaced with SVG later */}
-        <div className="category-block-icon" aria-hidden="true" />
+        {/* Category icon */}
+        <div className="category-block-icon" aria-hidden="true">
+          {category.icon && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={category.icon}
+              alt=""
+              width={18}
+              height={18}
+              className="w-[18px] h-[18px] object-contain"
+            />
+          )}
+        </div>
 
         {/* Name + count */}
         <div className="category-block-info">
