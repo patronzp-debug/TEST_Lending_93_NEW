@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ArrowUpRight } from 'lucide-react'
-import AnimatedList, { type VacancyItem } from '@/components/AnimatedList'
+import AnimatedList, { type VacancyItem, type VacancyCategory } from '@/components/AnimatedList'
 
 /* ============================================================
    DATA — Ukrainian only per spec_theme.md
@@ -17,6 +17,7 @@ interface Vacancy extends VacancyItem {
   priority: 'КРИТИЧНО' | 'ТЕРМІНОВО' | 'НАБІР'
 }
 
+/* ── Flat list — used by desktop Bento Grid ── */
 const VACANCIES: Vacancy[] = [
   /* ── Водії та Техніка ── */
   {
@@ -79,7 +80,6 @@ const VACANCIES: Vacancy[] = [
     span: 'standard',
     priority: 'ТЕРМІНОВО',
   },
-
   /* ── Медицина ── */
   {
     id: 'v7',
@@ -111,7 +111,6 @@ const VACANCIES: Vacancy[] = [
     span: 'standard',
     priority: 'ТЕРМІНОВО',
   },
-
   /* ── Бойові Спеціальності ── */
   {
     id: 'v10',
@@ -143,7 +142,6 @@ const VACANCIES: Vacancy[] = [
     span: 'standard',
     priority: 'КРИТИЧНО',
   },
-
   /* ── Спеціалісти БПЛА/IT ── */
   {
     id: 'v13',
@@ -175,7 +173,6 @@ const VACANCIES: Vacancy[] = [
     span: 'standard',
     priority: 'НАБІР',
   },
-
   /* ── Адміністрація та Логістика ── */
   {
     id: 'v16',
@@ -186,6 +183,35 @@ const VACANCIES: Vacancy[] = [
       'Ведення фінансово-господарської документації підрозділу, нарахування грошового забезпечення, облік матеріальних цінностей. Підготовка звітності відповідно до вимог Міністерства оборони України.',
     span: 'wide',
     priority: 'НАБІР',
+  },
+]
+
+/* ── Grouped — used by mobile AnimatedList (nested accordion) ── */
+const VACANCY_CATEGORIES: VacancyCategory[] = [
+  {
+    id: 'cat-drivers',
+    categoryName: 'Водії та Техніка',
+    items: VACANCIES.filter(v => v.category === 'Водії та Техніка'),
+  },
+  {
+    id: 'cat-medicine',
+    categoryName: 'Медицина',
+    items: VACANCIES.filter(v => v.category === 'Медицина'),
+  },
+  {
+    id: 'cat-combat',
+    categoryName: 'Бойові Спеціальності',
+    items: VACANCIES.filter(v => v.category === 'Бойові Спеціальності'),
+  },
+  {
+    id: 'cat-tech',
+    categoryName: 'Спеціалісти (БПЛА/IT)',
+    items: VACANCIES.filter(v => v.category === 'БПЛА / IT'),
+  },
+  {
+    id: 'cat-admin',
+    categoryName: 'Адміністрація та Логістика',
+    items: VACANCIES.filter(v => v.category === 'Адміністрація'),
   },
 ]
 
@@ -551,7 +577,7 @@ export default function Vacancies() {
             MOBILE: Animated accordion list (below md)
             ═══════════════════════════════════════════════════════ */}
         <div className="block md:hidden">
-          <AnimatedList items={VACANCIES} />
+          <AnimatedList categories={VACANCY_CATEGORIES} />
         </div>
 
         {/* ── Bottom CTA bar — shared ── */}

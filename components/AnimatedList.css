@@ -1,41 +1,157 @@
 /* ============================================================
-   AnimatedList.css — Mobile Vacancies accordion list
-   Adapted from React Bits AnimatedList, styled for 93 OPTB
+   AnimatedList.css — Mobile Vacancies nested accordion
+   Level 1: Category blocks  |  Level 2: Vacancy rows
+   Adapted for 93 OPTB design system
    ============================================================ */
 
-/* ── Scroll container ── */
+/* ── Outer container ── */
 .animated-list-container {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 8px;
   width: 100%;
+}
+
+/* ================================================================
+   LEVEL 1 — CATEGORY BLOCKS
+   ================================================================ */
+
+.category-block {
   overflow: hidden;
+  border: 1px solid #1e1e1e;
+  transition: border-color 0.3s ease;
 }
 
-/* ── Single item wrapper ── */
-.animated-list-item {
-  position: relative;
-  border-bottom: 1px solid #1e1e1e;
-  transition: background 0.25s ease;
-  overflow: hidden;
+.category-block:has(.category-block-header.open) {
+  border-color: rgba(255, 90, 0, 0.25);
 }
 
-.animated-list-item:first-child {
-  border-top: 1px solid #1e1e1e;
-}
-
-.animated-list-item:hover {
-  background: rgba(255, 255, 255, 0.02);
-}
-
-/* ── Item header (clickable row) ── */
-.animated-list-item-header {
+/* ── Category header button ── */
+.category-block-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 14px;
   width: 100%;
-  padding: 18px 0;
+  padding: 18px 16px;
+  background: #111111;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.25s ease;
+  position: relative;
+}
+
+/* Left accent bar on open */
+.category-block-header.open {
+  background: #141414;
+}
+
+.category-block-header.open::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ff5a00;
+}
+
+.category-block-header:active {
+  background: #181818;
+}
+
+/* ── Icon placeholder (6×6 block, reserved for future SVG) ── */
+.category-block-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border: 1px solid #2a2a2a;
+  background: rgba(255, 90, 0, 0.04);
+  border-radius: 2px;
+}
+
+/* ── Name + count ── */
+.category-block-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.category-block-name {
+  font-family: var(--font-oswald);
+  font-size: clamp(1rem, 4.2vw, 1.15rem);
+  font-weight: 700;
+  color: #ececec;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+.category-block-header.open .category-block-name {
+  color: #ffffff;
+}
+
+.category-block-count {
+  font-family: var(--font-roboto-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  color: #3a3a3a;
+  text-transform: uppercase;
+}
+
+.category-block-header.open .category-block-count {
+  color: rgba(255, 90, 0, 0.6);
+}
+
+/* ── Chevron ── */
+.category-block-chevron {
+  flex-shrink: 0;
+  color: #3a3a3a;
+  transition: color 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-block-chevron.open {
+  color: #ff5a00;
+  transform: rotate(180deg);
+}
+
+/* ── Category body wrapper ── */
+.category-block-body {
+  overflow: hidden;
+}
+
+.category-block-body-inner {
+  background: transparent;
+  border-top: 1px solid #1a1a1a;
+}
+
+/* ================================================================
+   LEVEL 2 — VACANCY ROWS (inside open category)
+   ================================================================ */
+
+.vacancy-row {
+  border-bottom: 1px solid #181818;
+  transition: background 0.2s ease;
+}
+
+.vacancy-row:last-child {
+  border-bottom: none;
+}
+
+.vacancy-row:hover {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+/* ── Vacancy row trigger ── */
+.vacancy-row-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px 14px 20px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -43,109 +159,98 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Priority dot indicator ── */
-.animated-list-item-priority {
-  width: 6px;
-  height: 6px;
+/* ── Priority dot (smaller than category level) ── */
+.vacancy-row-dot {
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   flex-shrink: 0;
-  margin-top: 2px;
 }
 
-/* ── Title + meta group ── */
-.animated-list-item-info {
+/* ── Title + priority label ── */
+.vacancy-row-info {
   flex: 1;
   min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.animated-list-item-title {
+.vacancy-row-title {
   font-family: var(--font-oswald);
-  font-size: clamp(1.05rem, 4.5vw, 1.25rem);
-  font-weight: 700;
-  color: #ececec;
+  font-size: clamp(0.9rem, 3.8vw, 1.05rem);
+  font-weight: 600;
+  color: #c8c8c8;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 100%;
 }
 
-.animated-list-item-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 5px;
-  flex-wrap: wrap;
-}
-
-.animated-list-item-category {
+.vacancy-row-priority {
   font-family: var(--font-roboto-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.18em;
-  color: #ff5a00;
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  border: 1px solid rgba(255, 90, 0, 0.3);
-  background: rgba(255, 90, 0, 0.06);
-  padding: 2px 8px;
-  line-height: 1.8;
+  opacity: 0.8;
+  flex-shrink: 0;
   white-space: nowrap;
 }
 
-.animated-list-item-priority-label {
-  font-family: var(--font-roboto-mono);
-  font-size: 0.52rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.75;
-}
-
-/* ── Chevron icon ── */
-.animated-list-item-chevron {
+/* ── Chevron (vacancy level) ── */
+.vacancy-row-chevron {
   flex-shrink: 0;
-  color: #4a4a4a;
+  color: #2e2e2e;
   transition: color 0.25s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.animated-list-item-chevron.open {
+.vacancy-row-chevron.open {
   color: #ff5a00;
   transform: rotate(180deg);
 }
 
-/* ── Expandable body ── */
-.animated-list-item-body {
+/* ── Vacancy body ── */
+.vacancy-row-body {
   overflow: hidden;
 }
 
-.animated-list-item-body-inner {
-  padding-bottom: 20px;
+.vacancy-row-body-inner {
+  padding: 4px 16px 20px 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
+
+/* ================================================================
+   SHARED INNER ELEMENTS (description, requirement, apply btn)
+   ================================================================ */
 
 /* ── Description text ── */
 .animated-list-item-description {
   font-family: var(--font-roboto-mono);
-  font-size: 0.72rem;
-  color: #6a6a6a;
+  font-size: 0.7rem;
+  color: #5a5a5a;
   line-height: 1.75;
   letter-spacing: 0.03em;
 }
 
-/* ── Requirement row ── */
+/* ── Requirement block ── */
 .animated-list-item-requirement {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 12px 14px;
-  border-left: 2px solid rgba(255, 90, 0, 0.35);
+  padding: 10px 12px;
+  border-left: 2px solid rgba(255, 90, 0, 0.3);
   background: rgba(255, 90, 0, 0.03);
 }
 
 .animated-list-item-requirement-label {
   font-family: var(--font-roboto-mono);
-  font-size: 0.5rem;
+  font-size: 0.48rem;
   letter-spacing: 0.2em;
   color: #3a3a3a;
   text-transform: uppercase;
@@ -153,8 +258,8 @@
 
 .animated-list-item-requirement-text {
   font-family: var(--font-roboto-mono);
-  font-size: 0.7rem;
-  color: #8a8a8a;
+  font-size: 0.68rem;
+  color: #7a7a7a;
   letter-spacing: 0.04em;
   line-height: 1.5;
 }
@@ -166,13 +271,13 @@
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 13px 24px;
+  padding: 12px 24px;
   background: #ff5a00;
   border: none;
   border-radius: 1px;
   color: #fff;
   font-family: var(--font-roboto-mono);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   cursor: pointer;
@@ -183,7 +288,7 @@
 .animated-list-apply-btn:hover,
 .animated-list-apply-btn:focus-visible {
   background: #e84800;
-  box-shadow: 0 0 24px rgba(255, 90, 0, 0.45);
+  box-shadow: 0 0 22px rgba(255, 90, 0, 0.4);
   transform: translateY(-1px);
 }
 

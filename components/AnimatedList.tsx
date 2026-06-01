@@ -1,9 +1,10 @@
 'use client'
 
 /**
- * AnimatedList — Mobile accordion vacancy list
- * Inspired by React Bits AnimatedList, adapted for 93 OPTB design system.
- * Used exclusively for mobile (<md breakpoint). Desktop keeps Bento Grid.
+ * AnimatedList — Mobile nested accordion (2-level)
+ * Level 1: Categories (5 groups) — dark block headers with icon placeholder + chevron
+ * Level 2: Vacancies inside a category — compact rows with expand/collapse
+ * Desktop Bento Grid is NOT affected by this component.
  */
 
 import { useRef, useState } from 'react'
@@ -25,12 +26,15 @@ export interface VacancyItem {
   priority: 'КРИТИЧНО' | 'ТЕРМІНОВО' | 'НАБІР'
 }
 
-interface AnimatedItemProps {
-  item: VacancyItem
-  index: number
-  isOpen: boolean
-  onToggle: () => void
-  inView: boolean
+export interface VacancyCategory {
+  /** Unique slug used as accordion key */
+  id: string
+  /** Display name shown in the category header */
+  categoryName: string
+  /** Total count for the badge */
+  count?: number
+  /** Vacancy items belonging to this category */
+  items: VacancyItem[]
 }
 
 /* ============================================================
@@ -44,10 +48,16 @@ function getPriorityColor(priority: VacancyItem['priority']): string {
 }
 
 /* ============================================================
-   SINGLE ANIMATED ITEM — accordion row
+   LEVEL-2: SINGLE VACANCY ROW (inner accordion item)
    ============================================================ */
 
-function AnimatedItem({ item, index, isOpen, onToggle, inView }: AnimatedItemProps) {
+interface VacancyRowProps {
+  item: VacancyItem
+  isOpen: boolean
+  onToggle: () => void
+}
+
+function VacancyRow({ item, isOpen, onToggle }: VacancyRowProps) {
   const priorityColor = getPriorityColor(item.priority)
 
   function handleApply(e: React.MouseEvent) {
@@ -59,86 +69,73 @@ function AnimatedItem({ item, index, isOpen, onToggle, inView }: AnimatedItemPro
   }
 
   return (
-    <motion.div
-      className="animated-list-item"
-      /* stagger entrance from below */
-      initial={{ opacity: 0, y: 32 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-      transition={{
-        duration: 0.55,
-        delay: 0.1 + index * 0.08,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-    >
-      {/* ── Header / trigger row ── */}
+    <div className="vacancy-row">
+      {/* ── Trigger ── */}
       <button
-        className="animated-list-item-header"
+        className="vacancy-row-header"
         onClick={onToggle}
         aria-expanded={isOpen}
-        aria-controls={`vacancy-body-${item.id}`}
-        id={`vacancy-trigger-${item.id}`}
+        aria-controls={`vbody-${item.id}`}
+        id={`vtrigger-${item.id}`}
       >
         {/* Priority dot */}
         <span
-          className="animated-list-item-priority"
+          className="vacancy-row-dot"
           aria-hidden="true"
-          style={{ background: priorityColor, boxShadow: `0 0 6px ${priorityColor}88` }}
+          style={{ background: priorityColor, boxShadow: `0 0 5px ${priorityColor}99` }}
         />
 
-        {/* Title + meta */}
-        <div className="animated-list-item-info">
-          <span className="animated-list-item-title">{item.title}</span>
-          <div className="animated-list-item-meta">
-            <span className="animated-list-item-category">{item.category}</span>
-            <span
-              className="animated-list-item-priority-label"
-              style={{ color: priorityColor }}
-            >
-              ● {item.priority}
-            </span>
-          </div>
+        {/* Title + priority label */}
+        <div className="vacancy-row-info">
+          <span className="vacancy-row-title">{item.title}</span>
+          <span
+            className="vacancy-row-priority"
+            style={{ color: priorityColor }}
+          >
+            {item.priority}
+          </span>
         </div>
 
         {/* Chevron */}
         <ChevronDown
-          size={18}
-          className={`animated-list-item-chevron${isOpen ? ' open' : ''}`}
+          size={15}
+          className={`vacancy-row-chevron${isOpen ? ' open' : ''}`}
           aria-hidden="true"
         />
       </button>
 
-      {/* ── Expandable body ── */}
+      {/* ── Body ── */}
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
-            id={`vacancy-body-${item.id}`}
+            id={`vbody-${item.id}`}
             role="region"
-            aria-labelledby={`vacancy-trigger-${item.id}`}
-            className="animated-list-item-body"
-            key="body"
+            aria-labelledby={`vtrigger-${item.id}`}
+            className="vacancy-row-body"
+            key="vbody"
             initial={{ height: 0, opacity: 0 }}
             animate={{
               height: 'auto',
               opacity: 1,
               transition: {
-                height: { duration: 0.38, ease: [0.16, 1, 0.3, 1] },
-                opacity: { duration: 0.28, delay: 0.06 },
+                height: { duration: 0.36, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.24, delay: 0.05 },
               },
             }}
             exit={{
               height: 0,
               opacity: 0,
               transition: {
-                height: { duration: 0.3, ease: [0.4, 0, 1, 1] },
-                opacity: { duration: 0.18 },
+                height: { duration: 0.26, ease: [0.4, 0, 1, 1] },
+                opacity: { duration: 0.14 },
               },
             }}
           >
-            <div className="animated-list-item-body-inner">
+            <div className="vacancy-row-body-inner">
               {/* Description */}
               <p className="animated-list-item-description">{item.description}</p>
 
-              {/* Requirement block */}
+              {/* Requirement */}
               <div className="animated-list-item-requirement">
                 <span className="animated-list-item-requirement-label">Вимоги</span>
                 <span className="animated-list-item-requirement-text">{item.requirement}</span>
@@ -158,25 +155,135 @@ function AnimatedItem({ item, index, isOpen, onToggle, inView }: AnimatedItemPro
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  )
+}
+
+/* ============================================================
+   LEVEL-1: CATEGORY BLOCK (outer accordion item)
+   ============================================================ */
+
+interface CategoryBlockProps {
+  category: VacancyCategory
+  catIndex: number
+  isCatOpen: boolean
+  onCatToggle: () => void
+  inView: boolean
+}
+
+function CategoryBlock({
+  category,
+  catIndex,
+  isCatOpen,
+  onCatToggle,
+  inView,
+}: CategoryBlockProps) {
+  const [openVacancyId, setOpenVacancyId] = useState<string | null>(null)
+
+  function handleVacancyToggle(id: string) {
+    setOpenVacancyId(prev => (prev === id ? null : id))
+  }
+
+  return (
+    <motion.div
+      className="category-block"
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+      transition={{
+        duration: 0.5,
+        delay: 0.08 + catIndex * 0.07,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+    >
+      {/* ── Category header (Level-1 trigger) ── */}
+      <button
+        className={`category-block-header${isCatOpen ? ' open' : ''}`}
+        onClick={onCatToggle}
+        aria-expanded={isCatOpen}
+        aria-controls={`catbody-${category.id}`}
+        id={`cattrigger-${category.id}`}
+      >
+        {/* Icon placeholder — will be replaced with SVG later */}
+        <div className="category-block-icon" aria-hidden="true" />
+
+        {/* Name + count */}
+        <div className="category-block-info">
+          <span className="category-block-name">{category.categoryName}</span>
+          <span className="category-block-count">
+            {category.items.length} {category.items.length === 1 ? 'вакансія' : 'вакансій'}
+          </span>
+        </div>
+
+        {/* Chevron */}
+        <ChevronDown
+          size={20}
+          className={`category-block-chevron${isCatOpen ? ' open' : ''}`}
+          aria-hidden="true"
+        />
+      </button>
+
+      {/* ── Category body (Level-2 list of vacancies) ── */}
+      <AnimatePresence initial={false}>
+        {isCatOpen && (
+          <motion.div
+            id={`catbody-${category.id}`}
+            role="region"
+            aria-labelledby={`cattrigger-${category.id}`}
+            className="category-block-body"
+            key="catbody"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{
+              height: 'auto',
+              opacity: 1,
+              transition: {
+                height: { duration: 0.42, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.3, delay: 0.04 },
+              },
+            }}
+            exit={{
+              height: 0,
+              opacity: 0,
+              transition: {
+                height: { duration: 0.32, ease: [0.4, 0, 1, 1] },
+                opacity: { duration: 0.16 },
+              },
+            }}
+          >
+            <div className="category-block-body-inner">
+              {category.items.map(item => (
+                <VacancyRow
+                  key={item.id}
+                  item={item}
+                  isOpen={openVacancyId === item.id}
+                  onToggle={() => handleVacancyToggle(item.id)}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
 
 /* ============================================================
-   ANIMATED LIST — main export
+   ANIMATED LIST — main export (nested accordion)
    ============================================================ */
 
 interface AnimatedListProps {
-  items: VacancyItem[]
+  /** For backward-compat when flat list is passed */
+  items?: VacancyItem[]
+  /** Grouped categories (preferred) */
+  categories?: VacancyCategory[]
 }
 
-export default function AnimatedList({ items }: AnimatedListProps) {
-  const [openId, setOpenId] = useState<string | null>(null)
+export default function AnimatedList({ categories = [] }: AnimatedListProps) {
+  const [openCatId, setOpenCatId] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const inView = useInView(containerRef, { once: true, margin: '-8% 0px' })
 
-  function handleToggle(id: string) {
-    setOpenId(prev => (prev === id ? null : id))
+  function handleCatToggle(id: string) {
+    setOpenCatId(prev => (prev === id ? null : id))
   }
 
   return (
@@ -184,15 +291,15 @@ export default function AnimatedList({ items }: AnimatedListProps) {
       ref={containerRef}
       className="animated-list-container"
       role="list"
-      aria-label="Список відкритих вакансій"
+      aria-label="Вакансії за категоріями"
     >
-      {items.map((item, index) => (
-        <div key={item.id} role="listitem">
-          <AnimatedItem
-            item={item}
-            index={index}
-            isOpen={openId === item.id}
-            onToggle={() => handleToggle(item.id)}
+      {categories.map((cat, catIndex) => (
+        <div key={cat.id} role="listitem">
+          <CategoryBlock
+            category={cat}
+            catIndex={catIndex}
+            isCatOpen={openCatId === cat.id}
+            onCatToggle={() => handleCatToggle(cat.id)}
             inView={inView}
           />
         </div>
