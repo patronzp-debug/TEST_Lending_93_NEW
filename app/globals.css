@@ -431,13 +431,6 @@ input:-webkit-autofill:active {
    EQUIPMENT SECTION — HUD corners, heading glow, responsive grid
    ============================================================ */
 
-/* Aggressive HUD corners on hover */
-.equipment-card:hover .eq-hud {
-  opacity: 1 !important;
-  transform: translate(0, 0) !important;
-  box-shadow: -2px -2px 12px rgba(255, 90, 0, 0.35) !important;
-}
-
 /* Top accent line lights up on hover */
 .equipment-card:hover .eq-top-line {
   background: linear-gradient(90deg, transparent, rgba(255, 90, 0, 0.7), transparent) !important;
@@ -620,7 +613,7 @@ html.lenis {
 
 .faq-grid {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: minmax(280px, max-content) 1fr;
   gap: clamp(40px, 6vw, 100px);
   align-items: start;
 }

@@ -369,44 +369,28 @@ export default function About() {
           </div>
 
           {/* ════════════════════════════════════
-              RIGHT — Parallax media gallery
+              RIGHT — Bento grid media gallery
               ════════════════════════════════════ */}
           <div
             ref={mediaColRef}
-            className="about-media-col"
-            style={{
-              position: 'relative',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'clamp(14px, 2vw, 24px)',
-              /* Extra top padding to give parallax vertical breathing room */
-              paddingTop: 'clamp(20px, 4vw, 60px)',
-              paddingBottom: 'clamp(40px, 6vw, 100px)',
-            }}
+            className="about-media-col grid grid-cols-2 gap-4 md:gap-6 h-fit"
           >
             {MEDIA_BLOCKS.map((block, i) => {
+              const isFirst = i === 0
               return (
                 <motion.div
                   key={block.id}
                   id={`about-media-${block.id}`}
-                  className="group"
+                  className={isFirst 
+                    ? "col-span-2 overflow-hidden rounded-2xl relative aspect-video group" 
+                    : "col-span-1 overflow-hidden rounded-2xl relative aspect-square group"
+                  }
                   style={{
-                    position: 'relative',
-                    aspectRatio: block.aspectRatio,
                     background: 'rgba(255,255,255,0.025)',
                     border: '1px solid #222222',
                     backdropFilter: 'blur(8px)',
                     WebkitBackdropFilter: 'blur(8px)',
-                    marginLeft: block.marginLeft ?? '0',
-                    marginRight: block.marginRight ?? '0',
-                    overflow: 'hidden',
-                    /* will-change: transform set for GSAP */
                     willChange: 'transform',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '12px',
                   }}
                   initial={{ opacity: 0, y: 32 }}
                   animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
@@ -422,7 +406,9 @@ export default function About() {
                     alt={block.label}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    className={`object-cover transition-transform duration-500 ease-in-out hover:scale-110 group-hover:scale-110 will-change-transform w-full h-full ${
+                      isFirst ? 'aspect-video' : 'aspect-square'
+                    }`}
                   />
                 </motion.div>
               )

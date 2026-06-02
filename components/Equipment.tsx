@@ -70,49 +70,6 @@ const EQUIPMENT: EquipmentItem[] = [
   },
 ]
 
-/* ============================================================
-   LARGE HUD CORNERS — more aggressive than Vacancies version
-   ============================================================ */
-
-function EquipmentHudCorners() {
-  const base: React.CSSProperties = {
-    position: 'absolute',
-    width: '28px',
-    height: '28px',
-    pointerEvents: 'none',
-    opacity: 0,
-    transition: 'opacity 0.2s ease, transform 0.2s ease',
-  }
-  return (
-    <>
-      <span className="eq-hud eq-hud-tl" aria-hidden="true" style={{
-        ...base, top: '10px', left: '10px',
-        borderTop: '2px solid #ff5a00', borderLeft: '2px solid #ff5a00',
-        transform: 'translate(6px, 6px)',
-        boxShadow: '-2px -2px 8px rgba(255,90,0,0)',
-        transition: 'opacity 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease',
-      }} />
-      <span className="eq-hud eq-hud-tr" aria-hidden="true" style={{
-        ...base, top: '10px', right: '10px',
-        borderTop: '2px solid #ff5a00', borderRight: '2px solid #ff5a00',
-        transform: 'translate(-6px, 6px)',
-        transition: 'opacity 0.22s ease 0.04s, transform 0.22s ease 0.04s, box-shadow 0.22s ease 0.04s',
-      }} />
-      <span className="eq-hud eq-hud-bl" aria-hidden="true" style={{
-        ...base, bottom: '10px', left: '10px',
-        borderBottom: '2px solid #ff5a00', borderLeft: '2px solid #ff5a00',
-        transform: 'translate(6px, -6px)',
-        transition: 'opacity 0.22s ease 0.08s, transform 0.22s ease 0.08s, box-shadow 0.22s ease 0.08s',
-      }} />
-      <span className="eq-hud eq-hud-br" aria-hidden="true" style={{
-        ...base, bottom: '10px', right: '10px',
-        borderBottom: '2px solid #ff5a00', borderRight: '2px solid #ff5a00',
-        transform: 'translate(-6px, -6px)',
-        transition: 'opacity 0.22s ease 0.12s, transform 0.22s ease 0.12s, box-shadow 0.22s ease 0.12s',
-      }} />
-    </>
-  )
-}
 
 /* ============================================================
    SINGLE EQUIPMENT CARD
@@ -132,13 +89,10 @@ function EquipmentCard({ item, index }: CardProps) {
      */
     <div
       id={`eq-card-${item.id}`}
-      className="eq-card-wrapper"
+      className="eq-card-wrapper flex flex-col h-full"
       style={{
         opacity: 0,                        // GSAP will reveal
         willChange: 'transform, opacity',
-        /* Asymmetric grid spans */
-        ...(item.span === 'wide' ? { gridColumn: 'span 2' } : {}),
-        ...(item.span === 'tall' ? { gridRow: 'span 2' } : {}),
       }}
     >
       <motion.article
@@ -154,6 +108,7 @@ function EquipmentCard({ item, index }: CardProps) {
           cursor: 'default',
           display: 'flex',
           flexDirection: 'column',
+          flex: 1,
         }}
         whileHover={{
           borderColor: 'rgba(255,90,0,0.5)',
@@ -165,7 +120,7 @@ function EquipmentCard({ item, index }: CardProps) {
           transition: { duration: 0.25, ease: [0.16, 1, 0.3, 1] },
         }}
       >
-        <EquipmentHudCorners />
+
 
         {/* Top accent line */}
         <span
@@ -180,11 +135,8 @@ function EquipmentCard({ item, index }: CardProps) {
 
         {/* ── Media Placeholder (zooms on hover) ── */}
         <div
+          className="w-full aspect-video overflow-hidden relative flex-shrink-0"
           style={{
-            position: 'relative',
-            overflow: 'hidden',
-            flexShrink: 0,
-            aspectRatio: item.span === 'tall' ? '3/4' : item.span === 'wide' ? '21/9' : '4/3',
             background: `
               linear-gradient(
                 135deg,
@@ -210,19 +162,16 @@ function EquipmentCard({ item, index }: CardProps) {
               alt={item.name}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
+              className="w-full h-full object-cover"
             />
           </motion.div>
         </div>
 
         {/* ── Text content ── */}
         <div
+          className="flex-1 flex flex-col p-6"
           style={{
-            padding: 'clamp(18px, 2vw, 28px)',
-            display: 'flex',
-            flexDirection: 'column',
             gap: '8px',
-            flex: 1,
           }}
         >
           <h3
@@ -254,7 +203,7 @@ function EquipmentCard({ item, index }: CardProps) {
               fontSize: 'clamp(0.6rem, 0.9vw, 0.68rem)',
               color: '#4a4a4a',
               lineHeight: 1.6,
-              marginTop: '4px',
+              marginTop: 'auto',
             }}
           >
             {item.detail}
@@ -450,13 +399,7 @@ export default function Equipment() {
         */}
         <div
           id="equipment-grid"
-          className="equipment-grid"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gridAutoRows: 'minmax(300px, auto)',
-            gap: 'clamp(10px, 1.4vw, 18px)',
-          }}
+          className="equipment-grid grid grid-cols-1 md:grid-cols-2 gap-6"
         >
           {EQUIPMENT.map((item, i) => (
             <EquipmentCard key={item.id} item={item} index={i} />

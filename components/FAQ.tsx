@@ -229,8 +229,9 @@ export default function FAQ() {
               Запитання
             </motion.div>
 
-            <div style={{ overflow: 'hidden' }}>
+            <div style={{ overflow: 'hidden', width: 'fit-content' }}>
               <motion.h2
+                className="pr-4"
                 style={{
                   fontFamily: 'var(--font-oswald)',
                   fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
