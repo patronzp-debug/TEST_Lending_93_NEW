@@ -127,7 +127,7 @@ export default function Hero() {
       {/* ---- Background Video ---- */}
       <video
         className="hero-video absolute inset-0 w-full h-full object-cover"
-        src="/bg-main.webm"
+        src="/videos/bg-main.webm"
         autoPlay
         muted
         loop

@@ -191,31 +191,31 @@ const VACANCY_CATEGORIES: VacancyCategory[] = [
   {
     id: 'cat-drivers',
     categoryName: 'Водії та Техніка',
-    icon: '/driver.svg',
+    icon: '/icons/vacancies/driver.svg',
     items: VACANCIES.filter(v => v.category === 'Водії та Техніка'),
   },
   {
     id: 'cat-medicine',
     categoryName: 'Медицина',
-    icon: '/medic.svg',
+    icon: '/icons/vacancies/medic.svg',
     items: VACANCIES.filter(v => v.category === 'Медицина'),
   },
   {
     id: 'cat-combat',
     categoryName: 'Бойові Спеціальності',
-    icon: '/crosshair.svg',
+    icon: '/icons/vacancies/crosshair.svg',
     items: VACANCIES.filter(v => v.category === 'Бойові Спеціальності'),
   },
   {
     id: 'cat-tech',
     categoryName: 'Спеціалісти (БПЛА/IT)',
-    icon: '/drone.svg',
+    icon: '/icons/vacancies/drone.svg',
     items: VACANCIES.filter(v => v.category === 'БПЛА / IT'),
   },
   {
     id: 'cat-admin',
     categoryName: 'Адміністрація та Логістика',
-    icon: '/accountant1.svg',
+    icon: '/icons/vacancies/accountant1.svg',
     items: VACANCIES.filter(v => v.category === 'Адміністрація'),
   },
 ]
@@ -585,41 +585,6 @@ export default function Vacancies() {
           <AnimatedList categories={VACANCY_CATEGORIES} />
         </div>
 
-        {/* ── Bottom CTA bar — shared ── */}
-        <motion.div
-          className="mt-16 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-[#1a1a1a] pt-10"
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-        >
-          <p
-            className="text-[#4a4a4a] text-center sm:text-left"
-            style={{
-              fontFamily: 'var(--font-roboto-mono)',
-              fontSize: '0.7rem',
-              letterSpacing: '0.1em',
-            }}
-          >
-            Не знайшли відповідну позицію? Залиште заявку —<br className="hidden sm:block" />
-            ми зв'яжемося, коли відкриється підходяща вакансія.
-          </p>
-          <Button
-            id="vacancies-general-apply"
-            className="shrink-0 uppercase tracking-[0.2em] text-white border border-[#ff5a00] bg-transparent hover:bg-[#ff5a00]/10"
-            style={{
-              fontFamily: 'var(--font-roboto-mono)',
-              fontSize: '0.65rem',
-              padding: '12px 32px',
-              borderRadius: '1px',
-              height: 'auto',
-              letterSpacing: '0.18em',
-              boxShadow: '0 0 20px rgba(255,90,0,0.1)',
-              transition: 'box-shadow 0.3s ease, background 0.3s ease',
-            }}
-          >
-            Загальна заявка
-          </Button>
-        </motion.div>
       </div>
     </section>
   )

@@ -100,7 +100,7 @@ export default function Header() {
                 style={{ originX: 0.5, originY: 0.5 }}
               >
                 <Image
-                  src="/logo_section_Hero.png"
+                  src="/logos/93_optb/logo_section_Hero.png"
                   alt="93 ОПТБ Логотип"
                   width={140}
                   height={140}
@@ -181,7 +181,7 @@ export default function Header() {
             >
               <motion.div layoutId="brand-logo" style={{ originX: 0.5, originY: 0.5 }}>
                 <Image
-                  src="/logo_section_Hero.png"
+                  src="/logos/93_optb/logo_section_Hero.png"
                   alt="93 ОПТБ Логотип"
                   width={44}
                   height={44}
@@ -340,7 +340,7 @@ export default function Header() {
                   }}
                 >
                   <Image
-                    src="/logo_section_Hero.png"
+                    src="/logos/93_optb/logo_section_Hero.png"
                     alt="93 ОПТБ Логотип"
                     width={44}
                     height={44}

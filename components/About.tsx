@@ -98,7 +98,7 @@ const MEDIA_BLOCKS: MediaBlock[] = [
     yRange: -55,
     aspectRatio: '4/3',
     marginRight: '10%',
-    image: '/education_comand_ABOUT.webp',
+    image: '/images/about/education_comand_ABOUT.webp',
   },
   {
     id: 'mb2',
@@ -107,7 +107,7 @@ const MEDIA_BLOCKS: MediaBlock[] = [
     yRange: -25,
     aspectRatio: '1/1',
     marginLeft: '20%',
-    image: '/battalion%20weapons_ABOUT.webp',
+    image: '/images/about/battalion%20weapons_ABOUT.webp',
   },
   {
     id: 'mb3',
@@ -116,7 +116,7 @@ const MEDIA_BLOCKS: MediaBlock[] = [
     yRange: -70,
     aspectRatio: '16/9',
     marginRight: '5%',
-    image: '/comand_ABOUT.webp',
+    image: '/images/about/comand_ABOUT.webp',
   },
 ]
 
