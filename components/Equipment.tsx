@@ -33,7 +33,7 @@ const EQUIPMENT: EquipmentItem[] = [
     weaponClass: 'ПТРК',
     icon: Crosshair,
     span: 'wide',
-    image: '/images/hero/PTRK_STUGNA.png',
+    image: '/images/hero/PTRK_STUGNA.webp',
   },
   {
     id: 'eq2',
@@ -44,7 +44,7 @@ const EQUIPMENT: EquipmentItem[] = [
     weaponClass: 'БПЛА',
     icon: Zap,
     span: 'tall',
-    image: '/images/hero/FPV_DRON.png',
+    image: '/images/hero/FPV_DRON.webp',
   },
   {
     id: 'eq3',
@@ -55,7 +55,7 @@ const EQUIPMENT: EquipmentItem[] = [
     weaponClass: 'ПТРК',
     icon: Target,
     span: 'standard',
-    image: '/images/hero/FGM-JACELIN.png',
+    image: '/images/hero/FGM-JACELIN.webp',
   },
   {
     id: 'eq4',
@@ -66,7 +66,7 @@ const EQUIPMENT: EquipmentItem[] = [
     weaponClass: 'ББМ',
     icon: Shield,
     span: 'wide',
-    image: '/images/hero/БМП_М2_BREADLEY.png',
+    image: '/images/hero/БМП_М2_BREADLEY.webp',
   },
 ]
 
