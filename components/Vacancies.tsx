@@ -187,7 +187,7 @@ const VACANCIES: Vacancy[] = [
 ]
 
 /* ── Grouped — used by mobile AnimatedList (nested accordion) ── */
-const VACANCY_CATEGORIES: VacancyCategory[] = [
+export const VACANCY_CATEGORIES: VacancyCategory[] = [
   {
     id: 'cat-drivers',
     categoryName: 'Водії та Техніка',

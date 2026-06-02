@@ -6,6 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle2, Send } from 'lucide-react'
+import { VACANCY_CATEGORIES } from '@/components/Vacancies'
+import type { VacancyCategory } from '@/components/AnimatedList'
 
 /* ============================================================
    ZOD SCHEMA — валідація форми
@@ -37,13 +39,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-const POSITIONS = [
-  'Оператор ПТРК',
-  'Механік-водій',
-  'Бойовий медик',
-  'Оператор БПЛА',
-  'Інше',
-]
+/* POSITIONS видалено — тепер беремо дані з VACANCY_CATEGORIES */
 
 const LS_KEY = '93optb_form_draft'
 
@@ -149,12 +145,41 @@ interface CinematicSelectProps {
   id: string
   value: string
   onChange: (v: string) => void
-  options: string[]
+  /** Flat list — використовується якщо groups не передано */
+  options?: string[]
+  /** Згруповані опції за категоріями вакансій */
+  groups?: VacancyCategory[]
   placeholder: string
   hasError: boolean
 }
 
-function CinematicSelect({ id, value, onChange, options, placeholder, hasError }: CinematicSelectProps) {
+function SelectOption({
+  opt, value, onChange, setOpen,
+}: { opt: string; value: string; onChange: (v: string) => void; setOpen: (b: boolean) => void }) {
+  return (
+    <li
+      role="option"
+      aria-selected={value === opt}
+      onClick={() => { onChange(opt); setOpen(false) }}
+      style={{
+        padding: '10px 16px',
+        cursor: 'pointer',
+        fontFamily: 'var(--font-roboto-mono)',
+        fontSize: '0.78rem',
+        color: value === opt ? '#ff5a00' : '#8a8a8a',
+        letterSpacing: '0.05em',
+        background: value === opt ? 'rgba(255,90,0,0.05)' : 'transparent',
+        transition: 'background 0.15s ease, color 0.15s ease',
+      }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)' }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = value === opt ? 'rgba(255,90,0,0.05)' : 'transparent' }}
+    >
+      {opt}
+    </li>
+  )
+}
+
+function CinematicSelect({ id, value, onChange, options = [], groups, placeholder, hasError }: CinematicSelectProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -167,7 +192,7 @@ function CinematicSelect({ id, value, onChange, options, placeholder, hasError }
   }, [])
 
   return (
-    <div ref={ref} style={{ position: 'relative' }}>
+    <div ref={ref} className="relative w-full">
       <button
         id={id}
         type="button"
@@ -202,39 +227,67 @@ function CinematicSelect({ id, value, onChange, options, placeholder, hasError }
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0, transition: { duration: 0.18, ease: [0.16, 1, 0.3, 1] } }}
             exit={{ opacity: 0, y: -6, transition: { duration: 0.12 } }}
+            className="absolute w-full max-h-[300px] overflow-y-auto overscroll-contain z-50 shadow-2xl"
+            data-lenis-prevent="true"
+            data-lenis-prevent-wheel="true"
+            data-lenis-prevent-touch="true"
             style={{
-              position: 'absolute',
               top: 'calc(100% + 4px)',
               left: 0, right: 0,
               background: '#111',
               border: '1px solid #2a2a2a',
               listStyle: 'none',
-              zIndex: 100,
               padding: '4px 0',
             }}
           >
-            {options.map(opt => (
-              <li
-                key={opt}
-                role="option"
-                aria-selected={value === opt}
-                onClick={() => { onChange(opt); setOpen(false) }}
-                style={{
-                  padding: '12px 16px',
-                  cursor: 'pointer',
-                  fontFamily: 'var(--font-roboto-mono)',
-                  fontSize: '0.78rem',
-                  color: value === opt ? '#ff5a00' : '#8a8a8a',
-                  letterSpacing: '0.05em',
-                  background: value === opt ? 'rgba(255,90,0,0.05)' : 'transparent',
-                  transition: 'background 0.15s ease, color 0.15s ease',
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)' }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = value === opt ? 'rgba(255,90,0,0.05)' : 'transparent' }}
-              >
-                {opt}
-              </li>
-            ))}
+            {groups ? (
+              <>
+                {groups.map((cat, catIdx) => (
+                  <li key={cat.id} role="presentation">
+                    {/* Роздільник між групами (крім першої) */}
+                    {catIdx > 0 && (
+                      <div aria-hidden="true" style={{
+                        height: '1px',
+                        background: '#1e1e1e',
+                        margin: '4px 0',
+                      }} />
+                    )}
+                    {/* Назва категорії */}
+                    <div style={{
+                      padding: '8px 16px 4px',
+                      fontFamily: 'var(--font-roboto-mono)',
+                      fontSize: '0.55rem',
+                      letterSpacing: '0.2em',
+                      color: '#ff5a00',
+                      textTransform: 'uppercase',
+                    }}>
+                      {cat.categoryName}
+                    </div>
+                    {/* Вакансії категорії */}
+                    <ul role="group" aria-label={cat.categoryName} style={{ listStyle: 'none', padding: 0 }}>
+                      {cat.items.map(item => (
+                        <SelectOption
+                          key={item.id}
+                          opt={item.title}
+                          value={value}
+                          onChange={onChange}
+                          setOpen={setOpen}
+                        />
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+                {/* Роздільник перед «Інше» */}
+                <li role="presentation" aria-hidden="true">
+                  <div style={{ height: '1px', background: '#1e1e1e', margin: '4px 0' }} />
+                </li>
+                <SelectOption opt="Інше" value={value} onChange={onChange} setOpen={setOpen} />
+              </>
+            ) : (
+              options.map(opt => (
+                <SelectOption key={opt} opt={opt} value={value} onChange={onChange} setOpen={setOpen} />
+              ))
+            )}
           </motion.ul>
         )}
       </AnimatePresence>
@@ -371,10 +424,10 @@ function SubmitButton({ isLoading, isSuccess }: SubmitButtonProps) {
           pointerEvents: 'none',
         }}
       />
-      <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-        {isLoading && <Loader2 size={14} className="animate-spin" />}
-        {isSuccess && <CheckCircle2 size={14} />}
-        {!isLoading && !isSuccess && <Send size={12} />}
+      <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', color: '#ffffff' }}>
+        {isLoading && <Loader2 size={14} className="animate-spin" style={{ color: '#ffffff' }} />}
+        {isSuccess && <CheckCircle2 size={14} style={{ color: '#ffffff' }} />}
+        {!isLoading && !isSuccess && <Send size={12} style={{ color: '#ffffff' }} />}
         {isLoading ? 'Надсилання...' : isSuccess ? 'Заявку прийнято!' : 'Надіслати заявку'}
       </span>
     </button>
@@ -460,7 +513,7 @@ export default function RecruitingForm() {
         background: '#080808',
         padding: 'clamp(80px, 10vw, 160px) clamp(20px, 5vw, 80px)',
         position: 'relative',
-        overflow: 'hidden',
+        overflowX: 'clip',
         borderTop: '1px solid #111',
       }}
     >
@@ -642,7 +695,7 @@ export default function RecruitingForm() {
                       id="position"
                       value={field.value}
                       onChange={field.onChange}
-                      options={POSITIONS}
+                      groups={VACANCY_CATEGORIES}
                       placeholder="Оберіть посаду..."
                       hasError={!!errors.position}
                     />
