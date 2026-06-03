@@ -168,7 +168,7 @@ Lenis (smooth scroll)
 
 ### 3.2 Lenis + GSAP Bridge (`SmoothScrollProvider.tsx`)
 
-**Де живе:** `components/providers/SmoothScrollProvider.tsx`  
+**Де живе:** `components/providers/Smooth ScrollProvider.tsx`  
 **Монтується:** один раз у `app/layout.tsx`, огортає все дерево.
 
 ```tsx
