@@ -6,8 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle2, Send } from 'lucide-react'
-import { VACANCY_CATEGORIES } from '@/components/Vacancies'
-import type { VacancyCategory } from '@/components/AnimatedList'
+import { VACANCY_CATEGORIES, type VacancyCategory } from '../constants/vacancies'
 
 /* ============================================================
    ZOD SCHEMA — валідація форми

@@ -10,34 +10,8 @@
 import { useRef, useState } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { ChevronDown, ArrowRight } from 'lucide-react'
+import { type VacancyItem, type VacancyCategory } from '../constants/vacancies'
 import './AnimatedList.css'
-
-/* ============================================================
-   TYPES
-   ============================================================ */
-
-export interface VacancyItem {
-  id: string
-  title: string
-  category: string
-  requirement: string
-  description: string
-  span: 'wide' | 'tall' | 'standard'
-  priority: 'КРИТИЧНО' | 'ТЕРМІНОВО' | 'НАБІР'
-}
-
-export interface VacancyCategory {
-  /** Unique slug used as accordion key */
-  id: string
-  /** Display name shown in the category header */
-  categoryName: string
-  /** Path to SVG icon in /public (e.g. '/driver.svg') */
-  icon?: string
-  /** Total count for the badge */
-  count?: number
-  /** Vacancy items belonging to this category */
-  items: VacancyItem[]
-}
 
 /* ============================================================
    PRIORITY HELPERS
