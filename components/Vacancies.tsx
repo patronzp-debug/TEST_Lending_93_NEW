@@ -20,12 +20,14 @@ interface CardProps {
 function VacancyCard({ vacancy, index, inView }: CardProps) {
   const priorityColor =
     vacancy.priority === 'КРИТИЧНО' ? '#ff2200' :
-    vacancy.priority === 'ТЕРМІНОВО' ? '#ff5a00' : '#8a8a8a';
+      vacancy.priority === 'ТЕРМІНОВО' ? '#ff5a00' : '#8a8a8a';
 
   return (
     <motion.article
       className="vacancy-card group relative overflow-hidden flex flex-col rounded-md"
       style={{
+        width: '270px',
+        height: '345.17px',
         background: '#0a0a0a',
         border: '1px solid rgba(255,255,255,0.05)',
         willChange: 'transform',
@@ -40,21 +42,21 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
         transition: { duration: 0.2 }
       }}
     >
-      {/* Фоновое изображение (появляется при наведении) */}
-      <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none">
-        <img 
-          src={vacancy.imageUrl || '/images/vacancies/placeholder.webp'} 
-          alt="" 
-          className="w-full h-full object-cover grayscale" 
+      {/* Фоновое изображение (отображается всегда, изменяется при наведении) */}
+      <div className="absolute inset-0 z-0 opacity-50 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none">
+        <img
+          src={vacancy.imageUrl || '/images/vacancies/placeholder.webp'}
+          alt=""
+          className="w-full h-full object-cover grayscale"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
       </div>
 
       {/* Контент карточки */}
-      <div className="relative z-10 flex flex-col h-full p-6">
-        
+      <div className="relative z-10 flex flex-col h-full" style={{ padding: '32px' }}>
+
         {/* Верхний ряд: Статус приоритета */}
-        <div className="flex items-center gap-2 mb-6">
+        <div className="flex items-center gap-2" style={{ marginBottom: '32px' }}>
           <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: priorityColor }} />
           <span
             className="uppercase tracking-[0.15em] text-[0.65rem] font-bold"
@@ -65,8 +67,8 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
         </div>
 
         <div className="mb-4">
-          <h3 
-            className="text-white font-bold uppercase leading-tight" 
+          <h3
+            className="text-white font-bold uppercase leading-tight"
             style={{ fontFamily: 'var(--font-oswald)', fontSize: '1.4rem', letterSpacing: '-0.01em' }}
           >
             {vacancy.title}
@@ -74,21 +76,28 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
         </div>
 
         {/* Краткое описание */}
-        <p 
-          className="text-[#8a8a8a] text-[0.75rem] leading-relaxed mb-8 flex-grow" 
-          style={{ fontFamily: 'var(--font-roboto-mono)' }}
+        <p
+          className="text-[#8a8a8a] text-[0.75rem] leading-relaxed"
+          style={{ marginTop: 'auto', marginBottom: '20px', fontFamily: 'var(--font-roboto-mono)' }}
         >
           {vacancy.shortDescription || vacancy.description}
         </p>
 
         {/* Кнопка заявки */}
-        <div className="mt-auto">
+        <div className="flex justify-center">
           <Button
             id={`apply-${vacancy.id}`}
-            className="w-full relative overflow-hidden border border-white/10 group-hover:border-[#ff5a00]/50 text-white uppercase tracking-[0.15em] text-[0.65rem] bg-transparent hover:bg-[#ff5a00]/10 transition-all duration-300 py-4"
-            style={{ fontFamily: 'var(--font-roboto-mono)', borderRadius: '2px' }}
+            onClick={(e) => {
+              e.preventDefault();
+              const formEl = document.getElementById('recruiting-form');
+              if (formEl) {
+                formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+            className="relative overflow-hidden border border-white/10 group-hover:border-[#ff5a00]/50 text-white uppercase tracking-[0.15em] bg-transparent hover:bg-[#ff5a00]/10 transition-all duration-300"
+            style={{ width: '204px', height: '50px', padding: '12px 16px', fontSize: '14px', fontFamily: 'var(--font-roboto-mono)', borderRadius: '2px' }}
           >
-            <span className="flex items-center justify-between w-full px-2">
+            <span className="flex items-center justify-between w-full">
               <span>ПОДАТИ ЗАЯВКУ</span>
               <ArrowRight size={14} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
             </span>
@@ -208,25 +217,24 @@ export default function Vacancies() {
             DESKTOP: 4-Column Grid with Filters (md and above)
         ═══════════════════════════════════════════════════════ */}
         <div className="hidden md:block w-full" style={{ marginTop: '48px' }}>
-          
+
           {/* FILTER PANEL */}
           <div className="flex flex-wrap items-center" style={{ gap: '12px', marginBottom: '56px' }}>
             {FILTER_TABS.map((tab) => {
               const isActive = activeFilter === tab;
-              const displayName = tab === 'Адміністрація' ? 'АДМІНІСТРАЦІЯ ТА ЛОГІСТИКА' 
-                                : tab === 'БПЛА / IT' ? 'СПЕЦІАЛІСТИ (БПЛА/IT)' 
-                                : tab;
-              
+              const displayName = tab === 'Адміністрація' ? 'АДМІНІСТРАЦІЯ ТА ЛОГІСТИКА'
+                : tab === 'БПЛА / IT' ? 'СПЕЦІАЛІСТИ (БПЛА/IT)'
+                  : tab;
+
               return (
                 <button
                   key={tab}
                   onClick={() => setActiveFilter(tab)}
-                  className={`px-7 py-3 rounded-full border text-sm uppercase tracking-[0.15em] transition-all duration-300 ${
-                    isActive
+                  className={`rounded-full border text-sm uppercase tracking-[0.15em] transition-all duration-300 ${isActive
                       ? 'bg-[#ff5a00] border-[#ff5a00] text-black font-bold shadow-[0_0_15px_rgba(255,90,0,0.4)]'
                       : 'bg-transparent border-white/20 text-[#8a8a8a] hover:border-[#ff5a00]/70 hover:text-white'
-                  }`}
-                  style={{ fontFamily: 'var(--font-roboto-mono)' }}
+                    }`}
+                  style={{ padding: '8px 24px', fontFamily: 'var(--font-roboto-mono)' }}
                 >
                   {displayName}
                 </button>
@@ -238,9 +246,10 @@ export default function Vacancies() {
           <div
             className="vacancies-grid grid"
             style={{
-              gridTemplateColumns: 'repeat(4, 1fr)',
-              gridAutoRows: 'minmax(280px, auto)', /* Это вернет карточкам нормальную высоту */
+              gridTemplateColumns: 'repeat(auto-fill, 270px)',
+              gridAutoRows: '345.17px',
               gap: '20px',
+              justifyContent: 'center',
             }}
           >
             {filteredVacancies.map((vacancy, i) => (

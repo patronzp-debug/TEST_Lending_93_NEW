@@ -31,7 +31,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Безпечне перевезення особового складу та вантажів у зоні бойових дій. Технічний контроль транспортного засобу перед виходом на маршрут, дотримання заходів маскування та безпеки.',
     span: 'wide',
     priority: 'ТЕРМІНОВО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/driver.webp',
     iconName: 'Truck',
   },
   {
@@ -44,7 +44,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Управління транспортним засобом у поєднанні з обслуговуванням електрообладнання підрозділу. Діагностика та усунення несправностей бортової електрики в польових умовах.',
     span: 'standard',
     priority: 'ВІДКРИТО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/electrican driver.webp',
     iconName: 'Zap',
   },
   {
@@ -57,7 +57,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Управління спеціалізованою технікою інженерних підрозділів, участь у розмінуванні маршрутів і позицій. Знання основ інженерних загороджень та їх подолання.',
     span: 'tall',
     priority: 'КРИТИЧНО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/Driver  sapper.webp',
     iconName: 'ShieldAlert',
   },
   {
@@ -70,7 +70,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Доставка пально-мастильних матеріалів підрозділам у складних умовах логістики. Ведення обліку витрат ПММ, дотримання вимог безпеки при роботі з паливом.',
     span: 'standard',
     priority: 'ТЕРМІНОВО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/gas station driver.webp',
     iconName: 'Fuel',
   },
   {
@@ -83,7 +83,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Технічне обслуговування та поточний ремонт озброєння, військової техніки й обладнання підрозділу. Контроль технічного стану, складання заявок на запасні частини.',
     span: 'standard',
     priority: 'ВІДКРИТО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/technician.webp',
     iconName: 'Wrench',
   },
   {
@@ -96,7 +96,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Польовий ремонт та діагностика двигунів, ходової частини і агрегатів бойової техніки. Відновлення боєздатності машин у мінімально короткі строки безпосередньо в районі виконання завдань.',
     span: 'standard',
     priority: 'ТЕРМІНОВО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/mechanic.webp',
     iconName: 'Settings',
   },
   /* ── Медицина ── */
@@ -110,7 +110,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Виконання бойових завдань у складі відділення з одночасним наданням домедичної допомоги пораненим під вогнем. Евакуація поранених із зони безпосереднього контакту з противником.',
     span: 'wide',
     priority: 'КРИТИЧНО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/Sagittarius orderly.webp',
     iconName: 'HeartPulse',
   },
   {
@@ -123,7 +123,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Надання кваліфікованої медичної допомоги пораненим на медичному пункті підрозділу. Ведення медичної документації, підтримання запасів медикаментів та медичного обладнання.',
     span: 'standard',
     priority: 'ВІДКРИТО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/nurse.webp',
     iconName: 'Stethoscope',
   },
   {
@@ -136,7 +136,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Організація та проведення занять із тактичної медицини серед особового складу підрозділу. Контроль укомплектованості аптечок, ведення санітарного стану позицій та транспортних засобів.',
     span: 'standard',
     priority: 'ТЕРМІНОВО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/sanitary instructor.webp',
     iconName: 'BookOpen',
   },
   /* ── Бойові Спеціальності ── */
@@ -150,7 +150,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Наведення та ведення вогню з артилерійських систем за цілями противника згідно з отриманими координатами. Обслуговування озброєння, підготовка боєприпасів, взаємодія з підрозділами коригування.',
     span: 'wide',
     priority: 'КРИТИЧНО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/spotter.webp',
     iconName: 'Crosshair',
   },
   {
@@ -163,7 +163,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Виконання функцій у складі обслуги зброї чи бойового засобу: підготовка та подача боєприпасів, обслуговування системи, дотримання бойового розпорядку та нормативів.',
     span: 'standard',
     priority: 'ВІДКРИТО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/service number.webp',
     iconName: 'Swords',
   },
   {
@@ -176,7 +176,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Застосування протитанкових ракетних комплексів для ураження броньованої техніки та укріплень противника. Технічне обслуговування комплексу, підготовка до бойового застосування у складних умовах рельєфу.',
     span: 'standard',
     priority: 'КРИТИЧНО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/Combat Specialties.webp',
     iconName: 'Target',
   },
   /* ── Спеціалісти БПЛА/IT ── */
@@ -190,7 +190,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Пілотування безпілотних літальних апаратів для ведення повітряної розвідки та коригування артилерійського вогню. Технічне обслуговування дронів, аналіз отриманих даних, взаємодія з бойовими підрозділами.',
     span: 'tall',
     priority: 'КРИТИЧНО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/UAV operator.webp',
     iconName: 'PlaneTakeoff',
   },
   {
@@ -203,7 +203,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Технічна підтримка цифрової інфраструктури підрозділу: налаштування захищеного зв’язку, адміністрування систем управління та забезпечення кіберзахисту операцій.',
     span: 'standard',
     priority: 'ТЕРМІНОВО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/IT specialist.webp',
     iconName: 'Monitor',
   },
   {
@@ -216,7 +216,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Організація повноцінного гарячого харчування особового складу підрозділу в польових умовах. Планування меню з наявних продуктів, дотримання санітарних норм, раціональне використання продовольчого забезпечення.',
     span: 'standard',
     priority: 'ВІДКРИТО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/cook.webp',
     iconName: 'Coffee',
   },
   /* ── Адміністрація та Логістика ── */
@@ -230,7 +230,7 @@ export const VACANCIES: VacancyItem[] = [
     description: 'Ведення фінансово-господарської документації підрозділу, нарахування грошового забезпечення, облік матеріальних цінностей. Підготовка звітності відповідно до вимог Міністерства оборони України.',
     span: 'wide',
     priority: 'ВІДКРИТО',
-    imageUrl: '/images/vacancies/placeholder.webp',
+    imageUrl: '/images/vacancies/accountant.webp',
     iconName: 'Calculator',
   },
 ]
