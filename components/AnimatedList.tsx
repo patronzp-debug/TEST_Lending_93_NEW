@@ -108,25 +108,40 @@ function VacancyRow({ item, isOpen, onToggle }: VacancyRowProps) {
             }}
           >
             <div className="vacancy-row-body-inner">
-              {/* Description */}
-              <p className="animated-list-item-description">{item.description}</p>
+              {/* Background image with gradient overlay */}
+              {item.imageUrl && (
+                <div className="vacancy-row-bg-image" aria-hidden="true">
+                  <img
+                    src={item.imageUrl}
+                    alt=""
+                    className="vacancy-row-bg-img"
+                  />
+                  <div className="vacancy-row-bg-gradient" />
+                </div>
+              )}
 
-              {/* Requirement */}
-              <div className="animated-list-item-requirement">
-                <span className="animated-list-item-requirement-label">Вимоги</span>
-                <span className="animated-list-item-requirement-text">{item.requirement}</span>
+              {/* Content layer */}
+              <div className="vacancy-row-content-layer">
+                {/* Description */}
+                <p className="animated-list-item-description">{item.description}</p>
+
+                {/* Requirement */}
+                <div className="animated-list-item-requirement">
+                  <span className="animated-list-item-requirement-label">Вимоги</span>
+                  <span className="animated-list-item-requirement-text">{item.requirement}</span>
+                </div>
+
+                {/* Apply CTA */}
+                <button
+                  className="animated-list-apply-btn"
+                  onClick={handleApply}
+                  id={`mobile-apply-${item.id}`}
+                  aria-label={`Відгукнутися на вакансію: ${item.title}`}
+                >
+                  Відгукнутись
+                  <ArrowRight size={13} aria-hidden="true" />
+                </button>
               </div>
-
-              {/* Apply CTA */}
-              <button
-                className="animated-list-apply-btn"
-                onClick={handleApply}
-                id={`mobile-apply-${item.id}`}
-                aria-label={`Відгукнутися на вакансію: ${item.title}`}
-              >
-                Відгукнутись
-                <ArrowRight size={13} aria-hidden="true" />
-              </button>
             </div>
           </motion.div>
         )}

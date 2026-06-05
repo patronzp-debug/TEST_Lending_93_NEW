@@ -220,7 +220,43 @@ npm
 }
 
 .vacancy-row-body-inner {
-  padding: 4px 16px 20px 20px;
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+}
+
+/* ── Background image layer ── */
+.vacancy-row-bg-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.vacancy-row-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.45;
+  filter: grayscale(30%);
+}
+
+.vacancy-row-bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 8, 8, 0.25) 0%,
+    rgba(8, 8, 8, 0.55) 45%,
+    rgba(8, 8, 8, 0.94) 100%
+  );
+}
+
+/* ── Content above the background image ── */
+.vacancy-row-content-layer {
+  position: relative;
+  z-index: 1;
+  padding: 16px 16px 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -233,8 +269,8 @@ npm
 /* ── Description text ── */
 .animated-list-item-description {
   font-family: var(--font-roboto-mono);
-  font-size: 0.7rem;
-  color: #5a5a5a;
+  font-size: 0.84rem;
+  color: #e5e5e5;
   line-height: 1.75;
   letter-spacing: 0.03em;
 }
@@ -251,16 +287,16 @@ npm
 
 .animated-list-item-requirement-label {
   font-family: var(--font-roboto-mono);
-  font-size: 0.48rem;
+  font-size: 0.58rem;
   letter-spacing: 0.2em;
-  color: #3a3a3a;
+  color: #ff5a00;
   text-transform: uppercase;
 }
 
 .animated-list-item-requirement-text {
   font-family: var(--font-roboto-mono);
-  font-size: 0.68rem;
-  color: #7a7a7a;
+  font-size: 0.82rem;
+  color: #cccccc;
   letter-spacing: 0.04em;
   line-height: 1.5;
 }
