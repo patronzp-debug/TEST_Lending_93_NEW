@@ -60,7 +60,7 @@ export default function Footer() {
                 textTransform: 'uppercase',
                 marginTop: '2px',
               }}>
-                Окремий піхотний тактичний батальйон
+                Окремий Протитанковий Батальйон
               </span>
             </div>
           </div>

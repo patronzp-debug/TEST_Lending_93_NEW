@@ -573,11 +573,13 @@ export default function NewSection() {
 
 ```tsx
 <main>
-  <Hero />        {/* id="hero"      — 100svh, завжди перша */}
-  <About />       {/* id="about"     — між Hero і Vacancies */}
-  <Vacancies />   {/* id="vacancies" — Bento Grid */}
-  <Equipment />   {/* id="equipment" — планується */}
-  <Form />        {/* id="recruiting-form" — завжди остання */}
+  <Hero />            {/* id="hero"             — 100svh, завжди перша */}
+  <About />           {/* id="about"            — між Hero і RecruitmentPath */}
+  <RecruitmentPath /> {/* id="recruitment-path" — білий брейк, sticky scroll (desktop) / timeline (mobile) */}
+  <Vacancies />       {/* id="vacancies"        — Bento Grid */}
+  <Equipment />       {/* id="equipment"        — 3D GSAP card entrance */}
+  <FAQ />             {/* id="faq"              — акордеон */}
+  <RecruitingForm />  {/* id="recruiting-form"  — завжди остання форма */}
 </main>
 ```
 

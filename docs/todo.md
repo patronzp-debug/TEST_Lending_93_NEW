@@ -28,3 +28,22 @@
 - [x] **Баг №3 [Виправлено]:** Зламана верстка у секції About (Філософія підрозділу) на Desktop та Mobile.
   - *Desktop:* Ліва колонка з'їжджала вниз. Виправлено шляхом зміни `align-items` на `flex-start` для `.about-grid` у `globals.css`.
   - *Mobile:* Картки перекривалися та криво наповзали. Виправлено через відключення GSAP scroll-parallax на екранах < 768px за допомогою `gsap.matchMedia` у `About.tsx`, а також шляхом скидання асиметричних бокових відступів (`margin-left`/`margin-right`) до `0` у медіа-запиті `globals.css`.
+
+## Етап 1.5: Секція «Шлях рекрутингу» (RecruitmentPath)
+
+### Ітерація 1: Документація та структура
+- [x] Додано розділ «Шлях рекрутингу» у `docs/todo.md`.
+- [x] Зареєстровано `<RecruitmentPath />` у §6 «Порядок секцій у page.tsx» файлу `docs/architecture_and_motion.md` — між `<About />` і `<Vacancies />`.
+- [x] Створено директорію `public/images/recruitment_path/` для ілюстрацій кроків.
+
+### Ітерація 2: Компонент — мобільний Timeline
+- [x] Створено `components/RecruitmentPath.tsx` з директивою `'use client'`.
+- [x] Реалізовано базову верстку: білий фон (#ffffff), luxury spacing `clamp(80px, 10vw, 160px)`.
+- [x] Написано мобільну/планшетну версію (< 768px): вертикальний Timeline з оранжевою лінією, що заповнюється при скролі (Framer Motion `useScroll` + `useTransform`).
+- [x] Ізольований cleanup GSAP ScrollTrigger через `stInstances.current` для уникнення витоків пам'яті.
+
+### Ітерація 3: Десктоп Sticky Scroll, інтеграція, валідація
+- [x] Написано десктопну версію (>= 768px): sticky-ліва колонка (45%) зі зміною ілюстрацій (Framer Motion `AnimatePresence` cross-fade), правий список кроків (55%).
+- [x] Підключено `<RecruitmentPath />` у `app/page.tsx` строго між `<About />` і `<Vacancies />`.
+- [x] `npm run build` пройшов без TypeScript-помилок (✓ Compiled in 16.9s, TypeScript in 12.5s).
+- [x] Усі чекбокси цього розділу відмічені [x].
