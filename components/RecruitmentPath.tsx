@@ -14,37 +14,37 @@ const STEPS = [
     shortLabel: 'Заявка',
     title: 'Подача заявки',
     description:
-      "Заповни коротку форму на сайті або зв'яжись з нами напряму. Всі дані конфіденційні — ми не передаємо їх третім особам.",
+      "Заповни коротку форму на сайті або зв'яжись з нами напряму. Ми працюємо на пряму. Всі ваші дані конфіденційні — не передаємо третім особам(ТЦК) тощо.",
     image: '/images/recruitment_path/step1.webp',
     bgGradient: 'linear-gradient(135deg, #f8f5f2 0%, #ede8e0 100%)',
   },
   {
     index: 2,
     tag: 'КРОК 02',
-    shortLabel: 'Консультація',
-    title: 'Особиста консультація',
+    shortLabel: 'Дзвінок',
+    title: 'Дзвінок рекрутера',
     description:
-      'Телефонна або особиста зустріч з офіцером підрозділу. Ми розповімо про умови служби, завдання та відповімо на всі твої питання.',
+      "Рекрутер зв'язується з вами та проводить консультацію. Ми розповімо про умови служби, завдання та відповімо на всі ваші питання.",
     image: '/images/recruitment_path/step2.webp',
     bgGradient: 'linear-gradient(135deg, #f2f5f8 0%, #e0e8ed 100%)',
   },
   {
     index: 3,
     tag: 'КРОК 03',
-    shortLabel: 'Підбір вакансії',
+    shortLabel: 'Підбір позиції',
     title: 'Підбір позиції',
     description:
-      'Разом з офіцером визначаємо найбільш відповідну позицію зважаючи на твій досвід, навички та фізичну підготовку.',
+      'Разом з рекрутером визначаємо найбільш відповідну позицію зважаючи на твій досвід, навички та фізичну підготовку.',
     image: '/images/recruitment_path/step3.webp',
     bgGradient: 'linear-gradient(135deg, #f5f8f2 0%, #e8ede0 100%)',
   },
   {
     index: 4,
     tag: 'КРОК 04',
-    shortLabel: 'БЗВП',
-    title: 'БЗВП — Бойова злагодженість',
+    shortLabel: 'Злагодження',
+    title: 'Бойове злагодження',
     description:
-      'Проходження базового вишколу та зведеного вогневого підготування. Отримання первинних тактичних навичок у складі підрозділу.',
+      'БЗВП — базова військова підготовка. Проходження базової підготовки тривалістю 45 днів. Отримання первинних тактичних навичок у складі підрозділу',
     image: '/images/recruitment_path/step4.webp',
     bgGradient: 'linear-gradient(135deg, #f8f2f0 0%, #ede0e0 100%)',
   },
@@ -54,7 +54,7 @@ const STEPS = [
     shortLabel: 'Служба',
     title: 'Початок служби',
     description:
-      'Ти стаєш частиною 93-го ОПТБ. Виконання бойових завдань у складі досвідченої команди. Захист України разом з нами.',
+      'Ти стаєш частиною 93-го ОПТБ. Виконання бойових (спеціальних) завдань у складі досвідченої команди. Разом з нами до Перемоги.',
     image: '/images/recruitment_path/step5.webp',
     bgGradient: 'linear-gradient(135deg, #f5f0f8 0%, #e8e0ed 100%)',
   },
@@ -284,20 +284,6 @@ function DesktopImagePanel({ activeIndex }: { activeIndex: number }) {
             {step.shortLabel}
           </span>
         </div>
-
-        {[
-          { top: '12px', left: '12px', borderTop: '2px solid #ff5a00', borderLeft: '2px solid #ff5a00' },
-          { top: '12px', right: '12px', borderTop: '2px solid #ff5a00', borderRight: '2px solid #ff5a00' },
-          { bottom: '12px', left: '12px', borderBottom: '2px solid #ff5a00', borderLeft: '2px solid #ff5a00' },
-          { bottom: '12px', right: '12px', borderBottom: '2px solid #ff5a00', borderRight: '2px solid #ff5a00' },
-        ].map((corner, ci) => (
-          <span
-            key={ci}
-            aria-hidden="true"
-            className="pointer-events-none absolute z-20 h-[18px] w-[18px]"
-            style={corner}
-          />
-        ))}
       </div>
 
       {/* Progress dots */}
@@ -542,15 +528,21 @@ function SectionHeader() {
       </motion.div>
 
       {/* H2 slide-up */}
-      <div style={{ overflow: 'hidden' }}>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-8% 0px' }}
+        style={{ overflow: 'hidden' }}
+      >
         <motion.h2
-          initial={{ y: '108%' }}
-          whileInView={{ y: '0%' }}
-          viewport={{ once: true, margin: '-8% 0px' }}
+          variants={{
+            hidden: { y: '108%' },
+            visible: { y: '0%' },
+          }}
           transition={{ duration: 0.75, ease: EASE, delay: 0.05 }}
           style={{
             fontFamily: 'var(--font-oswald)',
-            fontSize: 'clamp(2.4rem, 6vw, 5.5rem)',
+            fontSize: 'clamp(2.4rem, 5.5vw, 5rem)',
             fontWeight: 700,
             lineHeight: 1.0,
             letterSpacing: '-0.02em',
@@ -561,9 +553,9 @@ function SectionHeader() {
           }}
         >
           Шлях{' '}
-          <span style={{ color: '#ff5a00' }}>рекрутингу</span>
+          <span style={{ color: '#ff5a00' }}>рекрутера</span>
         </motion.h2>
-      </div>
+      </motion.div>
 
       {/* Subtitle */}
       <motion.p
