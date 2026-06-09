@@ -269,7 +269,7 @@ npm
 /* ── Description text ── */
 .animated-list-item-description {
   font-family: var(--font-roboto-mono);
-  font-size: 0.84rem;
+  font-size: 0.7rem;
   color: #e5e5e5;
   line-height: 1.75;
   letter-spacing: 0.03em;
@@ -295,7 +295,7 @@ npm
 
 .animated-list-item-requirement-text {
   font-family: var(--font-roboto-mono);
-  font-size: 0.82rem;
+  font-size: 0.68rem;
   color: #cccccc;
   letter-spacing: 0.04em;
   line-height: 1.5;

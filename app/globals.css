@@ -659,6 +659,20 @@ html.lenis {
    MOBILE AUDIT — Global overflow + spacing fixes
    ============================================================ */
 
+/* Глобальное пропорциональное увеличение шрифтов (rem) на мобильных.
+   Это увеличит все значения clamp(...rem, ...), чтобы мелкий текст читался лучше. */
+@media (max-width: 767px) {
+  html {
+    font-size: 18px; /* +12.5% от базовых 16px */
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 19px; /* +~18% на самых маленьких экранах */
+  }
+}
+
 /* Prevent horizontal scroll без блокування вертикального скролу Lenis.
    CRITICAL: overflow-x: hidden на html/body/main ламає Lenis на iOS/Android.
    overflow-x: clip — не створює scroll-container, тому Lenis працює. */
