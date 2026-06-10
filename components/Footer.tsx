@@ -1,19 +1,11 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Shield } from 'lucide-react'
+import Image from 'next/image'
 
 /* ============================================================
    FOOTER — мінімалістичний, кінематографічний
    ============================================================ */
-
-const NAV_LINKS = [
-  { label: 'Герої',     href: '#about' },
-  { label: 'Вакансії',  href: '#vacancies' },
-  { label: 'Арсенал',   href: '#equipment' },
-  { label: 'FAQ',       href: '#faq' },
-  { label: 'Заявка',    href: '#recruiting-form' },
-]
 
 const YEAR = new Date().getFullYear()
 
@@ -35,11 +27,18 @@ export default function Footer() {
       }} />
 
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-        {/* Top row: logo + nav */}
+        {/* Top row: logo + contacts */}
         <div className="footer-top-row">
           {/* Logo / identity */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Shield size={18} color="rgba(255,90,0,0.6)" strokeWidth={1.5} aria-hidden="true" />
+            <Image
+              src="/logos/93_optb/logo_section_Hero.png"
+              alt="93 ОПТБ Логотип"
+              width={28}
+              height={28}
+              className="object-contain"
+              style={{ filter: 'drop-shadow(0 0 8px rgba(255,90,0,0.35))' }}
+            />
             <div>
               <span style={{
                 fontFamily: 'var(--font-oswald)',
@@ -65,39 +64,86 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Navigation */}
-          <nav aria-label="Навігація сайту">
-            <ul style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: 'clamp(16px, 2.5vw, 32px)',
-              listStyle: 'none',
-            }}>
-              {NAV_LINKS.map(link => (
-                <li key={link.href}>
-                  <motion.a
-                    href={link.href}
-                    style={{
-                      fontFamily: 'var(--font-roboto-mono)',
-                      fontSize: '0.65rem',
-                      color: '#3a3a3a',
-                      letterSpacing: '0.18em',
-                      textTransform: 'uppercase',
-                      textDecoration: 'none',
-                      transition: 'color 0.2s ease',
-                    }}
-                    whileHover={{ color: '#ff5a00' }}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' })
-                    }}
-                  >
-                    {link.label}
-                  </motion.a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          {/* Contacts Block */}
+          <div className="flex flex-wrap gap-8 md:gap-12">
+            {/* Email */}
+            <div className="flex flex-col gap-1">
+              <span style={{
+                fontFamily: 'var(--font-roboto-mono)',
+                fontSize: '0.55rem',
+                color: '#6a6a6a',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+              }}>
+                ПИШІТЬ
+              </span>
+              <motion.a
+                href="mailto:a5021armyrobota@gmail.com"
+                style={{
+                  fontFamily: 'var(--font-roboto-mono)',
+                  fontSize: '0.8rem',
+                  color: '#ececec',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s ease',
+                }}
+                whileHover={{ color: '#ff5a00' }}
+              >
+                a5021armyrobota@gmail.com
+              </motion.a>
+            </div>
+
+            {/* Recruiting Phone */}
+            <div className="flex flex-col gap-1">
+              <span style={{
+                fontFamily: 'var(--font-roboto-mono)',
+                fontSize: '0.55rem',
+                color: '#6a6a6a',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+              }}>
+                РЕКРУТИНГ
+              </span>
+              <motion.a
+                href="tel:+380971068514"
+                style={{
+                  fontFamily: 'var(--font-roboto-mono)',
+                  fontSize: '0.8rem',
+                  color: '#ececec',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s ease',
+                }}
+                whileHover={{ color: '#ff5a00' }}
+              >
+                +38 (097) 106 85 14
+              </motion.a>
+            </div>
+
+            {/* Hotline Phone */}
+            <div className="flex flex-col gap-1">
+              <span style={{
+                fontFamily: 'var(--font-roboto-mono)',
+                fontSize: '0.55rem',
+                color: '#6a6a6a',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+              }}>
+                ГАРЯЧА ЛІНІЯ
+              </span>
+              <motion.a
+                href="tel:+380633939824"
+                style={{
+                  fontFamily: 'var(--font-roboto-mono)',
+                  fontSize: '0.8rem',
+                  color: '#ececec',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s ease',
+                }}
+                whileHover={{ color: '#ff5a00' }}
+              >
+                +38 (063) 393 98 24
+              </motion.a>
+            </div>
+          </div>
         </div>
 
         {/* Divider */}

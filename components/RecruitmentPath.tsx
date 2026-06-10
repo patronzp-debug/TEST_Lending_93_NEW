@@ -15,7 +15,7 @@ const STEPS = [
     title: 'Подача заявки',
     description:
       "Заповни коротку форму на сайті або зв'яжись з нами напряму. Ми працюємо на пряму. Всі ваші дані конфіденційні — не передаємо третім особам(ТЦК) тощо.",
-    image: '/images/recruitment_path/step1.webp',
+    image: '/images/recruitment_path/1 step.webp',
     bgGradient: 'linear-gradient(135deg, #f8f5f2 0%, #ede8e0 100%)',
   },
   {
@@ -25,17 +25,17 @@ const STEPS = [
     title: 'Дзвінок рекрутера',
     description:
       "Рекрутер зв'язується з вами та проводить консультацію. Ми розповімо про умови служби, завдання та відповімо на всі ваші питання.",
-    image: '/images/recruitment_path/step2.webp',
+    image: '/images/recruitment_path/2 step.webp',
     bgGradient: 'linear-gradient(135deg, #f2f5f8 0%, #e0e8ed 100%)',
   },
   {
     index: 3,
     tag: 'КРОК 03',
-    shortLabel: 'Підбір позиції',
-    title: 'Підбір позиції',
+    shortLabel: 'Підбір вакансії',
+    title: 'Підбір вакансії',
     description:
-      'Разом з рекрутером визначаємо найбільш відповідну позицію зважаючи на твій досвід, навички та фізичну підготовку.',
-    image: '/images/recruitment_path/step3.webp',
+      'Разом з рекрутером визначаємо найбільш відповідну вакансію зважаючи на твій досвід, навички та фізичну підготовку.',
+    image: '/images/recruitment_path/3 step.webp',
     bgGradient: 'linear-gradient(135deg, #f5f8f2 0%, #e8ede0 100%)',
   },
   {
@@ -45,7 +45,7 @@ const STEPS = [
     title: 'Бойове злагодження',
     description:
       'БЗВП — базова військова підготовка. Проходження базової підготовки тривалістю 45 днів. Отримання первинних тактичних навичок у складі підрозділу',
-    image: '/images/recruitment_path/step4.webp',
+    image: '/images/recruitment_path/4 step.webp',
     bgGradient: 'linear-gradient(135deg, #f8f2f0 0%, #ede0e0 100%)',
   },
   {
@@ -55,7 +55,7 @@ const STEPS = [
     title: 'Початок служби',
     description:
       'Ти стаєш частиною 93-го ОПТБ. Виконання бойових (спеціальних) завдань у складі досвідченої команди. Разом з нами до Перемоги.',
-    image: '/images/recruitment_path/step5.webp',
+    image: '/images/recruitment_path/5 step.webp',
     bgGradient: 'linear-gradient(135deg, #f5f0f8 0%, #e8e0ed 100%)',
   },
 ] as const
@@ -216,7 +216,20 @@ function MobileTimeline() {
    ============================================================ */
 
 function DesktopImagePanel({ activeIndex }: { activeIndex: number }) {
+  const [lastIndex, setLastIndex] = useState<number>(activeIndex)
   const step = STEPS[activeIndex] ?? STEPS[0]
+  const lastStep = STEPS[lastIndex] ?? STEPS[0]
+
+  useEffect(() => {
+    if (activeIndex !== lastIndex) {
+      const timer = setTimeout(() => {
+        setLastIndex(activeIndex)
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [activeIndex, lastIndex])
+
+  const isTransitioning = activeIndex !== lastIndex
 
   return (
     <div className="sticky top-[120px] h-[70vh] w-full flex items-center justify-center">
@@ -241,18 +254,27 @@ function DesktopImagePanel({ activeIndex }: { activeIndex: number }) {
           </span>
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={activeIndex}
-            src={step.image}
-            alt={step.title}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.97 }}
-            transition={{ duration: 0.65, ease: EASE }}
+        {/* Static previous image underneath */}
+        {isTransitioning && (
+          <img
+            src={lastStep.image}
+            alt=""
             className="absolute inset-0 h-full w-full object-cover"
+            style={{ zIndex: 1 }}
           />
-        </AnimatePresence>
+        )}
+
+        {/* Current image fading in on top */}
+        <motion.img
+          key={activeIndex}
+          src={step.image}
+          alt={step.title}
+          initial={{ opacity: isTransitioning ? 0 : 1 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: EASE }}
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ zIndex: 2 }}
+        />
 
         <div
           className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between px-5 py-4"
