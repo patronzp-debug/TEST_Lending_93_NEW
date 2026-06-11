@@ -7,6 +7,14 @@ import Image from 'next/image'
    FOOTER — мінімалістичний, кінематографічний
    ============================================================ */
 
+const SOCIALS = [
+  { name: 'Telegram', icon: '/icons/footer_svg/telegram.svg', href: '#' },
+  { name: 'Instagram', icon: '/icons/footer_svg/instagram.svg', href: '#' },
+  { name: 'Facebook', icon: '/icons/footer_svg/facebook.svg', href: '#' },
+  { name: 'TikTok', icon: '/icons/footer_svg/tiktok.svg', href: '#' },
+  { name: 'YouTube', icon: '/icons/footer_svg/youtube.svg', href: '#' },
+]
+
 const YEAR = new Date().getFullYear()
 
 export default function Footer() {
@@ -152,6 +160,42 @@ export default function Footer() {
           background: '#111',
           margin: 'clamp(28px, 3vw, 40px) 0',
         }} />
+
+        {/* Socials Block */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '24px',
+          marginBottom: 'clamp(28px, 3vw, 40px)',
+        }}>
+          {SOCIALS.map(social => (
+            <motion.a
+              key={social.name}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                opacity: 0.6,
+              }}
+              whileHover={{
+                opacity: 1,
+                y: -2,
+                filter: 'drop-shadow(0 0 8px rgba(255,90,0,0.5))',
+              }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+            >
+              <Image
+                src={social.icon}
+                alt={social.name}
+                width={24}
+                height={24}
+                className="object-contain"
+              />
+            </motion.a>
+          ))}
+        </div>
 
         {/* Bottom row: copyright + disclaimer */}
         <div className="footer-bottom-row">
