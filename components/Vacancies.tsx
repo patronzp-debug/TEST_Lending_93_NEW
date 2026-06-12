@@ -43,7 +43,7 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
       }}
     >
       {/* Фоновое изображение (отображается всегда, изменяется при наведении) */}
-      <div className="absolute inset-0 z-0 opacity-50 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none">
+      <div className="absolute inset-0 z-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
         <img
           src={vacancy.imageUrl || '/images/vacancies/placeholder.webp'}
           alt=""
