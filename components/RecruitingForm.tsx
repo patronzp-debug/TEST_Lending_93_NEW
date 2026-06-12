@@ -447,7 +447,6 @@ function ResetButton({ onReset }: { onReset: () => void }) {
       onClick={onReset}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="whitespace-nowrap px-4 sm:px-7 py-3.5"
       style={{
         fontFamily: 'var(--font-roboto-mono)',
         fontSize: '0.75rem',
@@ -458,6 +457,7 @@ function ResetButton({ onReset }: { onReset: () => void }) {
         border: hovered
           ? '1px solid rgba(255,90,0,0.6)'
           : '1px solid rgba(255,90,0,0.3)',
+        padding: '18px 32px',
         cursor: 'pointer',
         whiteSpace: 'nowrap',
         transition: 'color 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
@@ -655,6 +655,7 @@ export default function RecruitingForm() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.65 }}
+                style={{ marginTop: '12px' }}
               >
                 <ResetButton onReset={() => {
                   window.scrollTo({ top: 0, behavior: 'smooth' })
