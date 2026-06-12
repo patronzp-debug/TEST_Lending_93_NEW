@@ -504,7 +504,7 @@ function DesktopLayout() {
   }, [])
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 relative w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 relative w-full">
       <div className="relative">
         <DesktopImagePanel activeIndex={activeIndex} />
       </div>
@@ -649,13 +649,13 @@ export default function RecruitmentPath() {
       <div style={{ maxWidth: '1280px', margin: '0 auto', position: 'relative' }}>
         <SectionHeader />
 
-        {/* Mobile/Tablet: вертикальний Timeline (< 768px) */}
-        <div className="block md:hidden">
+        {/* Mobile/Tablet: вертикальний Timeline (< 1024px) */}
+        <div className="block lg:hidden">
           <MobileTimeline />
         </div>
 
-        {/* Desktop: Sticky Scroll (>= 768px) */}
-        <div className="hidden md:block">
+        {/* Desktop: Sticky Scroll (>= 1024px) */}
+        <div className="hidden lg:block">
           <DesktopLayout />
         </div>
       </div>

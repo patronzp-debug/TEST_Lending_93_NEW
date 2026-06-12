@@ -216,7 +216,7 @@ export default function Vacancies() {
         {/* ═══════════════════════════════════════════════════════
             DESKTOP: 4-Column Grid with Filters (md and above)
         ═══════════════════════════════════════════════════════ */}
-        <div className="hidden md:block w-full" style={{ marginTop: '48px' }}>
+        <div className="hidden lg:block w-full" style={{ marginTop: '48px' }}>
 
           {/* FILTER PANEL */}
           <div className="flex flex-wrap items-center" style={{ gap: '12px', marginBottom: '56px' }}>
@@ -266,7 +266,7 @@ export default function Vacancies() {
         {/* ═══════════════════════════════════════════════════════
             MOBILE: Animated accordion list (below md)
             ═══════════════════════════════════════════════════════ */}
-        <div className="block md:hidden">
+        <div className="block lg:hidden">
           <AnimatedList categories={VACANCY_CATEGORIES} />
         </div>
 
