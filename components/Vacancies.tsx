@@ -47,7 +47,7 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
         <img
           src={vacancy.imageUrl || '/images/vacancies/placeholder.webp'}
           alt=""
-          className="w-full h-full object-cover grayscale"
+          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
       </div>
