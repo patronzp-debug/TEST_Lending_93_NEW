@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle2, Send } from 'lucide-react'
 import { VACANCY_CATEGORIES, type VacancyCategory } from '../constants/vacancies'
+import { submitToSheets } from '../app/actions/submitToSheets'
 
 /* ============================================================
    ZOD SCHEMA — валідація форми
@@ -427,7 +428,7 @@ function SubmitButton({ isLoading, isSuccess }: SubmitButtonProps) {
         {isLoading && <Loader2 size={14} className="animate-spin" style={{ color: '#ffffff' }} />}
         {isSuccess && <CheckCircle2 size={14} style={{ color: '#ffffff' }} />}
         {!isLoading && !isSuccess && <Send size={12} style={{ color: '#ffffff' }} />}
-        {isLoading ? 'Надсилання...' : isSuccess ? 'Заявку прийнято!' : 'Надіслати заявку'}
+        {isLoading ? 'ОБРОБКА ЗАЯВКИ...' : isSuccess ? 'Заявку прийнято!' : 'Надіслати заявку'}
       </span>
     </button>
   )
@@ -496,11 +497,20 @@ export default function RecruitingForm() {
   /* ---- Submit handler ---- */
   const onSubmit = async (data: FormData) => {
     setIsLoading(true)
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1800))
-    setIsLoading(false)
-    setIsSuccess(true)
-    try { localStorage.removeItem(LS_KEY) } catch { /* ignore */ }
+    try {
+      const result = await submitToSheets(data)
+      if (result.success) {
+        setIsSuccess(true)
+        try { localStorage.removeItem(LS_KEY) } catch { /* ignore */ }
+      } else {
+        console.error('[RecruitingForm] submitToSheets error:', result.error)
+        // Залишаємо форму активною — користувач може спробувати ще раз
+      }
+    } catch (err) {
+      console.error('[RecruitingForm] Unexpected error:', err)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
