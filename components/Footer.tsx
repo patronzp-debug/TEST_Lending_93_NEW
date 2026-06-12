@@ -172,12 +172,12 @@ export default function Footer() {
           {SOCIALS.map(social => (
             <motion.a
               key={social.name}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
+              onClick={(e) => { e.preventDefault(); alert('Сервіс в розробці') }}
               style={{
                 display: 'inline-flex',
                 opacity: 0.6,
+                cursor: 'pointer',
               }}
               whileHover={{
                 opacity: 1,
