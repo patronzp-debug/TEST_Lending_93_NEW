@@ -13,6 +13,7 @@
  *  ✓ Footer            — мінімалістичний footer з навігацією та копірайтом
  */
 import Hero from '@/components/Hero'
+import MarqueeTicker from '@/components/MarqueeTicker'
 import About from '@/components/About'
 import RecruitmentPath from '@/components/RecruitmentPath'
 import Vacancies from '@/components/Vacancies'
@@ -26,8 +27,10 @@ export default function Home() {
     <>
       <main className="relative bg-[#080808] overflow-x-clip">
         <Hero />
+        <MarqueeTicker text="ТВОЯ ЗБРОЯ ЧЕКАЄ ⋆ 93 ОПТБ ⋆ ЗАХИЩАЙ СВОЄ ⋆ 93 ОПТБ ⋆ ТВОЯ ЗБРОЯ ЧЕКАЄ ⋆ 93 ОПТБ ⋆ ЗАХИЩАЙ СВОЄ ⋆ 93 ОПТБ ⋆ " />
         <About />
         <RecruitmentPath />
+        <MarqueeTicker text="ДОЛУЧАЙСЯ ДО 93 ОПТБ ✦ ОБИРАЙ СВОЮ СПЕЦІАЛЬНІСТЬ ✦ СТАВАЙ ДО ЛАВ НАЙКРАЩИХ ✦ ДОЛУЧАЙСЯ ДО 93 ОПТБ ✦ ОБИРАЙ СВОЮ СПЕЦІАЛЬНІСТЬ ✦ СТАВАЙ ДО ЛАВ НАЙКРАЩИХ ✦ " />
         <Vacancies />
         <Equipment />
         <FAQ />

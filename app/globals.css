@@ -41,6 +41,7 @@
   --animate-flicker:    flicker 0.15s infinite;
   --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
   --animate-shimmer:    shimmer 2.5s linear infinite;
+  --animate-marquee:    marquee 15s linear infinite;
   --color-sidebar-ring:           var(--sidebar-ring);
   --color-sidebar-border:           var(--sidebar-border);
   --color-sidebar-accent-foreground:           var(--sidebar-accent-foreground);
@@ -146,6 +147,11 @@
 @keyframes shimmer {
   0%   { background-position: -200% center; }
   100% { background-position: 200% center; }
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @keyframes reveal-up {
@@ -719,6 +725,28 @@ main {
   .faq-grid h2 {
     font-size: clamp(2rem, 8vw, 3rem) !important;
   }
+}
+
+/* ============================================================
+   MARQUEE TICKER
+   ============================================================ */
+
+.marquee-track {
+  animation: marquee 15s linear infinite;
+  display: flex;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.marquee-item {
+  font-family: var(--font-oswald), 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1a1a1a;
+  padding-right: 0; /* spacing already in the text string */
+  flex-shrink: 0;
 }
 
 /* ============================================================
