@@ -434,40 +434,26 @@ input:-webkit-autofill:active {
 }
 
 /* ============================================================
-   EQUIPMENT SECTION — HUD corners, heading glow, responsive grid
+   SMART WAR SECTION — card hover effect
    ============================================================ */
 
-/* Top accent line lights up on hover */
-.equipment-card:hover .eq-top-line {
-  background: linear-gradient(90deg, transparent, rgba(255, 90, 0, 0.7), transparent) !important;
-}
-
-/* Heading glow pulse after entrance */
-@keyframes eq-glow {
-  0%, 100% { text-shadow: 0 0 20px rgba(255,90,0,0.0); }
-  50%       { text-shadow: 0 0 40px rgba(255,90,0,0.4), 0 0 80px rgba(255,90,0,0.15); }
-}
-
-.eq-heading {
-  animation: eq-glow 3s ease-in-out 1s infinite;
-}
-
-/* Mobile: single column */
-@media (max-width: 767px) {
-  .equipment-grid {
-    grid-template-columns: 1fr !important;
-    grid-auto-rows: auto !important;
-  }
-  .equipment-grid .eq-card-wrapper {
-    grid-column: span 1 !important;
-    grid-row: span 1 !important;
-  }
+.smart-war-card:hover {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 /* Tablet: 2 columns */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .equipment-grid {
+@media (min-width: 768px) {
+  .smart-war-grid {
     grid-template-columns: repeat(2, 1fr) !important;
+    gap: 32px !important;
+  }
+}
+
+/* Desktop: 4 columns */
+@media (min-width: 1024px) {
+  .smart-war-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
   }
 }
 
@@ -715,8 +701,7 @@ main {
   }
 
   /* Bento cards: reset any left/right margins for asymmetry */
-  .vacancies-grid > *,
-  .equipment-grid .eq-card-wrapper {
+  .vacancies-grid > * {
     margin-left: 0 !important;
     margin-right: 0 !important;
   }
@@ -754,7 +739,7 @@ main {
    ============================================================ */
 
 /* Tell browser which elements will animate — avoids paint during scroll */
-.eq-card-wrapper,
+.smart-war-card,
 .vacancy-card,
 .about-media-col > div {
   will-change: transform;

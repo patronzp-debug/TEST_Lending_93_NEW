@@ -7,7 +7,8 @@
  *  ✓ About             — двоколонка, stagger word-reveal, GSAP parallax галерея
  *  ✓ RecruitmentPath   — «Шлях рекрутингу», білий брейк, sticky (desktop) / timeline (mobile)
  *  ✓ Vacancies         — асиметричний Bento Grid, HUD-hover, Framer Motion
- *  ✓ Equipment         — 3D GSAP card entrance, HUD targeting hover, масонрі-сітка
+ *  ✓ SmartWar          — мінімалістична сітка 4 карток, Framer Motion stagger reveal
+ *  ✓ MythsAndReality   — 4 картки «Міф / Реальність», dark grid, hover orange border
  *  ✓ FAQ               — акордеон-секція з частими запитаннями (над формою)
  *  ✓ RecruitingForm    — zod + react-hook-form, localStorage, shimmer CTA, success state
  *  ✓ Footer            — мінімалістичний footer з навігацією та копірайтом
@@ -17,7 +18,8 @@ import MarqueeTicker from '@/components/MarqueeTicker'
 import About from '@/components/About'
 import RecruitmentPath from '@/components/RecruitmentPath'
 import Vacancies from '@/components/Vacancies'
-import Equipment from '@/components/Equipment'
+import SmartWar from '@/components/SmartWar'
+import MythsAndReality from '@/components/MythsAndReality'
 import FAQ from '@/components/FAQ'
 import RecruitingForm from '@/components/RecruitingForm'
 import Footer from '@/components/Footer'
@@ -32,7 +34,8 @@ export default function Home() {
         <RecruitmentPath />
         <MarqueeTicker text="ДОЛУЧАЙСЯ ДО 93 ОПТБ ✦ ОБИРАЙ СВОЮ СПЕЦІАЛЬНІСТЬ ✦ СТАВАЙ ДО ЛАВ НАЙКРАЩИХ ✦ ДОЛУЧАЙСЯ ДО 93 ОПТБ ✦ ОБИРАЙ СВОЮ СПЕЦІАЛЬНІСТЬ ✦ СТАВАЙ ДО ЛАВ НАЙКРАЩИХ ✦ " />
         <Vacancies />
-        <Equipment />
+        <SmartWar />
+        <MythsAndReality />
         <FAQ />
         <RecruitingForm />
       </main>

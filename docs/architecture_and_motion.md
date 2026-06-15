@@ -577,7 +577,7 @@ export default function NewSection() {
   <About />           {/* id="about"            — між Hero і RecruitmentPath */}
   <RecruitmentPath /> {/* id="recruitment-path" — білий брейк, sticky scroll (desktop) / timeline (mobile) */}
   <Vacancies />       {/* id="vacancies"        — Bento Grid */}
-  <Equipment />       {/* id="equipment"        — 3D GSAP card entrance */}
+  <SmartWar />       {/* id="smart-war"        — мінімалістична сітка 4 карток, Framer Motion stagger */}
   <FAQ />             {/* id="faq"              — акордеон */}
   <RecruitingForm />  {/* id="recruiting-form"  — завжди остання форма */}
 </main>
