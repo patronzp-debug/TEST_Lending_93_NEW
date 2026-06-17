@@ -190,7 +190,7 @@ function MythCardItem({
   isMobile: boolean
 }) {
   const cardRef = useRef<HTMLElement>(null)
-  const cardInView = useInView(cardRef, { once: true, margin: '-5% 0px' })
+  const cardInView = useInView(cardRef, { once: true, amount: 0.8 })
 
   const formattedIndex = String(index + 1).padStart(2, '0')
   const dir = CARD_DIRECTIONS[index] ?? { x: 0, y: 48 }
