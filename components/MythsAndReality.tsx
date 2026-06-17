@@ -2,7 +2,6 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { CheckCircle } from 'lucide-react'
 
 /* ============================================================
    DATA — Ukrainian only (spec_myths_and_reality.md)
@@ -11,33 +10,38 @@ import { CheckCircle } from 'lucide-react'
 interface MythCard {
   id: string
   myth: string
-  reality: string
+  realityHighlight: string
+  realityText: string
 }
 
 const MYTHS: MythCard[] = [
   {
     id: 'myth-1',
-    myth: 'Міф: Без військового досвіду я буду тягарем.',
-    reality:
-      '70% наших операторів прийшли з цивільних професій. Ви пройдете інтенсивну БЗВП та фахову підготовку з бойовими інструкторами. Ми вчимо з нуля.',
+    myth: 'Без військового досвіду я буду тягарем.',
+    realityHighlight: '70%',
+    realityText:
+      ' наших операторів прийшли з цивільних професій. Ви пройдете інтенсивну БЗВП та фахову підготовку з бойовими інструкторами. Ми вчимо з нуля.',
   },
   {
     id: 'myth-2',
-    myth: 'Міф: Мене одразу відправлять на непідготовлений штурм.',
-    reality:
-      'Наша специфіка — точкова робота по бронетехніці ворога з підготовлених і замаскованих позицій, а також логістика та розвідка.',
+    myth: 'Мене одразу відправлять на непідготовлений штурм.',
+    realityHighlight: 'Наша специфіка',
+    realityText:
+      ' — точкова робота по бронетехніці ворога з підготовлених і замаскованих позицій, а також логістика та розвідка.',
   },
   {
     id: 'myth-3',
-    myth: 'Міф: Цивільна професія в армії не потрібна.',
-    reality:
-      'Сучасний підрозділ — це механізм. Нам критично потрібні водії, електрики, інженери, механіки та айтішники для забезпечення роботи батальйону.',
+    myth: 'Цивільна професія в армії не потрібна.',
+    realityHighlight: 'Сучасний підрозділ',
+    realityText:
+      ' — це механізм. Нам критично потрібні водії, електрики, інженери, механіки та айтішники для забезпечення роботи батальйону.',
   },
   {
     id: 'myth-4',
-    myth: 'Міф: Доведеться купувати екіпірування за власні кошти.',
-    reality:
-      'Батальйон повністю забезпечує бійців сучасною амуніцією, засобами індивідуального захисту та необхідним обладнанням для виконання завдань.',
+    myth: 'Доведеться купувати екіпірування за власні кошти.',
+    realityHighlight: 'Батальйон повністю',
+    realityText:
+      ' забезпечує бійців сучасною амуніцією, засобами індивідуального захисту та необхідним обладнанням для виконання завдань.',
   },
 ]
 
@@ -97,7 +101,8 @@ const cardVariants = {
    SINGLE MYTH CARD
    ============================================================ */
 
-function MythCardItem({ card }: { card: MythCard }) {
+function MythCardItem({ card, index }: { card: MythCard; index: number }) {
+  const formattedIndex = String(index + 1).padStart(2, '0')
   return (
     <motion.article
       variants={cardVariants}
@@ -105,72 +110,173 @@ function MythCardItem({ card }: { card: MythCard }) {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: '12px',
+        borderRadius: '16px',
         border: '1px solid rgba(255, 255, 255, 0.05)',
-        background: '#1a1a1a',
-        padding: 'clamp(24px, 3vw, 32px)',
+        background: 'linear-gradient(145deg, #0d0d0d 0%, #1c1c1c 100%)',
+        padding: 'clamp(32px, 4vw, 40px)',
+        position: 'relative',
+        overflow: 'hidden',
         willChange: 'transform, opacity',
-        transition: 'border-color 0.3s ease',
+        boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.7)',
       }}
       whileHover={{
         borderColor: '#ff5a00',
+        background: 'linear-gradient(145deg, #121212 0%, #242424 100%)',
+        y: -8,
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 24px rgba(255, 90, 0, 0.04)',
       }}
       transition={{ duration: 0.3 }}
     >
-      {/* ── Myth text (struck-through) ── */}
-      <p
+      {/* ── Translucent Card Number ── */}
+      <span
         style={{
-          fontFamily: 'var(--font-roboto-mono)',
-          fontSize: '0.875rem',
-          lineHeight: 1.7,
-          color: '#71717a',
-          textDecoration: 'line-through',
-          textDecorationColor: 'rgba(113, 113, 122, 0.5)',
+          position: 'absolute',
+          top: '24px',
+          right: '32px',
+          fontFamily: 'var(--font-oswald)',
+          fontSize: 'clamp(4rem, 6vw, 5rem)',
+          fontWeight: 900,
+          color: 'rgba(255, 255, 255, 0.02)',
+          userSelect: 'none',
+          pointerEvents: 'none',
+          lineHeight: 1,
         }}
       >
-        {card.myth}
-      </p>
+        {formattedIndex}
+      </span>
 
-      {/* ── Divider ── */}
-      <hr
-        style={{
-          border: 'none',
-          borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-          margin: '20px 0',
-        }}
-      />
+      {/* ── Myth Row ── */}
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', zIndex: 1, minHeight: '56px' }}>
+        {/* Cross Icon */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '28px',
+            height: '28px',
+            borderRadius: '50%',
+            border: '2px solid rgba(113, 113, 122, 0.3)',
+            color: 'rgba(113, 113, 122, 0.6)',
+            flexShrink: 0,
+            marginTop: '2px',
+          }}
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </div>
 
-      {/* ── Reality row ── */}
-      <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-        {/* Icon */}
-        <CheckCircle
-          size={20}
-          color="#ff5a00"
-          strokeWidth={2}
-          style={{ flexShrink: 0, marginTop: '2px' }}
-          aria-hidden="true"
-        />
-
-        {/* Text */}
+        {/* Myth Text */}
         <p
           style={{
             fontFamily: 'var(--font-roboto-mono)',
-            fontSize: '0.875rem',
-            lineHeight: 1.7,
-            color: '#d4d4d8',
+            fontSize: '1rem',
+            lineHeight: 1.6,
+            color: '#71717a',
+            textDecoration: 'line-through',
+            textDecorationColor: 'rgba(113, 113, 122, 0.4)',
             margin: 0,
+            paddingRight: '60px',
           }}
         >
-          <span
+          {card.myth}
+        </p>
+      </div>
+
+      {/* ── Line 1: Bright Gradient Divider ── */}
+      <div
+        style={{
+          height: '2px',
+          background: 'linear-gradient(90deg, #ff5a00 0%, transparent 100%)',
+          marginTop: '28px',
+          width: '100%',
+        }}
+      />
+
+      {/* ── Line 2: Dim Gradient Divider ── */}
+      <div
+        style={{
+          height: '1px',
+          background: 'linear-gradient(90deg, rgba(255, 90, 0, 0.15) 0%, transparent 100%)',
+          marginTop: '16px',
+          marginBottom: '32px',
+          width: '100%',
+        }}
+      />
+
+      {/* ── Reality Section ── */}
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', zIndex: 1 }}>
+        {/* Checkmark Icon with Glow */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '32px',
+            height: '32px',
+            borderRadius: '50%',
+            background: '#ff5a00',
+            boxShadow: '0 0 16px rgba(255, 90, 0, 0.5)',
+            flexShrink: 0,
+            marginTop: '2px',
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </div>
+
+        {/* Reality Content Container */}
+        <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {/* Reality Title with Line 3 */}
+          <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+            <span
+              style={{
+                fontFamily: 'var(--font-oswald)',
+                fontSize: '1.25rem',
+                fontWeight: 700,
+                color: '#ff5a00',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                lineHeight: 1,
+              }}
+            >
+              Реальність
+            </span>
+            {/* Line 3: Title Gradient line */}
+            <div
+              style={{
+                flexGrow: 1,
+                height: '1px',
+                background: 'linear-gradient(90deg, rgba(255, 90, 0, 0.3) 0%, transparent 100%)',
+                marginLeft: '16px',
+              }}
+            />
+          </div>
+
+          {/* Reality Text */}
+          <p
             style={{
-              color: '#ff5a00',
-              fontWeight: 700,
+              fontFamily: 'var(--font-roboto-mono)',
+              fontSize: '0.925rem',
+              lineHeight: 1.7,
+              color: '#d4d4d8',
+              margin: 0,
             }}
           >
-            Реальність:
-          </span>{' '}
-          {card.reality}
-        </p>
+            <span
+              style={{
+                color: '#ff5a00',
+                fontWeight: 700,
+              }}
+            >
+              {card.realityHighlight}
+            </span>
+            {card.realityText}
+          </p>
+        </div>
       </div>
     </motion.article>
   )
@@ -270,8 +376,8 @@ export default function MythsAndReality() {
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
           variants={sectionVariants}
         >
-          {MYTHS.map((card) => (
-            <MythCardItem key={card.id} card={card} />
+          {MYTHS.map((card, index) => (
+            <MythCardItem key={card.id} card={card} index={index} />
           ))}
         </motion.div>
       </motion.div>
