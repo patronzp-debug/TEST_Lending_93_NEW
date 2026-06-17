@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 /* ============================================================
@@ -24,7 +24,7 @@ const MYTHS: MythCard[] = [
   },
   {
     id: 'myth-2',
-    myth: 'Мене одразу відправлять на непідготовлений штурм.',
+    myth: 'Мене одразу відправлять на штурм.',
     realityHighlight: 'Наша специфіка',
     realityText:
       ' — точкова робота по бронетехніці ворога з підготовлених і замаскованих позицій, а також логістика та розвідка.',
@@ -55,9 +55,9 @@ const EASE_OUT = [0.0, 0.0, 0.2, 1] as const
 /* Direction map for text fly-in: cards enter from alternating sides */
 const CARD_DIRECTIONS: Array<{ x: number; y: number }> = [
   { x: -60, y: 40 },   // card 0: from bottom-left
-  { x: 60,  y: 40 },   // card 1: from bottom-right
+  { x: 60, y: 40 },   // card 1: from bottom-right
   { x: -60, y: 40 },   // card 2: from bottom-left
-  { x: 60,  y: 40 },   // card 3: from bottom-right
+  { x: 60, y: 40 },   // card 3: from bottom-right
 ]
 
 const sectionVariants = {
@@ -100,11 +100,96 @@ const gridVariants = {
 }
 
 /* ============================================================
+   HOOK: Mobile detection (SSR-safe, matchMedia)
+   ============================================================ */
+
+function useIsMobile(): boolean {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    setIsMobile(mq.matches)
+
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  return isMobile
+}
+
+/* ============================================================
+   HOOK: Mobile typewriter effect
+   — setInterval-based (no direct RAF — safe per architecture rules)
+   — Starts only when isActive && isMobile
+   — Runs once (no restart on re-render)
+   ============================================================ */
+
+function useMobileTypewriter(
+  text: string,
+  isActive: boolean,
+  isMobile: boolean,
+  charDelay: number = 28,  // ~35 chars/sec — comfortable reading pace
+  startDelay: number = 0,  // ms to wait before first character
+): { displayed: string; isDone: boolean } {
+  const [charIndex, setCharIndex] = useState(0)
+  const hasStarted = useRef(false)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const start = useCallback(() => {
+    if (hasStarted.current) return
+    hasStarted.current = true
+
+    intervalRef.current = setInterval(() => {
+      setCharIndex(prev => {
+        const next = prev + 1
+        if (next >= text.length) {
+          // Done — clear interval
+          if (intervalRef.current) clearInterval(intervalRef.current)
+        }
+        return next
+      })
+    }, charDelay)
+  }, [text.length, charDelay])
+
+  useEffect(() => {
+    if (!isActive || !isMobile) return
+    if (hasStarted.current) return
+
+    // Delay before typing starts (card entrance animation finishes first)
+    timeoutRef.current = setTimeout(start, startDelay)
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      if (intervalRef.current) clearInterval(intervalRef.current)
+    }
+  }, [isActive, isMobile, start, startDelay])
+
+  // On desktop: always show full text
+  if (!isMobile) return { displayed: text, isDone: true }
+
+  // On mobile before activation: empty string (hidden by parent opacity animation anyway)
+  const displayed = isActive ? text.slice(0, charIndex) : ''
+  const isDone = charIndex >= text.length
+
+  return { displayed, isDone }
+}
+
+/* ============================================================
    SINGLE MYTH CARD
    ============================================================ */
 
-function MythCardItem({ card, index }: { card: MythCard; index: number }) {
-  const cardRef  = useRef<HTMLElement>(null)
+function MythCardItem({
+  card,
+  index,
+  isMobile,
+}: {
+  card: MythCard
+  index: number
+  isMobile: boolean
+}) {
+  const cardRef = useRef<HTMLElement>(null)
   const cardInView = useInView(cardRef, { once: true, margin: '-5% 0px' })
 
   const formattedIndex = String(index + 1).padStart(2, '0')
@@ -127,8 +212,31 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
   }
 
   /* ── Draw-strikethrough timing ── */
-  // starts 0.45s after card becomes visible (after it has settled in)
+  // starts 0.55s after card becomes visible (after it has settled in)
   const strikeDelay = 0.55 + index * 0.1
+
+
+
+  /* ── Typewriter: full reality text (highlight + body) ── */
+  const fullRealityText = card.realityHighlight + card.realityText
+
+  // Typewriter starts after card entrance (0.75s) + strikethrough (strikeDelay) + small buffer
+  const typewriterStartDelay = Math.round((strikeDelay + 1.05) * 1000)
+
+  const { displayed, isDone } = useMobileTypewriter(
+    fullRealityText,
+    cardInView,
+    isMobile,
+    28,
+    typewriterStartDelay,
+  )
+
+  /* ── Split displayed text back into highlight / body for coloring ── */
+  const highlightLen = card.realityHighlight.length
+  const displayedHighlight = displayed.slice(0, Math.min(highlightLen, displayed.length))
+  const displayedBody = displayed.length > highlightLen
+    ? displayed.slice(highlightLen)
+    : ''
 
   return (
     <motion.article
@@ -155,7 +263,7 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
         y: -8,
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 24px rgba(255, 90, 0, 0.06)',
       }}
-      transition={{ duration: 0.35, ease: EASE_OUT as [number,number,number,number] }}
+      transition={{ duration: 0.35, ease: EASE_OUT as [number, number, number, number] }}
     >
       {/* ── Orange edge glow (reveals on hover via CSS group trick — done with framer) ── */}
       <motion.div
@@ -221,8 +329,8 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
           </svg>
         </motion.div>
 
-        {/* Myth Text container — relative for absolute strikethrough overlay */}
-        <div style={{ position: 'relative', flex: 1, paddingRight: '56px' }}>
+        {/* Myth Text container */}
+        <div style={{ flex: 1, paddingRight: '56px' }}>
           <p
             style={{
               fontFamily: 'var(--font-roboto-mono)',
@@ -234,31 +342,17 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
               zIndex: 1,
             }}
           >
-            {card.myth}
+            <span
+              className="transition-[background-size] duration-[1000ms] ease-in-out bg-no-repeat inline"
+              style={{
+                backgroundImage: 'linear-gradient(transparent calc(50% - 1px), #71717a calc(50% - 1px), #71717a calc(50% + 1px), transparent calc(50% + 1px))',
+                backgroundSize: cardInView ? '100% 100%' : '0% 100%',
+                transitionDelay: `${strikeDelay}s`,
+              }}
+            >
+              {card.myth}
+            </span>
           </p>
-
-          {/* ── DRAW STRIKETHROUGH ── */}
-          {/* This absolutely-positioned bar animates its width from 0→100% */}
-          <motion.div
-            initial={{ scaleX: 0, originX: 0 }}
-            animate={cardInView ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{
-              duration: 0.65,
-              delay: strikeDelay,
-              ease: EASE_OUT,
-            }}
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: 0,
-              right: 0,
-              height: '1.5px',
-              background: 'linear-gradient(90deg, rgba(113,113,122,0.55) 0%, rgba(113,113,122,0.2) 100%)',
-              transformOrigin: 'left center',
-              zIndex: 2,
-              pointerEvents: 'none',
-            }}
-          />
         </div>
       </div>
 
@@ -353,8 +447,9 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
             />
           </div>
 
-          {/* Reality Text */}
+          {/* Reality Text — Desktop: static | Mobile: typewriter */}
           <p
+            className={isMobile ? 'reality-text-mobile' : undefined}
             style={{
               fontFamily: 'var(--font-roboto-mono)',
               fontSize: '0.925rem',
@@ -363,10 +458,29 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
               margin: 0,
             }}
           >
-            <span style={{ color: '#ff5a00', fontWeight: 700 }}>
-              {card.realityHighlight}
-            </span>
-            {card.realityText}
+            {isMobile ? (
+              /* Mobile: character-by-character reveal with accent highlight */
+              <>
+                <span style={{ color: '#ff5a00', fontWeight: 700 }}>
+                  {displayedHighlight}
+                </span>
+                {displayedBody}
+                {/* Blinking cursor — visible only while typing */}
+                {!isDone && (
+                  <span className="typewriter-cursor" aria-hidden="true">
+                    |
+                  </span>
+                )}
+              </>
+            ) : (
+              /* Desktop: static full text */
+              <>
+                <span style={{ color: '#ff5a00', fontWeight: 700 }}>
+                  {card.realityHighlight}
+                </span>
+                {card.realityText}
+              </>
+            )}
           </p>
         </div>
       </motion.div>
@@ -381,6 +495,7 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
 export default function MythsAndReality() {
   const sectionRef = useRef<HTMLElement>(null)
   const inView = useInView(sectionRef, { once: true, margin: '-8% 0px' })
+  const isMobile = useIsMobile()
 
   return (
     <section
@@ -468,7 +583,12 @@ export default function MythsAndReality() {
           variants={gridVariants}
         >
           {MYTHS.map((card, index) => (
-            <MythCardItem key={card.id} card={card} index={index} />
+            <MythCardItem
+              key={card.id}
+              card={card}
+              index={index}
+              isMobile={isMobile}
+            />
           ))}
         </motion.div>
       </motion.div>

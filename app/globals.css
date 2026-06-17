@@ -172,6 +172,11 @@
   100% { transform: translateY(100vh); }
 }
 
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
 /* ============================================================
    RESET & BASE
    ============================================================ */
@@ -749,4 +754,31 @@ main {
 /* Prevent iOS rubber-band from exposing white background */
 body {
   overscroll-behavior: none;
+}
+
+/* ============================================================
+   MYTHS AND REALITY — mobile scroll-triggered animations (v2)
+   ============================================================ */
+
+@media (max-width: 767px) {
+
+  /* Reality text min-height to prevent reflow during typewriter */
+  .reality-text-mobile {
+    min-height: 5.1em; /* ~3 lines at 1.7 line-height */
+    display: block;
+    word-break: break-word;
+    white-space: normal;
+  }
+}
+
+/* ── Blinking typewriter cursor ── */
+.typewriter-cursor {
+  display: inline-block;
+  color: #ff5a00;
+  font-weight: 400;
+  animation: blink-cursor 0.8s step-end infinite;
+  margin-left: 1px;
+  user-select: none;
+  pointer-events: none;
+  /* Only visible on mobile — hidden on desktop via JS isMobile flag */
 }
