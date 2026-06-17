@@ -129,7 +129,7 @@ function useMobileTypewriter(
   text: string,
   isActive: boolean,
   isMobile: boolean,
-  charDelay: number = 28,  // ~35 chars/sec — comfortable reading pace
+  charDelay: number = 23,  // ~43 chars/sec — 20% faster reading pace
   startDelay: number = 0,  // ms to wait before first character
 ): { displayed: string; isDone: boolean } {
   const [charIndex, setCharIndex] = useState(0)
@@ -227,7 +227,7 @@ function MythCardItem({
     fullRealityText,
     cardInView,
     isMobile,
-    28,
+    23,
     typewriterStartDelay,
   )
 
