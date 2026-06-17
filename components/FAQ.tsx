@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { Plus } from 'lucide-react'
 
@@ -311,6 +311,24 @@ function ShowMoreButton({ showAll, onToggle }: ShowMoreButtonProps) {
 }
 
 /* ============================================================
+   HOOK: Mobile detection (SSR-safe, matchMedia)
+   ============================================================ */
+function useIsMobile(): boolean {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    setIsMobile(mq.matches)
+
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  return isMobile
+}
+
+/* ============================================================
    FAQ SECTION
    ============================================================ */
 
@@ -319,6 +337,7 @@ export default function FAQ() {
   const [showAll, setShowAll] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const inView = useInView(sectionRef, { once: true, margin: '-8% 0px' })
+  const isMobile = useIsMobile()
 
   const toggle = (id: string) => setOpenId(prev => (prev === id ? null : id))
 
@@ -361,7 +380,7 @@ export default function FAQ() {
               Запитання
             </motion.div>
 
-            <div style={{ overflow: 'hidden', width: 'fit-content' }}>
+            <div style={{ overflow: 'visible', width: 'fit-content' }}>
               <motion.h2
                 className="pr-4"
                 style={{
@@ -373,9 +392,15 @@ export default function FAQ() {
                   color: '#ececec',
                   textTransform: 'uppercase',
                 }}
-                initial={{ y: '108%' }}
-                animate={inView ? { y: '0%' } : { y: '108%' }}
-                transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+                initial={{ y: -100, opacity: 0 }}
+                animate={inView ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 100,
+                  damping: 10,
+                  mass: 1,
+                  delay: 0.15,
+                }}
                 aria-label="Часті запитання"
               >
                 ЧАСТІ<br />
