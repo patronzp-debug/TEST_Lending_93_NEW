@@ -46,17 +46,26 @@ const MYTHS: MythCard[] = [
 ]
 
 /* ============================================================
-   ANIMATION VARIANTS
+   ANIMATION CONSTANTS
    ============================================================ */
 
 const EASE_CINEMATIC = [0.16, 1, 0.3, 1] as const
+const EASE_OUT = [0.0, 0.0, 0.2, 1] as const
+
+/* Direction map for text fly-in: cards enter from alternating sides */
+const CARD_DIRECTIONS: Array<{ x: number; y: number }> = [
+  { x: -60, y: 40 },   // card 0: from bottom-left
+  { x: 60,  y: 40 },   // card 1: from bottom-right
+  { x: -60, y: 40 },   // card 2: from bottom-left
+  { x: 60,  y: 40 },   // card 3: from bottom-right
+]
 
 const sectionVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.25,
+      staggerChildren: 0.12,
+      delayChildren: 0.2,
     },
   },
 }
@@ -66,33 +75,26 @@ const headingVariants = {
   visible: {
     y: '0%',
     opacity: 1,
-    transition: {
-      duration: 0.8,
-      ease: EASE_CINEMATIC,
-    },
+    transition: { duration: 0.85, ease: EASE_CINEMATIC },
   },
 }
 
 const tagVariants = {
-  hidden: { opacity: 0, x: -16 },
+  hidden: { opacity: 0, x: -20 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: {
-      duration: 0.5,
-      ease: EASE_CINEMATIC,
-    },
+    transition: { duration: 0.55, ease: EASE_CINEMATIC },
   },
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 48 },
+/* Grid stagger — each card is its own child */
+const gridVariants = {
+  hidden: {},
   visible: {
-    opacity: 1,
-    y: 0,
     transition: {
-      duration: 0.7,
-      ease: EASE_CINEMATIC,
+      staggerChildren: 0.15,
+      delayChildren: 0.0,
     },
   },
 }
@@ -102,10 +104,38 @@ const cardVariants = {
    ============================================================ */
 
 function MythCardItem({ card, index }: { card: MythCard; index: number }) {
+  const cardRef  = useRef<HTMLElement>(null)
+  const cardInView = useInView(cardRef, { once: true, margin: '-5% 0px' })
+
   const formattedIndex = String(index + 1).padStart(2, '0')
+  const dir = CARD_DIRECTIONS[index] ?? { x: 0, y: 48 }
+
+  /* Per-card entrance variant using the direction */
+  const cardVariant = {
+    hidden: { opacity: 0, x: dir.x, y: dir.y, scale: 0.96 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.75,
+        ease: EASE_CINEMATIC,
+        delay: index * 0.12,
+      },
+    },
+  }
+
+  /* ── Draw-strikethrough timing ── */
+  // starts 0.45s after card becomes visible (after it has settled in)
+  const strikeDelay = 0.55 + index * 0.1
+
   return (
     <motion.article
-      variants={cardVariants}
+      ref={cardRef as React.RefObject<HTMLElement>}
+      variants={cardVariant}
+      initial="hidden"
+      animate={cardInView ? 'visible' : 'hidden'}
       className="group"
       style={{
         display: 'flex',
@@ -113,7 +143,7 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
         borderRadius: '16px',
         border: '1px solid rgba(255, 255, 255, 0.05)',
         background: 'linear-gradient(145deg, #0d0d0d 0%, #1c1c1c 100%)',
-        padding: 'clamp(32px, 4vw, 40px)',
+        padding: 'clamp(28px, 4vw, 40px)',
         position: 'relative',
         overflow: 'hidden',
         willChange: 'transform, opacity',
@@ -123,32 +153,55 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
         borderColor: '#ff5a00',
         background: 'linear-gradient(145deg, #121212 0%, #242424 100%)',
         y: -8,
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 24px rgba(255, 90, 0, 0.04)',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 24px rgba(255, 90, 0, 0.06)',
       }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.35, ease: EASE_OUT as [number,number,number,number] }}
     >
-      {/* ── Translucent Card Number ── */}
-      <span
+      {/* ── Orange edge glow (reveals on hover via CSS group trick — done with framer) ── */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
         style={{
           position: 'absolute',
-          top: '24px',
-          right: '32px',
+          inset: 0,
+          borderRadius: '16px',
+          background: 'linear-gradient(135deg, rgba(255,90,0,0.06) 0%, transparent 60%)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+
+      {/* ── Translucent Card Number ── */}
+      <motion.span
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={cardInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }}
+        transition={{ duration: 0.6, delay: 0.3 + index * 0.1, ease: EASE_CINEMATIC }}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '28px',
           fontFamily: 'var(--font-oswald)',
           fontSize: 'clamp(4rem, 6vw, 5rem)',
           fontWeight: 900,
-          color: 'rgba(255, 255, 255, 0.02)',
+          color: 'rgba(255, 255, 255, 0.03)',
           userSelect: 'none',
           pointerEvents: 'none',
           lineHeight: 1,
+          zIndex: 0,
         }}
       >
         {formattedIndex}
-      </span>
+      </motion.span>
 
       {/* ── Myth Row ── */}
-      <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', zIndex: 1, minHeight: '56px' }}>
-        {/* Cross Icon */}
-        <div
+      <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', zIndex: 1, minHeight: '56px', position: 'relative' }}>
+        {/* Cross Icon — fades in slightly delayed */}
+        <motion.div
+          initial={{ opacity: 0, rotate: -45, scale: 0.5 }}
+          animate={cardInView ? { opacity: 1, rotate: 0, scale: 1 } : { opacity: 0, rotate: -45, scale: 0.5 }}
+          transition={{ duration: 0.45, delay: 0.25 + index * 0.1, ease: EASE_CINEMATIC }}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -166,50 +219,90 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
-        </div>
+        </motion.div>
 
-        {/* Myth Text */}
-        <p
-          style={{
-            fontFamily: 'var(--font-roboto-mono)',
-            fontSize: '1rem',
-            lineHeight: 1.6,
-            color: '#71717a',
-            textDecoration: 'line-through',
-            textDecorationColor: 'rgba(113, 113, 122, 0.4)',
-            margin: 0,
-            paddingRight: '60px',
-          }}
-        >
-          {card.myth}
-        </p>
+        {/* Myth Text container — relative for absolute strikethrough overlay */}
+        <div style={{ position: 'relative', flex: 1, paddingRight: '56px' }}>
+          <p
+            style={{
+              fontFamily: 'var(--font-roboto-mono)',
+              fontSize: '1rem',
+              lineHeight: 1.6,
+              color: '#71717a',
+              margin: 0,
+              position: 'relative',
+              zIndex: 1,
+            }}
+          >
+            {card.myth}
+          </p>
+
+          {/* ── DRAW STRIKETHROUGH ── */}
+          {/* This absolutely-positioned bar animates its width from 0→100% */}
+          <motion.div
+            initial={{ scaleX: 0, originX: 0 }}
+            animate={cardInView ? { scaleX: 1 } : { scaleX: 0 }}
+            transition={{
+              duration: 0.65,
+              delay: strikeDelay,
+              ease: EASE_OUT,
+            }}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: 0,
+              right: 0,
+              height: '1.5px',
+              background: 'linear-gradient(90deg, rgba(113,113,122,0.55) 0%, rgba(113,113,122,0.2) 100%)',
+              transformOrigin: 'left center',
+              zIndex: 2,
+              pointerEvents: 'none',
+            }}
+          />
+        </div>
       </div>
 
       {/* ── Line 1: Bright Gradient Divider ── */}
-      <div
+      <motion.div
+        initial={{ scaleX: 0, originX: 0 }}
+        animate={cardInView ? { scaleX: 1 } : { scaleX: 0 }}
+        transition={{ duration: 0.55, delay: 0.4 + index * 0.08, ease: EASE_CINEMATIC }}
         style={{
           height: '2px',
           background: 'linear-gradient(90deg, #ff5a00 0%, transparent 100%)',
           marginTop: '28px',
           width: '100%',
+          transformOrigin: 'left',
         }}
       />
 
       {/* ── Line 2: Dim Gradient Divider ── */}
-      <div
+      <motion.div
+        initial={{ scaleX: 0, originX: 0 }}
+        animate={cardInView ? { scaleX: 1 } : { scaleX: 0 }}
+        transition={{ duration: 0.55, delay: 0.5 + index * 0.08, ease: EASE_CINEMATIC }}
         style={{
           height: '1px',
           background: 'linear-gradient(90deg, rgba(255, 90, 0, 0.15) 0%, transparent 100%)',
           marginTop: '16px',
           marginBottom: '32px',
           width: '100%',
+          transformOrigin: 'left',
         }}
       />
 
       {/* ── Reality Section ── */}
-      <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', zIndex: 1 }}>
-        {/* Checkmark Icon with Glow */}
-        <div
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={cardInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.6, delay: 0.55 + index * 0.1, ease: EASE_CINEMATIC }}
+        style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', zIndex: 1 }}
+      >
+        {/* Checkmark Icon with Glow — pops in with spring */}
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={cardInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+          transition={{ duration: 0.5, delay: 0.65 + index * 0.1, type: 'spring', stiffness: 220, damping: 16 }}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -226,7 +319,7 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12" />
           </svg>
-        </div>
+        </motion.div>
 
         {/* Reality Content Container */}
         <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -245,13 +338,17 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
             >
               Реальність
             </span>
-            {/* Line 3: Title Gradient line */}
-            <div
+            {/* Line 3: Title Gradient line — draws left-to-right */}
+            <motion.div
+              initial={{ scaleX: 0, originX: 0 }}
+              animate={cardInView ? { scaleX: 1 } : { scaleX: 0 }}
+              transition={{ duration: 0.5, delay: 0.7 + index * 0.1, ease: EASE_CINEMATIC }}
               style={{
                 flexGrow: 1,
                 height: '1px',
                 background: 'linear-gradient(90deg, rgba(255, 90, 0, 0.3) 0%, transparent 100%)',
                 marginLeft: '16px',
+                transformOrigin: 'left',
               }}
             />
           </div>
@@ -266,18 +363,13 @@ function MythCardItem({ card, index }: { card: MythCard; index: number }) {
               margin: 0,
             }}
           >
-            <span
-              style={{
-                color: '#ff5a00',
-                fontWeight: 700,
-              }}
-            >
+            <span style={{ color: '#ff5a00', fontWeight: 700 }}>
               {card.realityHighlight}
             </span>
             {card.realityText}
           </p>
         </div>
-      </div>
+      </motion.div>
     </motion.article>
   )
 }
@@ -313,8 +405,7 @@ export default function MythsAndReality() {
           width: 'clamp(400px, 60vw, 900px)',
           height: 'clamp(400px, 60vw, 900px)',
           borderRadius: '50%',
-          background:
-            'radial-gradient(circle, rgba(255, 90, 0, 0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(255, 90, 0, 0.04) 0%, transparent 70%)',
           pointerEvents: 'none',
           zIndex: 0,
         }}
@@ -374,7 +465,7 @@ export default function MythsAndReality() {
         {/* ── Cards Grid ── */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          variants={sectionVariants}
+          variants={gridVariants}
         >
           {MYTHS.map((card, index) => (
             <MythCardItem key={card.id} card={card} index={index} />
