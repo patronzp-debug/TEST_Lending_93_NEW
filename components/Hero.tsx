@@ -79,7 +79,6 @@ export default function Hero() {
       if (!heroEl || !contentEl) return
 
       const st1 = gsap.to(contentEl, {
-        filter: 'blur(18px)',
         scale: 0.88,
         opacity: 0,
         ease: 'power2.inOut',
@@ -126,7 +125,7 @@ export default function Hero() {
     >
       {/* ---- Background Video ---- */}
       <video
-        className="hero-video absolute inset-0 w-full h-full object-cover"
+        className="hero-video absolute inset-0 w-full h-full object-cover transform-gpu will-change-transform"
         src="/videos/bg-main.webm"
         autoPlay
         muted

@@ -77,7 +77,7 @@ export default function Header() {
           >
             {/* Semi-transparent blurred overlay — hero video shows through */}
             <motion.div
-              className="absolute inset-0 bg-[#080808]/80 backdrop-blur-md"
+              className="absolute inset-0 bg-[#080808]/95 will-change-transform"
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -162,12 +162,10 @@ export default function Header() {
           paddingLeft: 'clamp(16px, 3vw, 48px)',
           paddingRight: 'clamp(16px, 3vw, 48px)',
           background: scrolled
-            ? 'rgba(8,8,8,0.92)'
-            : 'linear-gradient(to bottom, rgba(8,8,8,0.75) 0%, transparent 100%)',
-          backdropFilter: scrolled ? 'blur(16px)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
+            ? 'rgba(8,8,8,0.95)'
+            : 'linear-gradient(to bottom, rgba(8,8,8,0.85) 0%, transparent 100%)',
           borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : 'none',
-          transition: 'background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease',
+          transition: 'background 0.4s ease, border-color 0.4s ease',
         }}
       >
         <div className="flex items-center justify-between min-h-[60px]">

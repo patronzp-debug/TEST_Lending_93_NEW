@@ -135,6 +135,7 @@ function Card({ card }: { card: SmartWarCard }) {
       >
         {card.videoSrc ? (
           <video
+            className="transform-gpu will-change-transform"
             src={card.videoSrc}
             autoPlay
             loop
