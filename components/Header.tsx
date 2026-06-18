@@ -261,7 +261,7 @@ export default function Header() {
                 background: 'linear-gradient(135deg, #ff5a00 0%, #e84800 100%)',
                 border: 'none',
                 padding: '9px 22px',
-                borderRadius: '2px',
+                borderRadius: '8px',
                 cursor: 'pointer',
                 boxShadow: '0 0 18px rgba(255,90,0,0.3)',
               }}

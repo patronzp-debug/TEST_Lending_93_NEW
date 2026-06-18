@@ -255,7 +255,7 @@ export default function Hero() {
               padding: 'clamp(14px, 2vw, 18px) clamp(36px, 4vw, 60px)',
               background: 'linear-gradient(135deg, #ff5a00 0%, #e84800 100%)',
               boxShadow: '0 0 30px rgba(255,90,0,0.35), 0 4px 24px rgba(0,0,0,0.5)',
-              borderRadius: '2px',
+              borderRadius: '8px',
               height: 'auto',
               color: '#ffffff',
             }}

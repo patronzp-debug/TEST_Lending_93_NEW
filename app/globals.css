@@ -603,6 +603,13 @@ html.lenis {
   html {
     @apply font-sans;
   }
+
+  /* ── Global button border-radius (design system baseline) ──
+     rounded-lg = 8px — modern, tactical, consistent.
+     Any component-level rounded-* class will override this. */
+  button {
+    @apply rounded-lg;
+  }
 }
 
 /* ============================================================

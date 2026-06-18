@@ -409,7 +409,7 @@ function SubmitButton({ isLoading, isSuccess }: SubmitButtonProps) {
           ? '0 0 30px rgba(255,90,0,0.5), 0 0 70px rgba(255,90,0,0.2)'
           : '0 0 20px rgba(255,90,0,0.2)',
         transform: hovered && !isLoading && !isSuccess ? 'translateY(-1px)' : 'none',
-        borderRadius: 0,
+        borderRadius: '8px',
       }}
     >
       {/* Shimmer sweep — moves on hover */}

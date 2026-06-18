@@ -95,7 +95,7 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
               }
             }}
             className="relative overflow-hidden border border-white/10 group-hover:border-[#ff5a00]/50 text-white uppercase tracking-[0.15em] bg-transparent hover:bg-[#ff5a00]/10 transition-all duration-300"
-            style={{ width: '204px', height: '50px', padding: '12px 16px', fontSize: '14px', fontFamily: 'var(--font-roboto-mono)', borderRadius: '2px' }}
+            style={{ width: '204px', height: '50px', padding: '12px 16px', fontSize: '14px', fontFamily: 'var(--font-roboto-mono)', borderRadius: '8px' }}
           >
             <span className="flex items-center justify-between w-full">
               <span>ПОДАТИ ЗАЯВКУ</span>
@@ -230,7 +230,7 @@ export default function Vacancies() {
                 <button
                   key={tab}
                   onClick={() => setActiveFilter(tab)}
-                  className={`rounded-full border text-sm uppercase tracking-[0.15em] transition-all duration-300 ${isActive
+                  className={`rounded-lg border text-sm uppercase tracking-[0.15em] transition-all duration-300 ${isActive
                       ? 'bg-[#ff5a00] border-[#ff5a00] text-black font-bold shadow-[0_0_15px_rgba(255,90,0,0.4)]'
                       : 'bg-transparent border-white/20 text-[#8a8a8a] hover:border-[#ff5a00]/70 hover:text-white'
                     }`}
