@@ -700,7 +700,7 @@ export default function RecruitingForm() {
                 <motion.h2
                   style={{
                     fontFamily: 'var(--font-oswald)',
-                    fontSize: 'clamp(2.4rem, 5.5vw, 4.5rem)',
+                    fontSize: 'clamp(2.25rem, 5vw, 4.5rem)',
                     fontWeight: 700,
                     lineHeight: 1.0,
                     letterSpacing: '-0.02em',

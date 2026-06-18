@@ -385,7 +385,7 @@ export default function FAQ() {
                 className="pr-4"
                 style={{
                   fontFamily: 'var(--font-oswald)',
-                  fontSize: 'clamp(2.2rem, 4.5vw, 4rem)',
+                  fontSize: 'clamp(2.25rem, 5vw, 4.5rem)',
                   fontWeight: 700,
                   lineHeight: 1.0,
                   letterSpacing: '-0.02em',

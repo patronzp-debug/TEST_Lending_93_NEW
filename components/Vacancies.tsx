@@ -134,7 +134,7 @@ function SectionHeader({ inView }: { inView: boolean }) {
         className="flex flex-wrap gap-x-4 overflow-hidden"
         style={{
           fontFamily: 'var(--font-oswald)',
-          fontSize: 'clamp(2.6rem, 6vw, 5.5rem)',
+          fontSize: 'clamp(2.25rem, 5vw, 4.5rem)',
           fontWeight: 700,
           lineHeight: 1.0,
           letterSpacing: '-0.02em',

@@ -241,9 +241,9 @@ export default function SmartWar() {
               variants={headingVariants}
               style={{
                 fontFamily: 'var(--font-oswald)',
-                fontSize: 'clamp(2rem, 5.5vw, 4.5rem)',
+                fontSize: 'clamp(2.25rem, 5vw, 4.5rem)',
                 fontWeight: 700,
-                lineHeight: 1.05,
+                lineHeight: 1.0,
                 letterSpacing: '-0.02em',
                 color: '#ececec',
                 textTransform: 'uppercase',

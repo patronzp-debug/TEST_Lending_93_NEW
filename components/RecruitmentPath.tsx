@@ -564,7 +564,7 @@ function SectionHeader() {
           transition={{ duration: 0.75, ease: EASE, delay: 0.05 }}
           style={{
             fontFamily: 'var(--font-oswald)',
-            fontSize: 'clamp(2.4rem, 5.5vw, 5rem)',
+            fontSize: 'clamp(2.25rem, 5vw, 4.5rem)',
             fontWeight: 700,
             lineHeight: 1.0,
             letterSpacing: '-0.02em',
