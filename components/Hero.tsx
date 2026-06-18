@@ -86,7 +86,7 @@ export default function Hero() {
           trigger: heroEl,
           start: 'top top',
           end: 'bottom top',
-          scrub: 1.2,
+          scrub: true,
         },
       }).scrollTrigger
 

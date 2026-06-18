@@ -38,9 +38,26 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
-  /* Track scroll for subtle background change */
+  /* Track scroll for subtle background change (Optimized with RAF) */
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40)
+    let ticking = false
+    let lastScrolled = window.scrollY > 40
+
+    const handler = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isScrolled = window.scrollY > 40
+          if (isScrolled !== lastScrolled) {
+            setScrolled(isScrolled)
+            lastScrolled = isScrolled
+          }
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    setScrolled(lastScrolled)
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
