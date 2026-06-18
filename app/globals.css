@@ -42,6 +42,7 @@
   --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
   --animate-shimmer:    shimmer 2.5s linear infinite;
   --animate-marquee:    marquee 7s linear infinite;
+  --animate-marquee-slow: marquee 40s linear infinite;
   --color-sidebar-ring:           var(--sidebar-ring);
   --color-sidebar-border:           var(--sidebar-border);
   --color-sidebar-accent-foreground:           var(--sidebar-accent-foreground);
@@ -738,6 +739,11 @@ main {
   padding-right: 0; /* spacing already in the text string */
   flex-shrink: 0;
 }
+
+/* ============================================================
+   INFINITE IMAGE MARQUEE (About section slider)
+   — Animation fully managed via inline styles in InfiniteMarquee.tsx
+   ============================================================ */
 
 /* ============================================================
    MOTION PERFORMANCE — GPU hints

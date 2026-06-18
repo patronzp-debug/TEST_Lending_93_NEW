@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 import { Shield, Crosshair, Users } from 'lucide-react'
 import type { ScrollTrigger as STType } from 'gsap/ScrollTrigger'
+import InfiniteMarquee from './InfiniteMarquee'
 
 /* ============================================================
    WORD-SPLIT STAGGER REVEAL
@@ -104,7 +105,7 @@ const MEDIA_BLOCKS: MediaBlock[] = [
     id: 'mb2',
     icon: Shield,
     label: 'Озброєння та техніка',
-    yRange: -25,
+    yRange: -40,
     aspectRatio: '1/1',
     marginLeft: '20%',
     image: '/images/about/work%232.webp',
@@ -113,7 +114,7 @@ const MEDIA_BLOCKS: MediaBlock[] = [
     id: 'mb3',
     icon: Users,
     label: 'Команда підрозділу',
-    yRange: -70,
+    yRange: -40,
     aspectRatio: '16/9',
     marginRight: '5%',
     image: '/images/about/work%233.webp',
@@ -194,7 +195,7 @@ export default function About() {
       aria-label="Філософія підрозділу"
       style={{
         background: '#080808',
-        padding: 'clamp(80px, 10vw, 160px) clamp(20px, 5vw, 80px)',
+        padding: 'clamp(80px, 10vw, 160px) clamp(20px, 5vw, 80px) 0',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -416,6 +417,9 @@ export default function About() {
           </div>
         </div>
       </div>
+
+      {/* ── Infinite cinematic photo strip ── */}
+      <InfiniteMarquee />
     </section>
   )
 }
