@@ -72,14 +72,14 @@ interface FieldWrapperProps {
 
 function FieldWrapper({ label, id, error, required, children }: FieldWrapperProps) {
   return (
-    <div className="form-field-group" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    <div className="form-field-group" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
       <label
         htmlFor={id}
         style={{
           fontFamily: 'var(--font-roboto-mono)',
-          fontSize: '0.6rem',
+          fontSize: '0.58rem',
           letterSpacing: '0.2em',
-          color: error ? 'rgba(255,80,0,0.8)' : '#4a4a4a',
+          color: error ? 'rgba(255,80,0,0.9)' : '#6a6a6a',
           textTransform: 'uppercase',
           transition: 'color 0.2s ease',
         }}
@@ -121,20 +121,28 @@ function FieldWrapper({ label, id, error, required, children }: FieldWrapperProp
 
 const inputBaseStyle: React.CSSProperties = {
   width: '100%',
-  background: 'transparent',
-  border: '1px solid #1e1e1e',
-  borderRadius: 0,
-  color: '#ececec',
+  background: '#050505',
+  border: '1px solid rgba(63,63,70,0.6)',
+  borderRadius: '8px',
+  color: '#e4e4e7',
   fontFamily: 'var(--font-roboto-mono)',
-  fontSize: '0.85rem',
-  padding: '14px 0',
+  fontSize: '0.82rem',
+  padding: '13px 16px',
   outline: 'none',
-  borderTop: 'none',
-  borderLeft: 'none',
-  borderRight: 'none',
-  borderBottom: '1px solid #2a2a2a',
   transition: 'border-color 0.25s ease, box-shadow 0.25s ease',
   letterSpacing: '0.05em',
+  boxSizing: 'border-box',
+}
+
+const inputFocusHandlers = {
+  onFocus: (e: React.FocusEvent<HTMLInputElement>) => {
+    e.currentTarget.style.borderColor = '#ff5a00'
+    e.currentTarget.style.boxShadow = '0 0 0 2px rgba(255,90,0,0.15), 0 0 12px rgba(255,90,0,0.1)'
+  },
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
+    e.currentTarget.style.borderColor = 'rgba(63,63,70,0.6)'
+    e.currentTarget.style.boxShadow = 'none'
+  },
 }
 
 /* ============================================================
@@ -204,9 +212,9 @@ function CinematicSelect({ id, value, onChange, options = [], groups, placeholde
           justifyContent: 'space-between',
           alignItems: 'center',
           cursor: 'pointer',
-          color: value ? '#ececec' : '#3a3a3a',
-          borderColor: hasError ? 'rgba(255,80,0,0.5)' : open ? '#ff5a00' : '#2a2a2a',
-          boxShadow: open ? '0 4px 20px rgba(255,90,0,0.08)' : 'none',
+          color: value ? '#e4e4e7' : '#52525b',
+          borderColor: hasError ? 'rgba(255,80,0,0.5)' : open ? '#ff5a00' : 'rgba(63,63,70,0.6)',
+          boxShadow: open ? '0 0 0 2px rgba(255,90,0,0.15), 0 0 12px rgba(255,90,0,0.1)' : 'none',
         }}
         aria-haspopup="listbox"
         aria-expanded={open}
@@ -234,8 +242,9 @@ function CinematicSelect({ id, value, onChange, options = [], groups, placeholde
             style={{
               top: 'calc(100% + 4px)',
               left: 0, right: 0,
-              background: '#111',
-              border: '1px solid #2a2a2a',
+              background: '#080808',
+              border: '1px solid rgba(63,63,70,0.6)',
+              borderRadius: '8px',
               listStyle: 'none',
               padding: '4px 0',
             }}
@@ -309,7 +318,7 @@ interface CinematicRadioGroupProps {
 
 function CinematicRadioGroup({ name, value, onChange, options, hasError }: CinematicRadioGroupProps) {
   return (
-    <div role="radiogroup" aria-label={name} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    <div role="radiogroup" aria-label={name} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
       {options.map(opt => {
         const checked = value === opt.value
         return (
@@ -320,9 +329,10 @@ function CinematicRadioGroup({ name, value, onChange, options, hasError }: Cinem
               alignItems: 'center',
               gap: '14px',
               cursor: 'pointer',
-              padding: '14px 16px',
-              border: `1px solid ${checked ? 'rgba(255,90,0,0.4)' : hasError ? 'rgba(255,80,0,0.2)' : '#1e1e1e'}`,
-              background: checked ? 'rgba(255,90,0,0.05)' : 'transparent',
+              padding: '13px 16px',
+              border: `1px solid ${checked ? 'rgba(255,90,0,0.55)' : hasError ? 'rgba(255,80,0,0.35)' : 'rgba(63,63,70,0.6)'}`,
+              borderRadius: '8px',
+              background: checked ? 'rgba(255,90,0,0.07)' : '#050505',
               transition: 'border-color 0.2s ease, background 0.2s ease',
             }}
           >
@@ -339,7 +349,7 @@ function CinematicRadioGroup({ name, value, onChange, options, hasError }: Cinem
               style={{
                 width: '16px', height: '16px',
                 borderRadius: '50%',
-                border: `1.5px solid ${checked ? '#ff5a00' : '#3a3a3a'}`,
+                border: `1.5px solid ${checked ? '#ff5a00' : '#4a4a4a'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0,
                 transition: 'border-color 0.2s ease',
@@ -357,7 +367,7 @@ function CinematicRadioGroup({ name, value, onChange, options, hasError }: Cinem
             <span style={{
               fontFamily: 'var(--font-roboto-mono)',
               fontSize: '0.78rem',
-              color: checked ? '#ececec' : '#6a6a6a',
+              color: checked ? '#ececec' : '#8a8a8a',
               letterSpacing: '0.05em',
               transition: 'color 0.2s ease',
             }}>
@@ -393,7 +403,7 @@ function SubmitButton({ isLoading, isSuccess }: SubmitButtonProps) {
         position: 'relative',
         overflow: 'hidden',
         width: '100%',
-        padding: '18px 40px',
+        padding: '14px 24px',
         background: isSuccess
           ? 'linear-gradient(135deg, #1a4a1a 0%, #0d3d0d 100%)'
           : 'linear-gradient(135deg, #ff5a00 0%, #e84800 100%)',
@@ -401,8 +411,9 @@ function SubmitButton({ isLoading, isSuccess }: SubmitButtonProps) {
         color: '#fff',
         fontFamily: 'var(--font-roboto-mono)',
         fontSize: '0.75rem',
-        letterSpacing: '0.25em',
+        letterSpacing: '0.18em',
         textTransform: 'uppercase',
+        whiteSpace: 'nowrap',
         cursor: isLoading || isSuccess ? 'default' : 'pointer',
         transition: 'background 0.4s ease, box-shadow 0.3s ease, transform 0.2s ease',
         boxShadow: hovered && !isLoading && !isSuccess
@@ -569,7 +580,7 @@ export default function RecruitingForm() {
         pointerEvents: 'none', filter: 'blur(80px)',
       }} />
 
-      <div style={{ maxWidth: '760px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: '640px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <AnimatePresence mode="wait">
           {isSuccess ? (
             /* ══════════════════════════════════════════════
@@ -685,22 +696,33 @@ export default function RecruitingForm() {
                NORMAL STATE — заголовок + форма
                ══════════════════════════════════════════════ */
             <motion.div key="form-section" initial={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.3 } }}>
+              {/* ══ CARD CONTAINER ══ */}
+              <div style={{
+                background: 'linear-gradient(to bottom, #1a1a1a 0%, #050505 100%)',
+                border: '1px solid rgba(63,63,70,0.55)',
+                borderRadius: '24px',
+                boxShadow: '0 32px 96px rgba(0,0,0,0.9), 0 8px 32px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.05)',
+                padding: 'clamp(32px, 5vw, 52px) clamp(24px, 5vw, 48px)',
+              }}>
+
               {/* ── Section Header ── */}
               <motion.div
-                className="inline-flex items-center gap-2 tactical-tag mb-6"
-                initial={{ opacity: 0, x: -16 }}
-                animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -16 }}
+                style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}
+                initial={{ opacity: 0, y: -8 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[#ff5a00] animate-pulse" />
-                Рекрутинг · Етап 4
+                <div className="inline-flex items-center gap-2 tactical-tag">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff5a00] animate-pulse" />
+                  Рекрутинг · Етап 4
+                </div>
               </motion.div>
 
-              <div style={{ overflow: 'hidden', marginBottom: '12px' }}>
+              <div style={{ overflow: 'hidden', marginBottom: '8px', textAlign: 'center' }}>
                 <motion.h2
                   style={{
                     fontFamily: 'var(--font-oswald)',
-                    fontSize: 'clamp(2.25rem, 5vw, 4.5rem)',
+                    fontSize: 'clamp(2rem, 5vw, 3.6rem)',
                     fontWeight: 700,
                     lineHeight: 1.0,
                     letterSpacing: '-0.02em',
@@ -718,11 +740,12 @@ export default function RecruitingForm() {
               <motion.p
                 style={{
                   fontFamily: 'var(--font-roboto-mono)',
-                  fontSize: 'clamp(0.72rem, 1.1vw, 0.82rem)',
-                  color: '#4a4a4a',
+                  fontSize: 'clamp(0.7rem, 1.1vw, 0.78rem)',
+                  color: '#6a6a6a',
                   letterSpacing: '0.05em',
                   lineHeight: 1.7,
-                  marginBottom: 'clamp(40px, 5vw, 64px)',
+                  marginBottom: 'clamp(28px, 4vw, 44px)',
+                  textAlign: 'center',
                 }}
                 initial={{ opacity: 0 }}
                 animate={inView ? { opacity: 1 } : { opacity: 0 }}
@@ -751,6 +774,7 @@ export default function RecruitingForm() {
                       ...inputBaseStyle,
                       borderColor: errors.fullName ? 'rgba(255,80,0,0.5)' : undefined,
                     }}
+                    {...inputFocusHandlers}
                     {...register('fullName')}
                   />
                 </FieldWrapper>
@@ -766,6 +790,7 @@ export default function RecruitingForm() {
                       ...inputBaseStyle,
                       borderColor: errors.phone ? 'rgba(255,80,0,0.5)' : undefined,
                     }}
+                    {...inputFocusHandlers}
                     {...register('phone')}
                   />
                 </FieldWrapper>
@@ -782,6 +807,7 @@ export default function RecruitingForm() {
                       ...inputBaseStyle,
                       borderColor: errors.age ? 'rgba(255,80,0,0.5)' : undefined,
                     }}
+                    {...inputFocusHandlers}
                     {...register('age', { valueAsNumber: true })}
                   />
                 </FieldWrapper>
@@ -833,7 +859,7 @@ export default function RecruitingForm() {
                 <p style={{
                   fontFamily: 'var(--font-roboto-mono)',
                   fontSize: '0.58rem',
-                  color: '#2a2a2a',
+                  color: '#4a4a4a',
                   letterSpacing: '0.08em',
                   lineHeight: 1.7,
                 }}>
@@ -842,8 +868,13 @@ export default function RecruitingForm() {
                 </p>
 
                 {/* ── Submit ── */}
-                <SubmitButton isLoading={isLoading} isSuccess={isSuccess} />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div style={{ width: '100%' }}>
+                    <SubmitButton isLoading={isLoading} isSuccess={isSuccess} />
+                  </div>
+                </div>
               </motion.form>
+              </div>{/* end card */}
             </motion.div>
           )}
         </AnimatePresence>
