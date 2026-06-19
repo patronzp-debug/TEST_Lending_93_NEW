@@ -13,7 +13,7 @@ import { Menu, X } from 'lucide-react'
 const NAV_LINKS = [
   { label: 'Герої', href: '#about' },
   { label: 'Вакансії', href: '#vacancies' },
-  { label: 'Арсенал', href: '#equipment' },
+  { label: 'Інтелект', href: '#smart-war' },
   { label: 'FAQ', href: '#faq' },
 ]
 
