@@ -38,22 +38,22 @@ export default function Footer() {
         {/* Top row: logo + contacts */}
         <div className="footer-top-row">
           {/* Logo / identity */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <Image
               src="/logos/93_optb/logo_section_Hero.png"
               alt="93 ОПТБ Логотип"
-              width={28}
-              height={28}
+              width={48}
+              height={48}
               className="object-contain"
-              style={{ filter: 'drop-shadow(0 0 8px rgba(255,90,0,0.35))' }}
+              style={{ filter: 'drop-shadow(0 0 12px rgba(255,90,0,0.5))' }}
             />
             <div>
               <span style={{
                 fontFamily: 'var(--font-oswald)',
-                fontSize: 'clamp(0.95rem, 1.5vw, 1.15rem)',
+                fontSize: 'clamp(1.15rem, 1.8vw, 1.4rem)',
                 fontWeight: 700,
                 color: '#ececec',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.06em',
                 textTransform: 'uppercase',
               }}>
                 93 ОПТБ
@@ -61,11 +61,11 @@ export default function Footer() {
               <span style={{
                 display: 'block',
                 fontFamily: 'var(--font-roboto-mono)',
-                fontSize: '0.55rem',
-                color: '#3a3a3a',
-                letterSpacing: '0.2em',
+                fontSize: '0.65rem',
+                color: '#666',
+                letterSpacing: '0.18em',
                 textTransform: 'uppercase',
-                marginTop: '2px',
+                marginTop: '3px',
               }}>
                 Окремий Протитанковий Батальйон
               </span>
@@ -78,8 +78,8 @@ export default function Footer() {
             <div className="flex flex-col gap-1">
               <span style={{
                 fontFamily: 'var(--font-roboto-mono)',
-                fontSize: '0.55rem',
-                color: '#6a6a6a',
+                fontSize: '0.78rem',
+                color: '#888',
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
               }}>
@@ -89,7 +89,7 @@ export default function Footer() {
                 href="mailto:a5021armyrobota@gmail.com"
                 style={{
                   fontFamily: 'var(--font-roboto-mono)',
-                  fontSize: '0.8rem',
+                  fontSize: '1.05rem',
                   color: '#ececec',
                   textDecoration: 'none',
                   transition: 'color 0.2s ease',
@@ -104,8 +104,8 @@ export default function Footer() {
             <div className="flex flex-col gap-1">
               <span style={{
                 fontFamily: 'var(--font-roboto-mono)',
-                fontSize: '0.55rem',
-                color: '#6a6a6a',
+                fontSize: '0.78rem',
+                color: '#888',
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
               }}>
@@ -115,7 +115,7 @@ export default function Footer() {
                 href="tel:+380971068514"
                 style={{
                   fontFamily: 'var(--font-roboto-mono)',
-                  fontSize: '0.8rem',
+                  fontSize: '1.05rem',
                   color: '#ececec',
                   textDecoration: 'none',
                   transition: 'color 0.2s ease',
@@ -130,8 +130,8 @@ export default function Footer() {
             <div className="flex flex-col gap-1">
               <span style={{
                 fontFamily: 'var(--font-roboto-mono)',
-                fontSize: '0.55rem',
-                color: '#6a6a6a',
+                fontSize: '0.78rem',
+                color: '#888',
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
               }}>
@@ -141,7 +141,7 @@ export default function Footer() {
                 href="tel:+380633939824"
                 style={{
                   fontFamily: 'var(--font-roboto-mono)',
-                  fontSize: '0.8rem',
+                  fontSize: '1.05rem',
                   color: '#ececec',
                   textDecoration: 'none',
                   transition: 'color 0.2s ease',
@@ -189,8 +189,8 @@ export default function Footer() {
               <Image
                 src={social.icon}
                 alt={social.name}
-                width={24}
-                height={24}
+                width={32}
+                height={32}
                 className="object-contain"
               />
             </motion.a>
@@ -201,8 +201,8 @@ export default function Footer() {
         <div className="footer-bottom-row">
           <p style={{
             fontFamily: 'var(--font-roboto-mono)',
-            fontSize: '0.55rem',
-            color: '#2a2a2a',
+            fontSize: '0.68rem',
+            color: '#555',
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
           }}>
@@ -210,8 +210,8 @@ export default function Footer() {
           </p>
           <p style={{
             fontFamily: 'var(--font-roboto-mono)',
-            fontSize: '0.55rem',
-            color: '#1e1e1e',
+            fontSize: '0.68rem',
+            color: '#444',
             letterSpacing: '0.08em',
             textAlign: 'right' as const,
           }}>
