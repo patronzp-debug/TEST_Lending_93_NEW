@@ -1,21 +1,53 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type CSSProperties } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import { useIntro } from '@/components/providers/IntroContext'
-import { Menu, X } from 'lucide-react'
+import { BriefcaseBusiness, Cpu, Menu, MessageCircleQuestionMark, Shield, X } from 'lucide-react'
 
 /* ============================================================
    NAV LINKS
    ============================================================ */
 
 const NAV_LINKS = [
-  { label: 'Герої', href: '#about' },
-  { label: 'Вакансії', href: '#vacancies' },
-  { label: 'Інтелект', href: '#smart-war' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Герої', href: '#about', icon: Shield },
+  { label: 'Вакансії', href: '#vacancies', icon: BriefcaseBusiness },
+  { label: 'Інтелект', href: '#smart-war', icon: Cpu },
+  { label: 'FAQ', href: '#faq', icon: MessageCircleQuestionMark },
 ]
+
+const mobilePanelStyle: CSSProperties = {
+  background:
+    'radial-gradient(circle at 0% 0%, rgba(255,90,0,0.12), transparent 32%), linear-gradient(180deg, #080808 0%, #101010 52%, #1a1a1a 100%)',
+  isolation: 'isolate',
+}
+
+const mobileLinkStyle: CSSProperties = {
+  minHeight: '50px',
+  padding: '7px 11px 7px 8px',
+  border: '1px solid rgba(255,255,255,0.12)',
+  borderRadius: '8px',
+  background:
+    'linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.018)), rgba(8,8,8,0.64)',
+  boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.02), 0 10px 24px rgba(0,0,0,0.26)',
+  cursor: 'pointer',
+  fontFamily: 'var(--font-oswald)',
+}
+
+const mobileIconStyle: CSSProperties = {
+  border: '1px solid rgba(255,90,0,0.32)',
+  borderRadius: '7px',
+  color: '#ff5a00',
+  background: 'rgba(255,90,0,0.07)',
+  boxShadow: 'inset 0 0 12px rgba(255,90,0,0.07)',
+}
+
+const mobileMenuGutterStyle: CSSProperties = {
+  boxSizing: 'border-box',
+  paddingLeft: '16px',
+  paddingRight: '16px',
+}
 
 /* ============================================================
    SMOOTH SCROLL HELPER
@@ -290,7 +322,7 @@ export default function Header() {
           {/* ---- MOBILE: Burger ---- */}
           <motion.button
             id="header-burger"
-            className="md:hidden relative z-10 p-2 text-[#ececec]"
+            className="relative z-10 p-2 text-[#ececec] md:hidden"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? 'Закрити меню' : 'Відкрити меню'}
             initial={{ opacity: 0 }}
@@ -334,12 +366,13 @@ export default function Header() {
               animate={{ y: 0 }}
               exit={{ y: '-100%' }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed inset-0 h-dvh w-full z-[9999] md:hidden flex flex-col bg-[#080808]"
+              className="fixed inset-0 z-[10000] flex h-dvh w-full flex-col overflow-hidden md:hidden"
               aria-label="Мобільна навігація"
+              style={mobilePanelStyle}
             >
               {/* Top Row: Brand & Close Button */}
               <div 
-                className="flex items-center justify-between min-h-[60px] w-full"
+                className="relative z-10 flex min-h-[60px] w-full items-center justify-between"
                 style={{
                   boxSizing: 'border-box',
                   paddingTop: '16px',
@@ -405,7 +438,10 @@ export default function Header() {
               </div>
 
               {/* Centered links */}
-              <div className="flex flex-col items-center justify-center flex-1 gap-8 my-auto">
+              <div
+                className="relative z-10 flex min-h-0 flex-1 flex-col items-stretch justify-center gap-2.5 py-6"
+                style={mobileMenuGutterStyle}
+              >
                 {NAV_LINKS.map((link, i) => (
                   <motion.button
                     key={link.href}
@@ -413,24 +449,32 @@ export default function Header() {
                       setMobileOpen(false)
                       scrollTo(link.href)
                     }}
-                    className="text-center text-[1.5rem] font-bold tracking-[0.2em] text-[#ececec] hover:text-[#ff5a00] uppercase transition-colors duration-200"
-                    style={{ fontFamily: 'var(--font-oswald)', background: 'none', border: 'none', cursor: 'pointer' }}
+                    className="group relative flex w-full items-center gap-3 overflow-hidden text-left text-[#ececec]"
+                    style={mobileLinkStyle}
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    whileTap={{ scale: 0.965, y: 2 }}
                   >
-                    {link.label}
+                    <span
+                      className="grid h-9 w-9 shrink-0 place-items-center"
+                      aria-hidden="true"
+                      style={mobileIconStyle}
+                    >
+                      <link.icon size={18} strokeWidth={1.8} />
+                    </span>
+                    <span className="text-[1.05rem] font-bold uppercase leading-none tracking-[0.1em]">
+                      {link.label}
+                    </span>
                   </motion.button>
                 ))}
               </div>
 
               {/* Bottom CTA Button (Elegant margins, tall, blocky like reference) */}
               <div 
-                className="w-full mt-auto"
+                className="relative z-10 mt-auto w-full"
                 style={{
-                  boxSizing: 'border-box',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
+                  ...mobileMenuGutterStyle,
                   paddingBottom: '24px',
                 }}
               >
@@ -448,12 +492,13 @@ export default function Header() {
                     fontSize: '1.05rem',
                     letterSpacing: '0.05em',
                     cursor: 'pointer',
-                    borderRadius: '0px',
+                    borderRadius: '10px',
                     boxShadow: '0 4px 20px rgba(255,90,0,0.15)',
                   }}
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: NAV_LINKS.length * 0.08 + 0.05, ease: [0.16, 1, 0.3, 1] }}
+                  whileTap={{ scale: 0.97, y: 2 }}
                 >
                   Приєднатися
                 </motion.button>
