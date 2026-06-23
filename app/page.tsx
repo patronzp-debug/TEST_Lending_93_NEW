@@ -1,18 +1,3 @@
-/**
- * 93 ОПТБ — Головна сторінка
- * Primary Language: Ukrainian (spec_theme.md)
- *
- * Розділи:
- *  ✓ Hero              — кінематографічне відео, глітч-заголовок, GSAP scroll
- *  ✓ About             — двоколонка, stagger word-reveal, GSAP parallax галерея
- *  ✓ RecruitmentPath   — «Шлях рекрутингу», білий брейк, sticky (desktop) / timeline (mobile)
- *  ✓ Vacancies         — асиметричний Bento Grid, HUD-hover, Framer Motion
- *  ✓ SmartWar          — мінімалістична сітка 4 карток, Framer Motion stagger reveal
- *  ✓ MythsAndReality   — 4 картки «Міф / Реальність», dark grid, hover orange border
- *  ✓ FAQ               — акордеон-секція з частими запитаннями (над формою)
- *  ✓ RecruitingForm    — zod + react-hook-form, localStorage, shimmer CTA, success state
- *  ✓ Footer            — мінімалістичний footer з навігацією та копірайтом
- */
 import Hero from '@/components/Hero'
 import MarqueeTicker from '@/components/MarqueeTicker'
 import About from '@/components/About'
@@ -43,5 +28,4 @@ export default function Home() {
     </>
   )
 }
-
 

@@ -15,6 +15,24 @@ const SOCIALS = [
   { name: 'YouTube', icon: '/icons/footer_svg/youtube.svg', href: '#' },
 ]
 
+const CONTACTS = [
+  {
+    label: 'ПИШІТЬ',
+    href: 'mailto:a5021armyrobota@gmail.com',
+    value: 'a5021armyrobota@gmail.com',
+  },
+  {
+    label: 'РЕКРУТИНГ',
+    href: 'tel:+380971068514',
+    value: '+38 (097) 106 85 14',
+  },
+  {
+    label: 'ГАРЯЧА ЛІНІЯ',
+    href: 'tel:+380633939824',
+    value: '+38 (063) 393 98 24',
+  },
+]
+
 const YEAR = new Date().getFullYear()
 
 export default function Footer() {
@@ -72,85 +90,33 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Contacts Block */}
           <div className="flex flex-wrap gap-8 md:gap-12">
-            {/* Email */}
-            <div className="flex flex-col gap-1">
-              <span style={{
-                fontFamily: 'var(--font-roboto-mono)',
-                fontSize: '0.78rem',
-                color: '#888',
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-              }}>
-                ПИШІТЬ
-              </span>
-              <motion.a
-                href="mailto:a5021armyrobota@gmail.com"
-                style={{
+            {CONTACTS.map(contact => (
+              <div key={contact.href} className="flex flex-col gap-1">
+                <span style={{
                   fontFamily: 'var(--font-roboto-mono)',
-                  fontSize: '1.05rem',
-                  color: '#ececec',
-                  textDecoration: 'none',
-                  transition: 'color 0.2s ease',
-                }}
-                whileHover={{ color: '#ff5a00' }}
-              >
-                a5021armyrobota@gmail.com
-              </motion.a>
-            </div>
-
-            {/* Recruiting Phone */}
-            <div className="flex flex-col gap-1">
-              <span style={{
-                fontFamily: 'var(--font-roboto-mono)',
-                fontSize: '0.78rem',
-                color: '#888',
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-              }}>
-                РЕКРУТИНГ
-              </span>
-              <motion.a
-                href="tel:+380971068514"
-                style={{
-                  fontFamily: 'var(--font-roboto-mono)',
-                  fontSize: '1.05rem',
-                  color: '#ececec',
-                  textDecoration: 'none',
-                  transition: 'color 0.2s ease',
-                }}
-                whileHover={{ color: '#ff5a00' }}
-              >
-                +38 (097) 106 85 14
-              </motion.a>
-            </div>
-
-            {/* Hotline Phone */}
-            <div className="flex flex-col gap-1">
-              <span style={{
-                fontFamily: 'var(--font-roboto-mono)',
-                fontSize: '0.78rem',
-                color: '#888',
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-              }}>
-                ГАРЯЧА ЛІНІЯ
-              </span>
-              <motion.a
-                href="tel:+380633939824"
-                style={{
-                  fontFamily: 'var(--font-roboto-mono)',
-                  fontSize: '1.05rem',
-                  color: '#ececec',
-                  textDecoration: 'none',
-                  transition: 'color 0.2s ease',
-                }}
-                whileHover={{ color: '#ff5a00' }}
-              >
-                +38 (063) 393 98 24
-              </motion.a>
-            </div>
+                  fontSize: '0.78rem',
+                  color: '#888',
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase',
+                }}>
+                  {contact.label}
+                </span>
+                <motion.a
+                  href={contact.href}
+                  style={{
+                    fontFamily: 'var(--font-roboto-mono)',
+                    fontSize: '1.05rem',
+                    color: '#ececec',
+                    textDecoration: 'none',
+                    transition: 'color 0.2s ease',
+                  }}
+                  whileHover={{ color: '#ff5a00' }}
+                >
+                  {contact.value}
+                </motion.a>
+              </div>
+            ))}
           </div>
         </div>
 

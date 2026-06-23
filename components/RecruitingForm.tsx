@@ -39,9 +39,11 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-/* POSITIONS видалено — тепер беремо дані з VACANCY_CATEGORIES */
-
 const LS_KEY = '93optb_form_draft'
+const EXPERIENCE_OPTIONS = [
+  { value: 'yes', label: 'Так, маю досвід' },
+  { value: 'no', label: 'Ні, не маю' },
+]
 
 /* ============================================================
    FRAMER MOTION VARIANTS
@@ -153,10 +155,7 @@ interface CinematicSelectProps {
   id: string
   value: string
   onChange: (v: string) => void
-  /** Flat list — використовується якщо groups не передано */
-  options?: string[]
-  /** Згруповані опції за категоріями вакансій */
-  groups?: VacancyCategory[]
+  groups: VacancyCategory[]
   placeholder: string
   hasError: boolean
 }
@@ -187,7 +186,7 @@ function SelectOption({
   )
 }
 
-function CinematicSelect({ id, value, onChange, options = [], groups, placeholder, hasError }: CinematicSelectProps) {
+function CinematicSelect({ id, value, onChange, groups, placeholder, hasError }: CinematicSelectProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -249,54 +248,42 @@ function CinematicSelect({ id, value, onChange, options = [], groups, placeholde
               padding: '4px 0',
             }}
           >
-            {groups ? (
-              <>
-                {groups.map((cat, catIdx) => (
-                  <li key={cat.id} role="presentation">
-                    {/* Роздільник між групами (крім першої) */}
-                    {catIdx > 0 && (
-                      <div aria-hidden="true" style={{
-                        height: '1px',
-                        background: '#1e1e1e',
-                        margin: '4px 0',
-                      }} />
-                    )}
-                    {/* Назва категорії */}
-                    <div style={{
-                      padding: '8px 16px 4px',
-                      fontFamily: 'var(--font-roboto-mono)',
-                      fontSize: '0.55rem',
-                      letterSpacing: '0.2em',
-                      color: '#ff5a00',
-                      textTransform: 'uppercase',
-                    }}>
-                      {cat.categoryName}
-                    </div>
-                    {/* Вакансії категорії */}
-                    <ul role="group" aria-label={cat.categoryName} style={{ listStyle: 'none', padding: 0 }}>
-                      {cat.items.map(item => (
-                        <SelectOption
-                          key={item.id}
-                          opt={item.title}
-                          value={value}
-                          onChange={onChange}
-                          setOpen={setOpen}
-                        />
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-                {/* Роздільник перед «Інше» */}
-                <li role="presentation" aria-hidden="true">
-                  <div style={{ height: '1px', background: '#1e1e1e', margin: '4px 0' }} />
-                </li>
-                <SelectOption opt="Інше" value={value} onChange={onChange} setOpen={setOpen} />
-              </>
-            ) : (
-              options.map(opt => (
-                <SelectOption key={opt} opt={opt} value={value} onChange={onChange} setOpen={setOpen} />
-              ))
-            )}
+            {groups.map((cat, catIdx) => (
+              <li key={cat.id} role="presentation">
+                {catIdx > 0 && (
+                  <div aria-hidden="true" style={{
+                    height: '1px',
+                    background: '#1e1e1e',
+                    margin: '4px 0',
+                  }} />
+                )}
+                <div style={{
+                  padding: '8px 16px 4px',
+                  fontFamily: 'var(--font-roboto-mono)',
+                  fontSize: '0.55rem',
+                  letterSpacing: '0.2em',
+                  color: '#ff5a00',
+                  textTransform: 'uppercase',
+                }}>
+                  {cat.categoryName}
+                </div>
+                <ul role="group" aria-label={cat.categoryName} style={{ listStyle: 'none', padding: 0 }}>
+                  {cat.items.map(item => (
+                    <SelectOption
+                      key={item.id}
+                      opt={item.title}
+                      value={value}
+                      onChange={onChange}
+                      setOpen={setOpen}
+                    />
+                  ))}
+                </ul>
+              </li>
+            ))}
+            <li role="presentation" aria-hidden="true">
+              <div style={{ height: '1px', background: '#1e1e1e', margin: '4px 0' }} />
+            </li>
+            <SelectOption opt="Інше" value={value} onChange={onChange} setOpen={setOpen} />
           </motion.ul>
         )}
       </AnimatePresence>
@@ -841,10 +828,7 @@ export default function RecruitingForm() {
                         name="hasExperience"
                         value={field.value}
                         onChange={field.onChange}
-                        options={[
-                          { value: 'yes', label: 'Так, маю досвід' },
-                          { value: 'no',  label: 'Ні, не маю' },
-                        ]}
+                        options={EXPERIENCE_OPTIONS}
                         hasError={!!errors.hasExperience}
                       />
                     )}

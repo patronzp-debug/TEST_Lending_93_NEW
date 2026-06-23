@@ -322,7 +322,7 @@ export default function FAQ() {
 
   const toggle = (id: string) => setOpenId(prev => (prev === id ? null : id))
 
-  const visibleItems = showAll ? FAQ_ITEMS : FAQ_ITEMS.slice(0, INITIAL_VISIBLE)
+  const firstItems = FAQ_ITEMS.slice(0, INITIAL_VISIBLE)
   const hiddenItems = FAQ_ITEMS.slice(INITIAL_VISIBLE)
 
   return (
@@ -408,8 +408,7 @@ export default function FAQ() {
 
           {/* RIGHT — Accordion */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {/* Always-visible first 5 items */}
-            {visibleItems.slice(0, INITIAL_VISIBLE).map((item, i) => (
+            {firstItems.map((item, i) => (
               <AccordionItem
                 key={item.id}
                 item={item}
@@ -420,7 +419,6 @@ export default function FAQ() {
               />
             ))}
 
-            {/* Animated extra items (6-13) */}
             <AnimatePresence initial={false}>
               {showAll && hiddenItems.map((item, i) => (
                 <motion.div
@@ -445,7 +443,6 @@ export default function FAQ() {
               ))}
             </AnimatePresence>
 
-            {/* Show More / Collapse button */}
             <ShowMoreButton
               showAll={showAll}
               onToggle={() => setShowAll(prev => !prev)}

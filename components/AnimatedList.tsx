@@ -1,12 +1,5 @@
 'use client'
 
-/**
- * AnimatedList — Mobile nested accordion (2-level)
- * Level 1: Categories (5 groups) — dark block headers with icon placeholder + chevron
- * Level 2: Vacancies inside a category — compact rows with expand/collapse
- * Desktop Bento Grid is NOT affected by this component.
- */
-
 import { useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
@@ -275,9 +268,6 @@ function CategoryBlock({
    ============================================================ */
 
 interface AnimatedListProps {
-  /** For backward-compat when flat list is passed */
-  items?: VacancyItem[]
-  /** Grouped categories (preferred) */
   categories?: VacancyCategory[]
 }
 

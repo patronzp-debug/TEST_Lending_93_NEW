@@ -17,6 +17,8 @@ const NAV_LINKS = [
   { label: 'FAQ', href: '#faq', icon: MessageCircleQuestionMark },
 ]
 
+const BRAND_WORDS = ['ОКРЕМИЙ', 'ПРОТИТАНКОВИЙ', 'БАТАЛЬЙОН'] as const
+
 const mobilePanelStyle: CSSProperties = {
   background:
     'radial-gradient(circle at 0% 0%, rgba(255,90,0,0.12), transparent 32%), linear-gradient(180deg, #080808 0%, #101010 52%, #1a1a1a 100%)',
@@ -187,7 +189,7 @@ export default function Header() {
                 layoutId="brand-text"
                 className="flex flex-col items-center leading-snug w-full md:w-auto md:items-start"
               >
-                {(['ОКРЕМИЙ', 'ПРОТИТАНКОВИЙ', 'БАТАЛЬЙОН'] as const).map((word) => (
+                {BRAND_WORDS.map((word) => (
                   <span
                     key={word}
                     className="block font-bold uppercase tracking-[0.2em] text-[#ececec]"
@@ -255,24 +257,15 @@ export default function Header() {
               </motion.span>
 
               <motion.div layoutId="brand-text" className="flex flex-col leading-tight ml-1">
-                <span
-                  className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
-                  style={{ fontFamily: 'var(--font-oswald)' }}
-                >
-                  ОКРЕМИЙ
-                </span>
-                <span
-                  className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
-                  style={{ fontFamily: 'var(--font-oswald)' }}
-                >
-                  ПРОТИТАНКОВИЙ
-                </span>
-                <span
-                  className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
-                  style={{ fontFamily: 'var(--font-oswald)' }}
-                >
-                  БАТАЛЬЙОН
-                </span>
+                {BRAND_WORDS.map(word => (
+                  <span
+                    key={word}
+                    className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
+                    style={{ fontFamily: 'var(--font-oswald)' }}
+                  >
+                    {word}
+                  </span>
+                ))}
               </motion.div>
             </motion.div>
           )}
@@ -411,24 +404,15 @@ export default function Header() {
                     93
                   </span>
                   <div className="flex flex-col leading-tight ml-1">
-                    <span
-                      className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
-                      style={{ fontFamily: 'var(--font-oswald)' }}
-                    >
-                      ОКРЕМИЙ
-                    </span>
-                    <span
-                      className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
-                      style={{ fontFamily: 'var(--font-oswald)' }}
-                    >
-                      ПРОТИТАНКОВИЙ
-                    </span>
-                    <span
-                      className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
-                      style={{ fontFamily: 'var(--font-oswald)' }}
-                    >
-                      БАТАЛЬЙОН
-                    </span>
+                    {BRAND_WORDS.map(word => (
+                      <span
+                        key={word}
+                        className="text-[0.6rem] font-semibold tracking-[0.14em] text-[#ececec] uppercase"
+                        style={{ fontFamily: 'var(--font-oswald)' }}
+                      >
+                        {word}
+                      </span>
+                    ))}
                   </div>
                 </div>
 

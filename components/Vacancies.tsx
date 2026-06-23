@@ -13,15 +13,28 @@ import { type VacancyItem, VACANCIES, VACANCY_CATEGORIES } from '../constants/va
    ============================================================ */
 
 interface CardProps {
-  vacancy: VacancyItem;
-  index: number;
-  inView: boolean;
+  vacancy: VacancyItem
+  index: number
+  inView: boolean
+}
+
+const FILTER_TABS = [
+  { value: 'УСІ', label: 'УСІ' },
+  { value: 'Водії та Техніка', label: 'Водії та Техніка' },
+  { value: 'Медицина', label: 'Медицина' },
+  { value: 'Бойові Спеціальності', label: 'Бойові Спеціальності' },
+  { value: 'БПЛА / IT', label: 'СПЕЦІАЛІСТИ (БПЛА/IT)' },
+  { value: 'Адміністрація', label: 'АДМІНІСТРАЦІЯ ТА ЛОГІСТИКА' },
+]
+
+function getPriorityColor(priority: VacancyItem['priority']) {
+  if (priority === 'КРИТИЧНО') return '#ff2200'
+  if (priority === 'ТЕРМІНОВО') return '#ff5a00'
+  return '#8a8a8a'
 }
 
 function VacancyCard({ vacancy, index, inView }: CardProps) {
-  const priorityColor =
-    vacancy.priority === 'КРИТИЧНО' ? '#ff2200' :
-      vacancy.priority === 'ТЕРМІНОВО' ? '#ff5a00' : '#8a8a8a';
+  const priorityColor = getPriorityColor(vacancy.priority)
 
   return (
     <motion.article
@@ -40,7 +53,7 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
         borderColor: 'rgba(255,90,0,0.4)',
         boxShadow: '0 8px 30px rgba(0,0,0,0.6)',
         y: -4,
-        transition: { duration: 0.2 }
+        transition: { duration: 0.2 },
       }}
     >
       {/* Фоновое изображение (отображается всегда, изменяется при наведении) */}
@@ -91,10 +104,10 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
           <Button
             id={`apply-${vacancy.id}`}
             onClick={(e) => {
-              e.preventDefault();
-              const formEl = document.getElementById('recruiting-form');
+              e.preventDefault()
+              const formEl = document.getElementById('recruiting-form')
               if (formEl) {
-                formEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                formEl.scrollIntoView({ behavior: 'smooth', block: 'start' })
               }
             }}
             className="relative overflow-hidden border border-white/10 group-hover:border-[#ff5a00]/50 text-white uppercase tracking-[0.15em] bg-transparent hover:bg-[#ff5a00]/10 transition-all duration-300"
@@ -198,9 +211,9 @@ export default function Vacancies() {
   const inView = useInView(sectionRef, { once: true, margin: '-10% 0px' })
   const [activeFilter, setActiveFilter] = useState<string>('УСІ')
 
-  const FILTER_TABS = ['УСІ', 'Водії та Техніка', 'Медицина', 'Бойові Спеціальності', 'БПЛА / IT', 'Адміністрація']
-
-  const filteredVacancies = activeFilter === 'УСІ' ? VACANCIES : VACANCIES.filter(v => v.category === activeFilter)
+  const filteredVacancies = activeFilter === 'УСІ'
+    ? VACANCIES
+    : VACANCIES.filter(v => v.category === activeFilter)
 
   return (
     <section
@@ -224,24 +237,21 @@ export default function Vacancies() {
           {/* FILTER PANEL */}
           <div className="flex flex-wrap items-center" style={{ gap: '12px', marginBottom: '56px' }}>
             {FILTER_TABS.map((tab) => {
-              const isActive = activeFilter === tab;
-              const displayName = tab === 'Адміністрація' ? 'АДМІНІСТРАЦІЯ ТА ЛОГІСТИКА'
-                : tab === 'БПЛА / IT' ? 'СПЕЦІАЛІСТИ (БПЛА/IT)'
-                  : tab;
+              const isActive = activeFilter === tab.value
 
               return (
                 <button
-                  key={tab}
-                  onClick={() => setActiveFilter(tab)}
+                  key={tab.value}
+                  onClick={() => setActiveFilter(tab.value)}
                   className={`rounded-lg border text-sm uppercase tracking-[0.15em] transition-all duration-300 ${isActive
                       ? 'bg-[#ff5a00] border-[#ff5a00] text-black font-bold shadow-[0_0_15px_rgba(255,90,0,0.4)]'
                       : 'bg-transparent border-white/20 text-[#8a8a8a] hover:border-[#ff5a00]/70 hover:text-white'
                     }`}
                   style={{ padding: '8px 24px', fontFamily: 'var(--font-roboto-mono)' }}
                 >
-                  {displayName}
+                  {tab.label}
                 </button>
-              );
+              )
             })}
           </div>
 
