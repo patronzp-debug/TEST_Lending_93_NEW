@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Oswald, Roboto_Mono } from 'next/font/google'
 import SmoothScrollProvider from '@/components/providers/SmoothScrollProvider'
 import { IntroProvider } from '@/components/providers/IntroContext'
-import CookieBanner from '@/components/CookieBanner'
+import LazyCookieBanner from '@/components/LazyCookieBanner'
 import Header from '@/components/Header'
 import './globals.css'
 
@@ -72,7 +72,7 @@ export default function RootLayout({
           <SmoothScrollProvider>
             {children}
           </SmoothScrollProvider>
-          <CookieBanner />
+          <LazyCookieBanner />
         </IntroProvider>
       </body>
     </html>

@@ -23,7 +23,7 @@ export default function CookieBanner() {
   }
 
   return (
-    <div className="fixed bottom-0 z-50 w-full border-t border-zinc-800 bg-zinc-950/95 px-4 py-4 backdrop-blur-md">
+    <div className="fixed bottom-0 z-50 w-full border-t border-zinc-800 bg-zinc-950 px-4 py-4">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-3 text-center md:flex-row md:gap-5">
         <p className="max-w-4xl text-sm leading-relaxed text-zinc-200">
           Цей сайт використовує файли cookie для аналітики та покращення
