@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ChevronDown } from 'lucide-react'
@@ -123,9 +124,20 @@ export default function Hero() {
       className="hero-section relative w-full overflow-hidden"
       style={{ height: '100svh' }}
     >
+      {/* ---- Priority Poster Image for LCP ---- */}
+      <Image
+        src="/images/hero-poster.png"
+        alt="93 ОПТБ бойова робота"
+        fill
+        priority
+        fetchPriority="high"
+        sizes="100vw"
+        className="absolute inset-0 z-0 object-cover object-center"
+      />
+
       {/* ---- Background Video ---- */}
       <video
-        className="hero-video absolute inset-0 w-full h-full object-cover transform-gpu will-change-transform"
+        className="hero-video absolute inset-0 z-10 w-full h-full object-cover transform-gpu will-change-transform"
         autoPlay
         muted
         loop
@@ -141,7 +153,7 @@ export default function Hero() {
 
       {/* ---- Vignette / Dark Gradient Overlay ---- */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 z-20 pointer-events-none"
         aria-hidden="true"
         style={{
           background: `
@@ -163,7 +175,7 @@ export default function Hero() {
 
       {/* ---- Scan-line accent (subtle) ---- */}
       <div
-        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-[0.04]"
+        className="absolute inset-0 z-20 pointer-events-none mix-blend-overlay opacity-[0.04]"
         aria-hidden="true"
         style={{
           backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.5) 2px, rgba(255,255,255,0.5) 3px)',
@@ -174,7 +186,7 @@ export default function Hero() {
       {/* ---- Cinematic Content (appears after intro) ---- */}
       <div
         ref={contentRef}
-        className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center overflow-hidden"
+        className="absolute inset-0 z-30 flex flex-col items-center justify-center px-6 text-center overflow-hidden"
         style={{ willChange: 'filter, transform, opacity', paddingTop: '72px' }}
       >
 
