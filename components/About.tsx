@@ -408,7 +408,7 @@ export default function About() {
                     src={block.image}
                     alt={block.label}
                     fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className={`object-cover transition-transform duration-500 ease-in-out hover:scale-110 group-hover:scale-110 will-change-transform w-full h-full ${
                       isFirst ? 'aspect-video' : 'aspect-square'
                     }`}

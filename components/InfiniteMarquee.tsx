@@ -87,7 +87,7 @@ function MarqueeCard({ src, index, ariaHidden }: { src: string; index: number; a
         src={src}
         alt={ariaHidden ? '' : `Фото підрозділу ${index + 1}`}
         fill
-        sizes="300px"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         style={{ objectFit: 'cover' }}
       />
     </div>
@@ -175,7 +175,7 @@ function MobileSlider() {
                 src={src}
                 alt={`Фото підрозділу ${idx + 1}`}
                 fill
-                sizes="100vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 style={{ objectFit: 'cover' }}
                 draggable={false}
                 priority={idx === 0}
@@ -248,7 +248,8 @@ function MobileSlider() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: '6px',
+        gap: '0',
+        flexWrap: 'wrap',
         marginTop: '14px',
       }}>
         {SLIDER_IMAGES.map((_, idx) => (
@@ -257,16 +258,28 @@ function MobileSlider() {
             onClick={() => setCurrent(idx)}
             aria-label={`Фото ${idx + 1}`}
             style={{
-              width: idx === current ? '20px' : '6px',
-              height: '6px',
-              borderRadius: '3px',
-              background: idx === current ? '#ff5a00' : 'rgba(255,255,255,0.2)',
+              minWidth: '44px',
+              minHeight: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'transparent',
               border: 'none',
               padding: 0,
               cursor: 'pointer',
-              transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
             }}
-          />
+          >
+            <span
+              aria-hidden="true"
+              style={{
+                width: idx === current ? '20px' : '6px',
+                height: '6px',
+                borderRadius: '3px',
+                background: idx === current ? '#ff5a00' : 'rgba(255,255,255,0.2)',
+                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+            />
+          </button>
         ))}
       </div>
 

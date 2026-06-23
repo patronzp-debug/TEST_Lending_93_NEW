@@ -80,7 +80,7 @@ export default function Footer() {
                 display: 'block',
                 fontFamily: 'var(--font-roboto-mono)',
                 fontSize: '0.65rem',
-                color: '#666',
+                color: '#888',
                 letterSpacing: '0.18em',
                 textTransform: 'uppercase',
                 marginTop: '3px',
@@ -168,7 +168,7 @@ export default function Footer() {
           <p style={{
             fontFamily: 'var(--font-roboto-mono)',
             fontSize: '0.68rem',
-            color: '#555',
+            color: '#888',
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
           }}>
@@ -177,7 +177,7 @@ export default function Footer() {
           <p style={{
             fontFamily: 'var(--font-roboto-mono)',
             fontSize: '0.68rem',
-            color: '#444',
+            color: '#888',
             letterSpacing: '0.08em',
             textAlign: 'right' as const,
           }}>

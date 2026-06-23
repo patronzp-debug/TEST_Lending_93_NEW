@@ -148,7 +148,9 @@ function Card({ card }: { card: SmartWarCard }) {
               height: '100%',
               objectFit: 'cover',
             }}
-          />
+          >
+            <track kind="captions" srcLang="uk" label="Ukrainian" />
+          </video>
         ) : (
           <span
             style={{

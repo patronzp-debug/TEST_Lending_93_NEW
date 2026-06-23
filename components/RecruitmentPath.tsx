@@ -161,7 +161,7 @@ function MobileTimeline() {
                 style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}
               >
                 <motion.span
-                  animate={{ color: isActive ? '#ff5a00' : '#aaaaaa' }}
+                  animate={{ color: isActive ? '#ff5a00' : '#777777' }}
                   transition={{ duration: 0.35 }}
                   style={{
                     fontFamily: 'var(--font-roboto-mono)',
@@ -175,7 +175,7 @@ function MobileTimeline() {
                 </motion.span>
 
                 <motion.h3
-                  animate={{ color: isActive ? '#080808' : isDone ? '#3a3a3a' : '#9a9a9a' }}
+                  animate={{ color: isActive ? '#080808' : isDone ? '#3a3a3a' : '#777777' }}
                   transition={{ duration: 0.4 }}
                   style={{
                     fontFamily: 'var(--font-oswald)',
@@ -191,7 +191,7 @@ function MobileTimeline() {
                 </motion.h3>
 
                 <motion.p
-                  animate={{ color: isActive ? '#4a4a4a' : '#aaaaaa' }}
+                  animate={{ color: isActive ? '#666666' : '#777777' }}
                   transition={{ duration: 0.4 }}
                   style={{
                     fontFamily: 'var(--font-roboto-mono)',
@@ -396,7 +396,7 @@ function DesktopStepItem({
         {/* Текст */}
         <div className="flex flex-1 flex-col gap-2.5">
           <motion.span
-            animate={{ color: isActive ? '#ff5a00' : '#b0b0b0' }}
+            animate={{ color: isActive ? '#ff5a00' : '#777777' }}
             transition={{ duration: 0.35 }}
             className="uppercase"
             style={{
@@ -410,7 +410,7 @@ function DesktopStepItem({
           </motion.span>
 
           <motion.h3
-            animate={{ color: isActive ? '#080808' : '#b0b0b0' }}
+            animate={{ color: isActive ? '#080808' : '#777777' }}
             transition={{ duration: 0.4 }}
             className="m-0 uppercase"
             style={{
@@ -425,7 +425,7 @@ function DesktopStepItem({
           </motion.h3>
 
           <motion.p
-            animate={{ color: isActive ? '#4a4a4a' : '#c0c0c0', opacity: isActive ? 1 : 0.5 }}
+            animate={{ color: isActive ? '#666666' : '#777777', opacity: isActive ? 1 : 0.7 }}
             transition={{ duration: 0.45 }}
             className="m-0 max-w-[440px]"
             style={{

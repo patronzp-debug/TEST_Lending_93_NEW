@@ -148,6 +148,7 @@ export default function Hero() {
         <source src="/videos/bg-main.webm" type="video/webm" />
         {/* Safari, iOS, macOS — universal fallback */}
         <source src="/videos/bg-main.mp4" type="video/mp4" />
+        <track kind="captions" srcLang="uk" label="Ukrainian" />
         Ваш браузер не підтримує відео.
       </video>
 
