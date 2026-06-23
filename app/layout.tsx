@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Oswald, Roboto_Mono } from 'next/font/google'
 import SmoothScrollProvider from '@/components/providers/SmoothScrollProvider'
 import { IntroProvider } from '@/components/providers/IntroContext'
+import CookieBanner from '@/components/CookieBanner'
 import Header from '@/components/Header'
 import './globals.css'
 
@@ -30,15 +31,24 @@ const robotoMono = Roboto_Mono({
    ============================================================ */
 
 export const metadata: Metadata = {
-  title: '93 ОПТБ — Служи з Честю',
+  title: '93 ОПТБ — Служи з Честю | Окремий Протитанковий Батальйон',
   description:
-    'Офіційна сторінка рекрутингу 93-го окремого піхотного тактичного батальйону. Приєднуйся до команди професіоналів, які захищають Україну.',
-  keywords: ['93 ОПТБ', 'рекрутинг', 'ЗСУ', 'служба', 'батальйон'],
+    'Офіційний рекрутинговий портал 93-го Окремого Протитанкового Батальйону. Долучайся до лав ЗСУ, обирай посаду та подавай заявку онлайн.',
+  keywords: [
+    '93 ОПТБ',
+    'ЗСУ',
+    'рекрутинг',
+    'служба за контрактом',
+    'протитанковий батальйон',
+    'приєднатися до ЗСУ',
+  ],
   openGraph: {
     title: '93 ОПТБ — Служи з Честю',
-    description: 'Офіційна рекрутингова сторінка 93 ОПТБ',
-    type: 'website',
+    description: 'Офіційний рекрутинговий портал 93 ОПТБ.',
+    url: 'https://test-lending-93-new.vercel.app/',
+    siteName: '93 ОПТБ',
     locale: 'uk_UA',
+    type: 'website',
   },
 }
 
@@ -62,6 +72,7 @@ export default function RootLayout({
           <SmoothScrollProvider>
             {children}
           </SmoothScrollProvider>
+          <CookieBanner />
         </IntroProvider>
       </body>
     </html>
