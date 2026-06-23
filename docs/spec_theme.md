@@ -1,4 +1,4 @@
-# spec_theme.md
+пше# spec_theme.md
 
 Source of Truth generated from executable code only.
 

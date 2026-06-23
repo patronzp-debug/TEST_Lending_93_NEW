@@ -126,13 +126,18 @@ export default function Hero() {
       {/* ---- Background Video ---- */}
       <video
         className="hero-video absolute inset-0 w-full h-full object-cover transform-gpu will-change-transform"
-        src="/videos/bg-main.webm"
         autoPlay
         muted
         loop
         playsInline
         aria-hidden="true"
-      />
+      >
+        {/* Chrome, Firefox, Opera — compact source */}
+        <source src="/videos/bg-main.webm" type="video/webm" />
+        {/* Safari, iOS, macOS — universal fallback */}
+        <source src="/videos/bg-main.mp4" type="video/mp4" />
+        Ваш браузер не підтримує відео.
+      </video>
 
       {/* ---- Vignette / Dark Gradient Overlay ---- */}
       <div
