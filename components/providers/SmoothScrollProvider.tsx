@@ -13,10 +13,9 @@ interface SmoothScrollProviderProps {
 
 export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const lenisRef = useRef<Lenis | null>(null)
+  const tickerCallbackRef = useRef<((time: number) => void) | null>(null)
 
   useEffect(() => {
-    let rafId: number
-
     async function init() {
       // Dynamically import GSAP (client-side only)
       const gsapModule = await import('gsap')
@@ -48,31 +47,25 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
       })
 
       // GSAP ticker drives Lenis
-      gsap.ticker.add((time: number) => {
+      const tickerCallback = (time: number) => {
         lenis.raf(time * 1000)
-      })
-      gsap.ticker.lagSmoothing(0)
-
-      // RAF fallback (for non-GSAP contexts)
-      function raf(time: number) {
-        lenis.raf(time)
-        rafId = requestAnimationFrame(raf)
       }
-      // NOTE: When using gsap.ticker, don't also use RAF to avoid double updates
-      // The GSAP ticker handles everything above
+      tickerCallbackRef.current = tickerCallback
+      gsap.ticker.add(tickerCallback)
+      gsap.ticker.lagSmoothing(0)
     }
 
     init()
 
     return () => {
       // Cleanup
-      cancelAnimationFrame(rafId)
       if (lenisRef.current) {
         lenisRef.current.destroy()
         lenisRef.current = null
       }
-      if (gsap) {
-        gsap.ticker.remove(() => {})
+      if (gsap && tickerCallbackRef.current) {
+        gsap.ticker.remove(tickerCallbackRef.current)
+        tickerCallbackRef.current = null
       }
       ScrollTrigger?.getAll().forEach(t => t.kill())
     }

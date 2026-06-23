@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
@@ -44,10 +45,12 @@ function VacancyCard({ vacancy, index, inView }: CardProps) {
     >
       {/* Фоновое изображение (отображается всегда, изменяется при наведении) */}
       <div className="absolute inset-0 z-0 opacity-50 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-        <img
+        <Image
           src={vacancy.imageUrl || '/images/vacancies/placeholder.webp'}
           alt=""
-          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+          fill
+          sizes="270px"
+          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
       </div>

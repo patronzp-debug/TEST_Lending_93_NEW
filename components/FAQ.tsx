@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { Plus } from 'lucide-react'
 
@@ -311,24 +311,6 @@ function ShowMoreButton({ showAll, onToggle }: ShowMoreButtonProps) {
 }
 
 /* ============================================================
-   HOOK: Mobile detection (SSR-safe, matchMedia)
-   ============================================================ */
-function useIsMobile(): boolean {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)')
-    setIsMobile(mq.matches)
-
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
-  }, [])
-
-  return isMobile
-}
-
-/* ============================================================
    FAQ SECTION
    ============================================================ */
 
@@ -337,7 +319,6 @@ export default function FAQ() {
   const [showAll, setShowAll] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const inView = useInView(sectionRef, { once: true, margin: '-8% 0px' })
-  const isMobile = useIsMobile()
 
   const toggle = (id: string) => setOpenId(prev => (prev === id ? null : id))
 

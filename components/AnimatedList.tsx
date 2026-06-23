@@ -8,6 +8,7 @@
  */
 
 import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { ChevronDown, ArrowRight } from 'lucide-react'
 import { type VacancyItem, type VacancyCategory } from '../constants/vacancies'
@@ -111,9 +112,11 @@ function VacancyRow({ item, isOpen, onToggle }: VacancyRowProps) {
               {/* Background image with gradient overlay */}
               {item.imageUrl && (
                 <div className="vacancy-row-bg-image" aria-hidden="true">
-                  <img
+                  <Image
                     src={item.imageUrl}
                     alt=""
+                    fill
+                    sizes="100vw"
                     className="vacancy-row-bg-img"
                   />
                   <div className="vacancy-row-bg-gradient" />
@@ -197,8 +200,7 @@ function CategoryBlock({
         {/* Category icon */}
         <div className="category-block-icon" aria-hidden="true">
           {category.icon && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={category.icon}
               alt=""
               width={18}

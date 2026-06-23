@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import Image from 'next/image'
+import { motion, useScroll, useTransform } from 'framer-motion'
 
 /* ============================================================
    ДАНІ КРОКІВ — Ukrainian only (spec_theme.md)
@@ -256,10 +257,12 @@ function DesktopImagePanel({ activeIndex }: { activeIndex: number }) {
 
         {/* Static previous image underneath */}
         {isTransitioning && (
-          <img
+          <Image
             src={lastStep.image}
             alt=""
-            className="absolute inset-0 h-full w-full object-cover"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
             style={{ zIndex: 1 }}
           />
         )}

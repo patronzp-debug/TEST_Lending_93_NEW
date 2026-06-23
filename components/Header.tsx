@@ -74,6 +74,9 @@ export default function Header() {
   useEffect(() => {
     let ticking = false
     let lastScrolled = window.scrollY > 40
+    const initialFrame = window.requestAnimationFrame(() => {
+      setScrolled(lastScrolled)
+    })
 
     const handler = () => {
       if (!ticking) {
@@ -89,9 +92,11 @@ export default function Header() {
       }
     }
 
-    setScrolled(lastScrolled)
     window.addEventListener('scroll', handler, { passive: true })
-    return () => window.removeEventListener('scroll', handler)
+    return () => {
+      window.cancelAnimationFrame(initialFrame)
+      window.removeEventListener('scroll', handler)
+    }
   }, [])
 
   /* Close mobile menu on resize to desktop */

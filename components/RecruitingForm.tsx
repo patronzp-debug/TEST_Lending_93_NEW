@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -487,7 +487,6 @@ function ResetButton({ onReset }: { onReset: () => void }) {
 export default function RecruitingForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-  const sectionInView = useRef(false)
   const [inView, setInView] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -495,7 +494,6 @@ export default function RecruitingForm() {
     register,
     handleSubmit,
     control,
-    watch,
     reset,
     formState: { errors },
   } = useForm<FormData>({
@@ -508,6 +506,7 @@ export default function RecruitingForm() {
       hasExperience: '',
     },
   })
+  const watchedValues = useWatch({ control })
 
   /* ---- Restore from localStorage ---- */
   useEffect(() => {
@@ -522,13 +521,10 @@ export default function RecruitingForm() {
 
   /* ---- Persist to localStorage on change ---- */
   useEffect(() => {
-    const { unsubscribe } = watch((values) => {
-      try {
-        localStorage.setItem(LS_KEY, JSON.stringify(values))
-      } catch { /* ignore storage errors */ }
-    })
-    return () => unsubscribe()
-  }, [watch])
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(watchedValues))
+    } catch { /* ignore storage errors */ }
+  }, [watchedValues])
 
   /* ---- Section entrance ---- */
   useEffect(() => {
@@ -645,7 +641,7 @@ export default function RecruitingForm() {
                   margin: 0,
                 }}
               >
-                Ми зв'яжемося з вами протягом 24 годин.<br />
+                Ми зв&apos;яжемося з вами протягом 24 годин.<br />
                 Слава Україні!
               </motion.p>
 
@@ -751,7 +747,7 @@ export default function RecruitingForm() {
                 animate={inView ? { opacity: 1 } : { opacity: 0 }}
                 transition={{ duration: 0.6, delay: 0.35 }}
               >
-                Заповніть форму — ми зв'яжемося з вами протягом 24 годин.
+                Заповніть форму — ми зв&apos;яжемося з вами протягом 24 годин.
               </motion.p>
 
               {/* ── Form ── */}

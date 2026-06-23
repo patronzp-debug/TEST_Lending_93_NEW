@@ -108,11 +108,16 @@ function useIsMobile(): boolean {
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)')
-    setIsMobile(mq.matches)
+    const frame = window.requestAnimationFrame(() => {
+      setIsMobile(mq.matches)
+    })
 
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
     mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
+    return () => {
+      window.cancelAnimationFrame(frame)
+      mq.removeEventListener('change', handler)
+    }
   }, [])
 
   return isMobile

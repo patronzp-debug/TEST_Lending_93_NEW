@@ -7,6 +7,8 @@ import { Shield, Crosshair, Users } from 'lucide-react'
 import type { ScrollTrigger as STType } from 'gsap/ScrollTrigger'
 import InfiniteMarquee from './InfiniteMarquee'
 
+type GSAPMatchMedia = ReturnType<typeof import('gsap').default.matchMedia>
+
 /* ============================================================
    WORD-SPLIT STAGGER REVEAL
    Splits a string into words; each word slides up from a mask.
@@ -146,7 +148,7 @@ export default function About() {
   /* ---- GSAP Parallax on media blocks ---- */
   useEffect(() => {
     let mounted = true
-    let mm: any
+    let mm: GSAPMatchMedia | undefined
 
     async function initParallax() {
       const { default: gsap } = await import('gsap')
@@ -182,7 +184,7 @@ export default function About() {
 
     return () => {
       mounted = false
-      if (mm) mm.revert()
+      mm?.revert()
       stInstances.current.forEach(st => st.kill())
       stInstances.current = []
     }
