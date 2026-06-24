@@ -287,7 +287,7 @@ interface CinematicRadioGroupProps {
 function CinematicRadioGroup({ name, value, onChange, options, hasError }: CinematicRadioGroupProps) {
   return (
     <div role="radiogroup" aria-label={name} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-      {options.map(opt => {
+      {options.map((opt, index) => {
         const checked = value === opt.value
         return (
           <label
@@ -305,6 +305,7 @@ function CinematicRadioGroup({ name, value, onChange, options, hasError }: Cinem
             }}
           >
             <input
+              id={index === 0 ? name : `${name}-${opt.value}`}
               type="radio"
               name={name}
               value={opt.value}
@@ -746,6 +747,7 @@ export default function RecruitingForm() {
                   <input
                     id="fullName"
                     type="text"
+                    autoComplete="name"
                     placeholder="Прізвище Ім'я По батькові"
                     className="form-input-field"
                     style={{
@@ -762,6 +764,7 @@ export default function RecruitingForm() {
                   <input
                     id="phone"
                     type="tel"
+                    autoComplete="tel"
                     placeholder="+380XXXXXXXXX"
                     className="form-input-field"
                     style={{
@@ -778,6 +781,7 @@ export default function RecruitingForm() {
                   <input
                     id="age"
                     type="number"
+                    autoComplete="off"
                     placeholder="18–60"
                     min={18} max={60}
                     className="form-input-field"
