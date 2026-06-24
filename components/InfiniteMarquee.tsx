@@ -248,9 +248,9 @@ function MobileSlider() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: '0',
-        flexWrap: 'wrap',
-        marginTop: '14px',
+        gap: '2px',
+        flexWrap: 'nowrap',
+        marginTop: '12px',
       }}>
         {SLIDER_IMAGES.map((_, idx) => (
           <button
@@ -258,8 +258,9 @@ function MobileSlider() {
             onClick={() => setCurrent(idx)}
             aria-label={`Фото ${idx + 1}`}
             style={{
-              minWidth: '44px',
-              minHeight: '44px',
+              width: idx === current ? '28px' : '24px',
+              height: '24px',
+              flex: '0 0 auto',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -286,7 +287,7 @@ function MobileSlider() {
       {/* Счётчик */}
       <p style={{
         textAlign: 'center',
-        marginTop: '8px',
+        marginTop: '6px',
         fontFamily: 'var(--font-roboto-mono)',
         fontSize: '0.65rem',
         letterSpacing: '0.12em',

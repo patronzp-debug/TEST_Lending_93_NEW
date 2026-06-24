@@ -11,11 +11,25 @@ interface SmoothScrollProviderProps {
   children: React.ReactNode
 }
 
+function resetScrollPosition() {
+  document.documentElement.scrollTop = 0
+  document.body.scrollTop = 0
+  window.scrollTo(0, 0)
+}
+
 export default function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const lenisRef = useRef<Lenis | null>(null)
   const tickerCallbackRef = useRef<((time: number) => void) | null>(null)
 
   useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration
+
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+
+    resetScrollPosition()
+
     async function init() {
       // Dynamically import GSAP (client-side only)
       const gsapModule = await import('gsap')
@@ -40,6 +54,7 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
       })
 
       lenisRef.current = lenis
+      lenis.scrollTo(0, { immediate: true, force: true })
 
       // Bridge Lenis → GSAP ScrollTrigger
       lenis.on('scroll', () => {
@@ -55,9 +70,20 @@ export default function SmoothScrollProvider({ children }: SmoothScrollProviderP
       gsap.ticker.lagSmoothing(0)
     }
 
+    const handlePageHide = () => {
+      resetScrollPosition()
+      lenisRef.current?.scrollTo(0, { immediate: true, force: true })
+    }
+
+    window.addEventListener('pagehide', handlePageHide)
+
     init()
 
     return () => {
+      window.removeEventListener('pagehide', handlePageHide)
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = previousScrollRestoration
+      }
       // Cleanup
       if (lenisRef.current) {
         lenisRef.current.destroy()
