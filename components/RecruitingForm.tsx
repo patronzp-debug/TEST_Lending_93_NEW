@@ -3,41 +3,22 @@
 import { useEffect, useRef, useState } from 'react'
 import { useForm, Controller, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, CheckCircle2, Send } from 'lucide-react'
 import { VACANCY_CATEGORIES, type VacancyCategory } from '../constants/vacancies'
 import { submitToSheets } from '../app/actions/submitToSheets'
+import {
+  recruitingFormSchema,
+  type RecruitingFormData,
+  type RecruitingFormPayload,
+} from '../lib/validation/recruitingForm'
 
 /* ============================================================
    ZOD SCHEMA — валідація форми
    ============================================================ */
 
-const schema = z.object({
-  fullName: z
-    .string()
-    .min(1, "Введіть ваше ПІБ")
-    .refine(v => v.trim().split(/\s+/).length >= 2, {
-      message: "Введіть щонайменше прізвище та ім\u2019я",
-    }),
-  phone: z
-    .string()
-    .min(1, "Введіть номер телефону")
-    .regex(/^\+380\d{9}$/, 'Формат: +380XXXXXXXXX (9 цифр після +380)'),
-  age: z
-    .number({ error: 'Введіть вік' })
-    .int('Вік має бути цілим числом')
-    .min(18, 'Мінімальний вік — 18 років')
-    .max(60, 'Максимальний вік — 60 років'),
-  position: z
-    .string()
-    .min(1, 'Оберіть бажану посаду'),
-  hasExperience: z
-    .string()
-    .min(1, 'Оберіть відповідь'),
-})
-
-type FormData = z.infer<typeof schema>
+type FormData = RecruitingFormData
+type FormValues = RecruitingFormPayload
 
 const LS_KEY = '93optb_form_draft'
 const EXPERIENCE_OPTIONS = [
@@ -474,6 +455,7 @@ function ResetButton({ onReset }: { onReset: () => void }) {
 export default function RecruitingForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [inView, setInView] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -483,14 +465,15 @@ export default function RecruitingForm() {
     control,
     reset,
     formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+  } = useForm<FormValues, unknown, FormData>({
+    resolver: zodResolver(recruitingFormSchema),
     defaultValues: {
       fullName: '',
       phone: '+380',
       age: undefined,
       position: '',
       hasExperience: '',
+      website: '',
     },
   })
   const watchedValues = useWatch({ control })
@@ -500,7 +483,7 @@ export default function RecruitingForm() {
     try {
       const saved = localStorage.getItem(LS_KEY)
       if (saved) {
-        const parsed = JSON.parse(saved) as Partial<FormData>
+        const parsed = JSON.parse(saved) as Partial<FormValues>
         reset(parsed)
       }
     } catch { /* ignore parse errors */ }
@@ -525,6 +508,7 @@ export default function RecruitingForm() {
 
   /* ---- Submit handler ---- */
   const onSubmit = async (data: FormData) => {
+    setSubmitError(null)
     setIsLoading(true)
     try {
       const result = await submitToSheets(data)
@@ -532,10 +516,12 @@ export default function RecruitingForm() {
         setIsSuccess(true)
         try { localStorage.removeItem(LS_KEY) } catch { /* ignore */ }
       } else {
+        setSubmitError(result.error ?? 'Не вдалося надіслати заявку. Спробуйте ще раз.')
         console.error('[RecruitingForm] submitToSheets error:', result.error)
         // Залишаємо форму активною — користувач може спробувати ще раз
       }
     } catch (err) {
+      setSubmitError('Не вдалося надіслати заявку. Спробуйте ще раз.')
       console.error('[RecruitingForm] Unexpected error:', err)
     } finally {
       setIsLoading(false)
@@ -746,6 +732,15 @@ export default function RecruitingForm() {
                 style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(28px, 3vw, 40px)' }}
                 noValidate
               >
+                <input
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ display: 'none' }}
+                  {...register('website')}
+                />
+
                 {/* ── ПІБ ── */}
                 <FieldWrapper label="ПІБ" id="fullName" error={errors.fullName?.message} required>
                   <input
@@ -791,7 +786,7 @@ export default function RecruitingForm() {
                       borderColor: errors.age ? 'rgba(255,80,0,0.5)' : undefined,
                     }}
                     {...inputFocusHandlers}
-                    {...register('age', { valueAsNumber: true })}
+                    {...register('age')}
                   />
                 </FieldWrapper>
 
@@ -846,6 +841,30 @@ export default function RecruitingForm() {
                   * Надсилаючи форму, ви погоджуєтесь на обробку персональних даних
                   відповідно до законодавства України.
                 </p>
+
+                <AnimatePresence mode="wait">
+                  {submitError && (
+                    <motion.p
+                      key={submitError}
+                      variants={errorVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="exit"
+                      role="alert"
+                      style={{
+                        fontFamily: 'var(--font-roboto-mono)',
+                        fontSize: '0.66rem',
+                        letterSpacing: '0.08em',
+                        color: 'rgba(255, 70, 0, 0.95)',
+                        lineHeight: 1.6,
+                        textAlign: 'center',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {submitError}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
 
                 {/* ── Submit ── */}
                 <div style={{ display: 'flex', justifyContent: 'center' }}>

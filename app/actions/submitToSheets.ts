@@ -1,17 +1,35 @@
 'use server'
 
 import { google } from 'googleapis'
+import {
+  RECRUITING_RATE_LIMIT_MS,
+  recruitingFormSchema,
+  type RecruitingFormPayload,
+} from '@/lib/validation/recruitingForm'
 
-interface FormPayload {
-  fullName: string
-  phone: string
-  age: number
-  position: string
-  hasExperience: string
-}
+const phoneSubmissionTimes = new Map<string, number>()
 
-export async function submitToSheets(data: FormPayload): Promise<{ success: boolean; error?: string }> {
+export async function submitToSheets(data: RecruitingFormPayload): Promise<{ success: boolean; error?: string }> {
   try {
+    const parsed = recruitingFormSchema.safeParse(data)
+
+    if (!parsed.success) {
+      const firstError = parsed.error.issues[0]?.message ?? 'Перевірте правильність заповнення форми.'
+      return { success: false, error: firstError }
+    }
+
+    const formData = parsed.data
+    const nowMs = Date.now()
+    const lastSubmissionAt = phoneSubmissionTimes.get(formData.phone)
+
+    if (lastSubmissionAt && nowMs - lastSubmissionAt < RECRUITING_RATE_LIMIT_MS) {
+      const minutesLeft = Math.ceil((RECRUITING_RATE_LIMIT_MS - (nowMs - lastSubmissionAt)) / 60000)
+      return {
+        success: false,
+        error: `Заявку з цим номером вже надіслано. Спробуйте ще раз через ${minutesLeft} хв.`,
+      }
+    }
+
     const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n')
 
     if (!process.env.GOOGLE_SHEET_ID || !process.env.GOOGLE_CLIENT_EMAIL || !privateKey) {
@@ -36,15 +54,15 @@ export async function submitToSheets(data: FormPayload): Promise<{ success: bool
       minute: '2-digit',
     })
 
-    const experienceLabel = data.hasExperience === 'yes' ? 'Так' : 'Ні'
+    const experienceLabel = formData.hasExperience === 'yes' ? 'Так' : 'Ні'
 
     const row = [
       formattedDate,          // Дата
-      data.fullName,          // ПІБ
-      data.phone,             // Телефон
-      String(data.age),       // Вік
+      formData.fullName,      // ПІБ
+      formData.phone,         // Телефон
+      String(formData.age),   // Вік
       '',                     // Напрямок (резервна колонка — якщо є в шапці)
-      data.position,          // Позиція/Спеціальність
+      formData.position,      // Позиція/Спеціальність
       experienceLabel,        // Досвід
       'Новий',                // Статус
     ]
@@ -58,6 +76,8 @@ export async function submitToSheets(data: FormPayload): Promise<{ success: bool
         values: [row],
       },
     })
+
+    phoneSubmissionTimes.set(formData.phone, nowMs)
 
     return { success: true }
   } catch (err) {
