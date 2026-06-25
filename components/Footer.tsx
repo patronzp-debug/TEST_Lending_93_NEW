@@ -8,7 +8,7 @@ import Image from 'next/image'
    ============================================================ */
 
 const SOCIALS = [
-  { name: 'Telegram', icon: '/icons/footer_svg/telegram.svg', href: '#' },
+  { name: 'Telegram', icon: '/icons/footer_svg/telegram.svg', href: 'https://t.me/rekruting_93optb' },
   { name: 'Instagram', icon: '/icons/footer_svg/instagram.svg', href: '#' },
   { name: 'Facebook', icon: '/icons/footer_svg/facebook.svg', href: '#' },
   { name: 'TikTok', icon: '/icons/footer_svg/tiktok.svg', href: '#' },
@@ -138,8 +138,13 @@ export default function Footer() {
           {SOCIALS.map(social => (
             <motion.a
               key={social.name}
-              href="#"
-              onClick={(e) => { e.preventDefault(); alert('Сервіс в розробці') }}
+              href={social.href}
+              target={social.href === '#' ? undefined : '_blank'}
+              rel={social.href === '#' ? undefined : 'noopener noreferrer'}
+              onClick={social.href === '#'
+                ? (e) => { e.preventDefault(); alert('Сервіс в розробці') }
+                : undefined}
+              aria-label={social.name}
               style={{
                 display: 'inline-flex',
                 opacity: 0.6,
