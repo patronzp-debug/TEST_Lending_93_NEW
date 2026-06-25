@@ -58,7 +58,7 @@ export default function Footer() {
           {/* Logo / identity */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <Image
-              src="/logos/93_optb/logo_section_Hero.png"
+              src="/logos/93_optb/Logo_section_hero.webp"
               alt="93 ОПТБ Логотип"
               width={48}
               height={48}
