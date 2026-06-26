@@ -1,7 +1,9 @@
 import { z } from 'zod'
+import { VACANCIES } from '@/constants/vacancies'
 
 const CYRILLIC_NAME_PART_RE = /^[А-ЯЁЄІЇҐа-яёєіїґ]+(?:[-'][А-ЯЁЄІЇҐа-яёєіїґ]+)*$/u
 const REPEATED_CHARACTER_RE = /(.)\1{4,}/u
+const VACANCY_TITLES = new Set(VACANCIES.map(vacancy => vacancy.title))
 
 export const RECRUITING_RATE_LIMIT_MS = 10 * 60 * 1000
 
@@ -63,10 +65,16 @@ export const recruitingFormSchema = z.object({
   ),
   position: z
     .string()
-    .min(1, 'Оберіть бажану посаду'),
+    .min(1, 'Оберіть бажану посаду')
+    .refine(value => VACANCY_TITLES.has(value), {
+      message: 'Оберіть посаду зі списку',
+    }),
   hasExperience: z
     .string()
-    .min(1, 'Оберіть відповідь'),
+    .min(1, 'Оберіть відповідь')
+    .refine(value => value === 'yes' || value === 'no', {
+      message: 'Оберіть відповідь зі списку',
+    }),
   website: z
     .string()
     .optional()
