@@ -213,71 +213,41 @@ function MobileTimeline() {
 }
 
 /* ============================================================
-   DESKTOP IMAGE PANEL — sticky з AnimatePresence cross-fade
+   DESKTOP IMAGE PANEL — sticky з preloaded cross-fade
    ============================================================ */
 
 function DesktopImagePanel({ activeIndex }: { activeIndex: number }) {
-  const [lastIndex, setLastIndex] = useState<number>(activeIndex)
   const step = STEPS[activeIndex] ?? STEPS[0]
-  const lastStep = STEPS[lastIndex] ?? STEPS[0]
-
-  useEffect(() => {
-    if (activeIndex !== lastIndex) {
-      const timer = setTimeout(() => {
-        setLastIndex(activeIndex)
-      }, 500)
-      return () => clearTimeout(timer)
-    }
-  }, [activeIndex, lastIndex])
-
-  const isTransitioning = activeIndex !== lastIndex
 
   return (
     <div className="sticky top-[120px] h-[70vh] w-full flex items-center justify-center">
       <div className="relative h-full w-full overflow-hidden bg-[#f0f0f0]">
         <div
           aria-hidden="true"
-          className="absolute inset-0 flex items-center justify-center"
+          className="absolute inset-0"
           style={{ background: step.bgGradient }}
-        >
-          <span
-            style={{
-              fontFamily: 'var(--font-oswald)',
-              fontSize: 'clamp(6rem, 15vw, 14rem)',
-              fontWeight: 700,
-              color: 'rgba(255,90,0,0.07)',
-              letterSpacing: '-0.04em',
-              lineHeight: 1,
-              userSelect: 'none',
-            }}
-          >
-            0{activeIndex + 1}
-          </span>
-        </div>
-
-        {/* Static previous image underneath */}
-        {isTransitioning && (
-          <Image
-            src={lastStep.image}
-            alt=""
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
-            style={{ zIndex: 1 }}
-          />
-        )}
-
-        {/* Current image fading in on top */}
-        <motion.img
-          key={activeIndex}
-          src={step.image}
-          alt={step.title}
-          initial={{ opacity: isTransitioning ? 0 : 1 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: EASE }}
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ zIndex: 2 }}
         />
+
+        {STEPS.map((imageStep, i) => (
+          <motion.div
+            key={imageStep.index}
+            aria-hidden={i !== activeIndex}
+            animate={{ opacity: i === activeIndex ? 1 : 0 }}
+            transition={{ duration: 0.45, ease: EASE }}
+            className="absolute inset-0"
+            style={{ zIndex: i === activeIndex ? 2 : 1 }}
+          >
+            <Image
+              src={imageStep.image}
+              alt={imageStep.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              loading="eager"
+              preload={i === 0}
+              className="object-cover"
+            />
+          </motion.div>
+        ))}
 
         <div
           className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between px-5 py-4"
