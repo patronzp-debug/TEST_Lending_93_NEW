@@ -221,7 +221,7 @@ function DesktopImagePanel({ activeIndex }: { activeIndex: number }) {
 
   return (
     <div className="sticky top-[120px] h-[70vh] w-full flex items-center justify-center">
-      <div className="relative h-full w-full overflow-hidden bg-[#f0f0f0]">
+      <div className="relative h-full w-full overflow-hidden rounded-[8px] bg-[#f0f0f0]">
         <div
           aria-hidden="true"
           className="absolute inset-0"
@@ -234,7 +234,7 @@ function DesktopImagePanel({ activeIndex }: { activeIndex: number }) {
             aria-hidden={i !== activeIndex}
             animate={{ opacity: i === activeIndex ? 1 : 0 }}
             transition={{ duration: 0.45, ease: EASE }}
-            className="absolute inset-0"
+            className="absolute inset-0 rounded-[8px]"
             style={{ zIndex: i === activeIndex ? 2 : 1 }}
           >
             <Image
@@ -244,7 +244,7 @@ function DesktopImagePanel({ activeIndex }: { activeIndex: number }) {
               sizes="(max-width: 1024px) 100vw, 50vw"
               loading="eager"
               preload={i === 0}
-              className="object-cover"
+              className="rounded-[8px] object-cover"
             />
           </motion.div>
         ))}
