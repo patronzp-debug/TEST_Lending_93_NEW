@@ -17,13 +17,11 @@ const SLIDER_IMAGES = [
   '/images/about/slider_img/5.webp',
   '/images/about/slider_img/6.webp',
   '/images/about/slider_img/7.webp',
-  '/images/about/slider_img/8.webp',
   '/images/about/slider_img/9.webp',
   '/images/about/slider_img/10.webp',
   '/images/about/slider_img/12.webp',
   '/images/about/slider_img/13.webp',
   '/images/about/slider_img/14.webp',
-  '/images/about/slider_img/2.webp',
 ]
 
 /* ─────────────────────────────────────────────────────────────
