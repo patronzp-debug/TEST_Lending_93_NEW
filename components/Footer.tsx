@@ -18,8 +18,8 @@ const SOCIALS = [
 const CONTACTS = [
   {
     label: 'ПИШІТЬ',
-    href: 'mailto:a5021armyrobota@gmail.com',
-    value: 'a5021armyrobota@gmail.com',
+    href: 'mailto:army93optb@gmail.com',
+    value: 'army93optb@gmail.com',
   },
   {
     label: 'РЕКРУТИНГ',
