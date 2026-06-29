@@ -205,7 +205,7 @@ export default function Hero() {
               textShadow: '0 2px 40px rgba(0,0,0,0.9), 0 0 60px rgba(8,8,8,0.5)',
             }}
           >
-            Зроби свій крок до перемоги
+            93 окремий протитанковий батальйон
           </motion.h1>
         </div>
 
@@ -224,7 +224,7 @@ export default function Hero() {
               letterSpacing: '0.12em',
             }}
           >
-            стань частиною батальйону
+            стань частиною 93 ОПТБ
           </motion.p>
         </div>
 

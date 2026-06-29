@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://test-lending-93-new.vercel.app/sitemap.xml',
+    sitemap: 'https://93optb.com.ua/sitemap.xml',
   }
 }
