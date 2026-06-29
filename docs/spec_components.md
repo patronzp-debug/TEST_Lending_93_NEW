@@ -156,7 +156,7 @@ Source of Truth generated from executable code only.
 
 `components/FAQ.tsx`
 
-- 13 FAQ items.
+- 14 FAQ items.
 - Shows first 5 by default.
 - “Show all” reveals remaining items with `AnimatePresence`.
 - One open accordion item is tracked by `openId`.
