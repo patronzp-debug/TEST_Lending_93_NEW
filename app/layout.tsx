@@ -3,6 +3,7 @@ import { Oswald, Roboto_Mono } from 'next/font/google'
 import SmoothScrollProvider from '@/components/providers/SmoothScrollProvider'
 import { IntroProvider } from '@/components/providers/IntroContext'
 import LazyCookieBanner from '@/components/LazyCookieBanner'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import Header from '@/components/Header'
 import './globals.css'
 
@@ -86,6 +87,7 @@ export default function RootLayout({
       className={`${oswald.variable} ${robotoMono.variable} antialiased`}
     >
       <body className="bg-[#080808] text-[#ececec] overflow-x-clip">
+        <GoogleAnalytics />
         <script
           dangerouslySetInnerHTML={{
             __html:
