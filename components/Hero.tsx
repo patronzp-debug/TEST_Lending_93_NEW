@@ -224,7 +224,7 @@ export default function Hero() {
               letterSpacing: '0.12em',
             }}
           >
-            стань частиною 93 ОПТБ
+            93 батальйон ЗСУ чекає тебе
           </motion.p>
         </div>
 
