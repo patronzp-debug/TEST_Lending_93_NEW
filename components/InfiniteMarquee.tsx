@@ -85,6 +85,7 @@ function MarqueeCard({ src, index, ariaHidden }: { src: string; index: number; a
         src={src}
         alt={ariaHidden ? '' : `Фото підрозділу ${index + 1}`}
         fill
+        unoptimized
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         style={{ objectFit: 'cover' }}
       />
@@ -173,10 +174,11 @@ function MobileSlider() {
                 src={src}
                 alt={`Фото підрозділу ${idx + 1}`}
                 fill
+                unoptimized
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 style={{ objectFit: 'cover' }}
                 draggable={false}
-                priority={idx === 0}
+                preload={idx === 0}
               />
             </div>
           ))}
