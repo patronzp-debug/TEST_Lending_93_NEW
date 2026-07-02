@@ -262,7 +262,7 @@ export default function Vacancies() {
               gridTemplateColumns: 'repeat(auto-fill, 270px)',
               gridAutoRows: '345.17px',
               gap: '20px',
-              justifyContent: 'center',
+              justifyContent: 'start',
             }}
           >
             {filteredVacancies.map((vacancy, i) => (
