@@ -9,7 +9,7 @@ import Image from 'next/image'
 
 const SOCIALS = [
   { name: 'Telegram', icon: '/icons/footer_svg/telegram.svg', href: 'https://t.me/rekruting_93optb' },
-  { name: 'Instagram', icon: '/icons/footer_svg/instagram.svg', href: '#' },
+  { name: 'Instagram', icon: '/icons/footer_svg/instagram.svg', href: 'https://www.instagram.com/93optb_recruiting/' },
   { name: 'Facebook', icon: '/icons/footer_svg/facebook.svg', href: 'https://www.facebook.com/profile.php?id=61591548422987' },
   { name: 'TikTok', icon: '/icons/footer_svg/tiktok.svg', href: '#' },
   { name: 'YouTube', icon: '/icons/footer_svg/youtube.svg', href: '#' },
