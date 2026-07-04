@@ -12,45 +12,55 @@ export const BlurredStagger = ({
   className?: string;
   style?: React.CSSProperties;
 }) => {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.015,
-      },
-    },
-  };
-
-  const letterAnimation = {
-    hidden: {
-      opacity: 0,
-      filter: "blur(10px)",
-    },
-    show: {
-      opacity: 1,
-      filter: "blur(0px)",
-    },
-  };
+  const words = text.split(" ");
+  let charCounter = 0;
 
   return (
     <motion.p
-      variants={container}
       initial="hidden"
       animate="show"
       className={className}
-      style={style}
+      style={{
+        textAlign: "left",
+        wordBreak: "keep-all",
+        ...style,
+      }}
     >
-      {text.split("").map((char, index) => (
-        <motion.span
-          key={index}
-          variants={letterAnimation}
-          transition={{ duration: 0.3 }}
-          className="inline-block"
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
+      {words.map((word, wordIndex) => {
+        return (
+          <span
+            key={wordIndex}
+            className="inline-block whitespace-nowrap"
+            style={{ display: "inline-block", whiteSpace: "nowrap" }}
+          >
+            {word.split("").map((char, charIndex) => {
+              const globalIndex = charCounter++;
+              return (
+                <motion.span
+                  key={charIndex}
+                  initial={{ opacity: 0, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, filter: "blur(0px)" }}
+                  transition={{
+                    duration: 0.25,
+                    delay: globalIndex * 0.008,
+                    ease: "easeOut",
+                  }}
+                  className="inline-block"
+                  style={{ display: "inline-block" }}
+                >
+                  {char}
+                </motion.span>
+              );
+            })}
+            {/* Add a space after the word, preserving layout */}
+            {wordIndex < words.length - 1 && (
+              <span className="inline-block" style={{ display: "inline-block" }}>
+                &nbsp;
+              </span>
+            )}
+          </span>
+        );
+      })}
     </motion.p>
   );
 };
