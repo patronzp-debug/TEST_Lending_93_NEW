@@ -224,7 +224,7 @@ export default function Hero() {
               letterSpacing: '0.12em',
             }}
           >
-            93 батальйон ЗСУ чекає тебе
+            батальйон ЗСУ чекає тебе
           </motion.p>
         </div>
 

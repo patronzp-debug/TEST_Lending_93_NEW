@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { Plus } from 'lucide-react'
+import { BlurredStagger } from '@/components/ui/blurred-stagger-text'
 
 /* ============================================================
    FAQ DATA — Ukrainian only (spec_theme.md)
@@ -217,7 +218,8 @@ function AccordionItem({ item, index, isOpen, onToggle, inView }: AccordionItemP
                   marginRight: '22px',
                 }}
               />
-              <p
+              <BlurredStagger
+                text={item.answer}
                 style={{
                   fontFamily: 'var(--font-roboto-mono)',
                   fontSize: 'clamp(0.75rem, 1.2vw, 0.85rem)',
@@ -225,9 +227,7 @@ function AccordionItem({ item, index, isOpen, onToggle, inView }: AccordionItemP
                   lineHeight: 1.8,
                   letterSpacing: '0.02em',
                 }}
-              >
-                {item.answer}
-              </p>
+              />
             </div>
           </motion.div>
         )}
