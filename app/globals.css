@@ -385,6 +385,16 @@ p, span, li {
   will-change: transform, opacity;
 }
 
+@media (max-width: 767px) {
+  .hero-cta-wrap {
+    bottom: 4.5rem !important;
+  }
+
+  .hero-scroll-hint {
+    bottom: 1rem !important;
+  }
+}
+
 /* Tactical label (neon tag) */
 .tactical-tag {
   font-family: var(--font-roboto-mono), monospace;

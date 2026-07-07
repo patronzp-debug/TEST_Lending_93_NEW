@@ -240,7 +240,10 @@ export default function Header() {
                   width={44}
                   height={44}
                   className="object-contain"
-                  style={{ filter: 'drop-shadow(0 0 8px rgba(255,90,0,0.35))' }}
+                  style={{
+                    height: 'auto',
+                    filter: 'drop-shadow(0 0 8px rgba(255,90,0,0.35))',
+                  }}
                 />
               </motion.div>
 

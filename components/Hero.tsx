@@ -261,7 +261,7 @@ export default function Hero() {
           variants={fromBottom}
           initial="hidden"
           animate={textVisible ? 'visible' : 'hidden'}
-          className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 w-max"
+          className="hero-cta-wrap absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 w-max"
         >
           <Button
             id="hero-cta"
@@ -310,7 +310,7 @@ export default function Hero() {
 
         {/* Scroll hint */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
+          className="hero-scroll-hint absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
           initial={{ opacity: 0 }}
           animate={textVisible ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 1, delay: 0.8 }}
