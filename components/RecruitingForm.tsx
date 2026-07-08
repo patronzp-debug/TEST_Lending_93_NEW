@@ -359,56 +359,41 @@ interface SubmitButtonProps {
 }
 
 function SubmitButton({ isLoading, isSuccess }: SubmitButtonProps) {
-  const [hovered, setHovered] = useState(false)
+  const [planeLaunching, setPlaneLaunching] = useState(false)
+  const isDisabled = isLoading || isSuccess
+
+  const handleClick = () => {
+    if (isDisabled) return
+    setPlaneLaunching(false)
+    window.setTimeout(() => setPlaneLaunching(true), 0)
+    window.setTimeout(() => setPlaneLaunching(false), 900)
+  }
 
   return (
     <button
       type="submit"
-      disabled={isLoading || isSuccess}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      disabled={isDisabled}
+      onClick={handleClick}
       className="form-submit-btn"
-      style={{
-        position: 'relative',
-        overflow: 'hidden',
-        width: '100%',
-        padding: '14px 24px',
-        background: isSuccess
-          ? 'linear-gradient(135deg, #1a4a1a 0%, #0d3d0d 100%)'
-          : 'linear-gradient(135deg, #ff5a00 0%, #e84800 100%)',
-        border: 'none',
-        color: '#fff',
-        fontFamily: 'var(--font-roboto-mono)',
-        fontSize: '0.75rem',
-        letterSpacing: '0.18em',
-        textTransform: 'uppercase',
-        whiteSpace: 'nowrap',
-        cursor: isLoading || isSuccess ? 'default' : 'pointer',
-        transition: 'background 0.4s ease, box-shadow 0.3s ease, transform 0.2s ease',
-        boxShadow: hovered && !isLoading && !isSuccess
-          ? '0 0 30px rgba(255,90,0,0.5), 0 0 70px rgba(255,90,0,0.2)'
-          : '0 0 20px rgba(255,90,0,0.2)',
-        transform: hovered && !isLoading && !isSuccess ? 'translateY(-1px)' : 'none',
-        borderRadius: '8px',
-      }}
+      data-state={isSuccess ? 'success' : isLoading ? 'loading' : 'idle'}
     >
-      {/* Shimmer sweep — moves on hover */}
-      <span
-        aria-hidden="true"
-        style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.22) 50%, transparent 70%)',
-          backgroundSize: '200% 100%',
-          backgroundPosition: hovered ? '-100% center' : '200% center',
-          transition: 'background-position 0.6s ease',
-          pointerEvents: 'none',
-        }}
-      />
-      <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', color: '#ffffff' }}>
-        {isLoading && <Loader2 size={14} className="animate-spin" style={{ color: '#ffffff' }} />}
-        {isSuccess && <CheckCircle2 size={14} style={{ color: '#ffffff' }} />}
-        {!isLoading && !isSuccess && <Send size={12} style={{ color: '#ffffff' }} />}
-        {isLoading ? 'ОБРОБКА ЗАЯВКИ...' : isSuccess ? 'Заявку прийнято!' : 'Надіслати заявку'}
+      <span className="form-submit-bg" aria-hidden="true" />
+      <span className="form-submit-wrap">
+        <span className="form-submit-outline" aria-hidden="true" />
+        <span className="form-submit-content">
+          <span className="form-submit-inner">
+            {isLoading && <Loader2 size={14} className="animate-spin form-submit-status-icon" />}
+            {isSuccess && <CheckCircle2 size={14} className="form-submit-status-icon" />}
+            {!isLoading && !isSuccess && (
+              <span className={planeLaunching ? 'form-submit-plane is-launching' : 'form-submit-plane'} aria-hidden="true">
+                <Send size={13} />
+              </span>
+            )}
+            <span className="form-submit-label">
+              {isLoading ? 'ОБРОБКА ЗАЯВКИ...' : isSuccess ? 'Заявку прийнято!' : 'Надіслати заявку'}
+            </span>
+          </span>
+        </span>
       </span>
     </button>
   )

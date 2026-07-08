@@ -18,6 +18,7 @@ const NAV_LINKS = [
 ]
 
 const BRAND_WORDS = ['ОКРЕМИЙ', 'ПРОТИТАНКОВИЙ', 'БАТАЛЬЙОН'] as const
+const MOBILE_JOIN_LABEL = 'Приєднатися'
 
 const mobilePanelStyle: CSSProperties = {
   background:
@@ -61,6 +62,18 @@ function scrollTo(href: string) {
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
+}
+
+function renderMobileJoinLabel() {
+  return Array.from(MOBILE_JOIN_LABEL).map((char, index) => (
+    <span
+      key={`${char}-${index}`}
+      className="mobile-join-letter"
+      style={{ '--i': index } as CSSProperties}
+    >
+      {char}
+    </span>
+  ))
 }
 
 /* ============================================================
@@ -303,20 +316,19 @@ export default function Header() {
             <motion.button
               id="header-join-btn"
               onClick={() => scrollTo('#recruiting-form')}
-              className="header-join-btn relative overflow-hidden text-[0.65rem] font-bold tracking-[0.16em] text-white uppercase"
+              className="header-join-btn relative text-[0.65rem] font-bold tracking-[0.16em] text-white uppercase"
               style={{
                 fontFamily: 'var(--font-roboto-mono)',
-                background: 'linear-gradient(135deg, #ff5a00 0%, #e84800 100%)',
-                border: 'none',
-                padding: '9px 22px',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                boxShadow: '0 0 18px rgba(255,90,0,0.3)',
               }}
-              whileHover={{ scale: 1.03, boxShadow: '0 0 30px rgba(255,90,0,0.55)' }}
               whileTap={{ scale: 0.97 }}
             >
-              Приєднатися
+              <span className="header-join-bg" aria-hidden="true" />
+              <span className="header-join-wrap">
+                <span className="header-join-outline" aria-hidden="true" />
+                <span className="header-join-content">
+                  <span className="header-join-label">Приєднатися</span>
+                </span>
+              </span>
             </motion.button>
           </motion.nav>
 
@@ -475,24 +487,25 @@ export default function Header() {
                     setMobileOpen(false)
                     scrollTo('#recruiting-form')
                   }}
-                  className="w-full flex items-center justify-center font-bold text-white transition-all duration-200 hover:bg-[#e04f00]"
+                  className="mobile-join-btn w-full font-bold text-white"
                   style={{
                     fontFamily: 'var(--font-sans), sans-serif',
-                    background: '#ff5a00',
-                    border: 'none',
                     height: '60px',
                     fontSize: '1.05rem',
                     letterSpacing: '0.05em',
-                    cursor: 'pointer',
-                    borderRadius: '10px',
-                    boxShadow: '0 4px 20px rgba(255,90,0,0.15)',
                   }}
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: NAV_LINKS.length * 0.08 + 0.05, ease: [0.16, 1, 0.3, 1] }}
                   whileTap={{ scale: 0.97, y: 2 }}
                 >
-                  Приєднатися
+                  <span className="mobile-join-bg" aria-hidden="true" />
+                  <span className="mobile-join-wrap">
+                    <span className="mobile-join-outline" aria-hidden="true" />
+                    <span className="mobile-join-content">
+                      <span className="mobile-join-label">{renderMobileJoinLabel()}</span>
+                    </span>
+                  </span>
                 </motion.button>
               </div>
             </motion.nav>
