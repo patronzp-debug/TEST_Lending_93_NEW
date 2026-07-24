@@ -317,6 +317,141 @@ p, span, li {
   animation: reveal-up 0.8s var(--ease-cinematic) both;
 }
 
+/* ============================================================
+   INFORMATION SUPPORT + SHARE BLOCKS
+   ============================================================ */
+
+.information-support-section {
+  padding: clamp(64px, 8vw, 112px) clamp(20px, 5vw, 80px) clamp(72px, 8vw, 120px);
+  background: #0b0b0b;
+  border-top: 1px solid rgba(255, 90, 0, 0.16);
+  border-bottom: 1px solid rgba(255, 90, 0, 0.16);
+}
+
+.information-support-grid {
+  opacity: 0.32;
+  background-image: linear-gradient(rgba(255, 90, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 90, 0, 0.05) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(90deg, transparent, black 22%, black 78%, transparent);
+}
+
+.information-support-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.information-support-intro {
+  max-width: 920px;
+  margin: 0;
+  text-align: left;
+}
+
+.information-support-intro > .tactical-tag {
+  margin-bottom: 20px;
+}
+
+.information-support-title {
+  color: #ececec;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  max-width: 920px;
+  text-align: left;
+  text-wrap: balance;
+}
+
+.information-support-title-main,
+.information-support-title-secondary {
+  display: block;
+  color: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.information-support-title-main {
+  white-space: nowrap;
+}
+
+.information-support-title-secondary {
+  margin-top: 0.1em;
+}
+
+.information-support-copy {
+  display: grid;
+  gap: 10px;
+  max-width: 720px;
+  margin: 24px 0 0;
+  padding: 2px 0 2px 22px;
+  border-left: 1px solid rgba(255, 90, 0, 0.55);
+  text-align: left;
+}
+
+.information-support-copy-primary,
+.information-support-copy-secondary {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.information-support-copy-primary {
+  color: #c7c7c7;
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+
+.information-support-copy-secondary {
+  color: #777;
+  font-size: 0.76rem;
+  line-height: 1.7;
+}
+
+.information-support-follow-label {
+  max-width: none;
+  margin: 38px 0 0;
+  color: #ececec;
+  font-family: var(--font-roboto-mono), monospace;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  letter-spacing: 0.12em;
+  text-align: left;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.information-support-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 20px; }
+.information-support-card { display: flex; min-height: 104px; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.025); text-decoration: none; transition: border-color 300ms var(--ease-cinematic), background 300ms var(--ease-cinematic), transform 300ms var(--ease-cinematic), box-shadow 300ms var(--ease-cinematic); }
+.information-support-card:hover { transform: translateY(-4px); border-color: rgba(255,90,0,0.55); background: rgba(255,90,0,0.06); box-shadow: 0 12px 30px rgba(0,0,0,0.28); }
+.information-support-card-description { margin-top: 4px; color: #777; font-size: 0.65rem; line-height: 1.45; }
+
+.share-information-section { padding: clamp(52px, 7vw, 92px) clamp(20px, 5vw, 80px); background: #080808; }
+.share-information-inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px 48px; max-width: 1280px; margin: 0 auto; padding: clamp(28px, 4vw, 48px); border: 1px solid rgba(255,255,255,0.08); border-left: 2px solid #ff5a00; background: linear-gradient(110deg, rgba(255,90,0,0.07), rgba(255,255,255,0.02) 42%, transparent); }
+.share-information-main-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; padding: 12px 24px; border: 1px solid #ff5a00; background: #ff5a00; color: #080808; font-family: var(--font-roboto-mono); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 200ms ease, box-shadow 200ms ease, transform 200ms ease; }
+.share-information-main-button:hover { background: #ff762d; box-shadow: 0 0 24px rgba(255,90,0,0.28); transform: translateY(-2px); }
+.share-information-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 6px; }
+.share-information-action { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 14px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.025); color: #c4c4c4; font-family: var(--font-roboto-mono); font-size: 0.68rem; text-decoration: none; cursor: pointer; transition: color 200ms ease, border-color 200ms ease, background 200ms ease; }
+.share-information-action:hover { color: #fff; border-color: rgba(255,90,0,0.6); background: rgba(255,90,0,0.08); }
+.share-information-instagram { color: #666; font-family: var(--font-roboto-mono); font-size: 0.68rem; }
+
+@media (max-width: 767px) {
+  .information-support-section { padding-top: 56px; padding-bottom: 64px; }
+  .information-support-intro > .tactical-tag { margin-bottom: 16px; }
+  .information-support-copy { gap: 12px; margin-top: 24px; padding-left: 16px; }
+  .information-support-copy-primary { font-size: 0.8rem; line-height: 1.65; }
+  .information-support-copy-secondary { font-size: 0.72rem; line-height: 1.65; }
+  .information-support-follow-label { margin-top: 30px; font-size: 0.66rem; letter-spacing: 0.08em; }
+  .information-support-cards { grid-template-columns: 1fr; }
+  .information-support-card { min-height: 88px; padding: 18px; }
+  .share-information-inner { grid-template-columns: 1fr; gap: 24px; }
+  .share-information-main-button { width: 100%; }
+  .share-information-actions { align-items: stretch; }
+  .share-information-action { flex: 1 1 calc(50% - 10px); }
+  .share-information-instagram { flex-basis: 100%; line-height: 1.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .information-support-card, .share-information-main-button, .share-information-action { transition: none; }
+}
+
 /* Shimmer text */
 .shimmer-text {
   background: linear-gradient(

@@ -7,6 +7,8 @@ import SmartWar from '@/components/SmartWar'
 import MythsAndReality from '@/components/MythsAndReality'
 import FAQ from '@/components/FAQ'
 import RecruitingForm from '@/components/RecruitingForm'
+import InformationSupport from '@/components/InformationSupport'
+import ShareInformation from '@/components/ShareInformation'
 import Footer from '@/components/Footer'
 
 const structuredData = [
@@ -57,10 +59,12 @@ export default function Home() {
         <RecruitmentPath />
         <MarqueeTicker text="ДОЛУЧАЙСЯ ДО 93 ОПТБ ✦ ОБИРАЙ СВОЮ СПЕЦІАЛЬНІСТЬ ✦ СТАВАЙ ДО ЛАВ НАЙКРАЩИХ ✦ ДОЛУЧАЙСЯ ДО 93 ОПТБ ✦ ОБИРАЙ СВОЮ СПЕЦІАЛЬНІСТЬ ✦ СТАВАЙ ДО ЛАВ НАЙКРАЩИХ ✦ " />
         <Vacancies />
+        <InformationSupport />
         <SmartWar />
         <MythsAndReality />
         <FAQ />
         <RecruitingForm />
+        <ShareInformation />
       </main>
       <Footer />
     </>
