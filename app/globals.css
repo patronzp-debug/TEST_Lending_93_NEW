@@ -1971,12 +1971,27 @@ body {
 
 @media (max-width: 767px) {
 
-  /* Reality text min-height to prevent reflow during typewriter */
+  /* Reserve the final copy height; the live typewriter layer sits above it. */
+  .reality-text-shell {
+    position: relative;
+    width: 100%;
+    overflow-anchor: none;
+  }
+
   .reality-text-mobile {
-    min-height: 5.1em; /* ~3 lines at 1.7 line-height */
     display: block;
     word-break: break-word;
     white-space: normal;
+  }
+
+  .reality-text-reserve {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .reality-text-live {
+    position: absolute;
+    inset: 0;
   }
 }
 

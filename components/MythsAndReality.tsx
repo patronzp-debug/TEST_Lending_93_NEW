@@ -452,41 +452,64 @@ function MythCardItem({
             />
           </div>
 
-          {/* Reality Text — Desktop: static | Mobile: typewriter */}
-          <p
-            className={isMobile ? 'reality-text-mobile' : undefined}
-            style={{
-              fontFamily: 'var(--font-roboto-mono)',
-              fontSize: '0.925rem',
-              lineHeight: 1.7,
-              color: '#d4d4d8',
-              margin: 0,
-            }}
-          >
-            {isMobile ? (
-              /* Mobile: character-by-character reveal with accent highlight */
-              <>
+          {/* Reality Text — desktop static, mobile typewriter over reserved final layout */}
+          {isMobile ? (
+            <div className="reality-text-shell">
+              {/* Invisible full copy reserves the final height before typing starts. */}
+              <p
+                className="reality-text-mobile reality-text-reserve"
+                aria-hidden="true"
+                style={{
+                  fontFamily: 'var(--font-roboto-mono)',
+                  fontSize: '0.925rem',
+                  lineHeight: 1.7,
+                  color: '#d4d4d8',
+                  margin: 0,
+                }}
+              >
+                <span style={{ color: '#ff5a00', fontWeight: 700 }}>
+                  {card.realityHighlight}
+                </span>
+                {card.realityText}
+              </p>
+
+              <p
+                className="reality-text-mobile reality-text-live"
+                style={{
+                  fontFamily: 'var(--font-roboto-mono)',
+                  fontSize: '0.925rem',
+                  lineHeight: 1.7,
+                  color: '#d4d4d8',
+                  margin: 0,
+                }}
+              >
                 <span style={{ color: '#ff5a00', fontWeight: 700 }}>
                   {displayedHighlight}
                 </span>
                 {displayedBody}
-                {/* Blinking cursor — visible only while typing */}
                 {!isDone && (
                   <span className="typewriter-cursor" aria-hidden="true">
                     |
                   </span>
                 )}
-              </>
-            ) : (
-              /* Desktop: static full text */
-              <>
-                <span style={{ color: '#ff5a00', fontWeight: 700 }}>
-                  {card.realityHighlight}
-                </span>
-                {card.realityText}
-              </>
-            )}
-          </p>
+              </p>
+            </div>
+          ) : (
+            <p
+              style={{
+                fontFamily: 'var(--font-roboto-mono)',
+                fontSize: '0.925rem',
+                lineHeight: 1.7,
+                color: '#d4d4d8',
+                margin: 0,
+              }}
+            >
+              <span style={{ color: '#ff5a00', fontWeight: 700 }}>
+                {card.realityHighlight}
+              </span>
+              {card.realityText}
+            </p>
+          )}
         </div>
       </motion.div>
     </motion.article>
